@@ -8,10 +8,10 @@ const Intro = () => {
   return (
     <Row className="min-h-[100vh] padding-[7rem] bg-[#333030]">
       <Col span={14} offset={2} className="mt-[18rem] z-10">
-        <Text className="block text-[6rem] font-bold text-white">
+        <Text className="block text-[5.5rem] font-bold text-white">
           Step into the light
         </Text>
-        <Text className="block font-medium text-[3.85rem]  mb-5 mt-[-2.4rem] text-white">
+        <Text className="block font-medium text-[3.35rem]  mb-5 mt-[-2.4rem] text-white">
           with our special coffee flavour
         </Text>
         <div>
@@ -20,9 +20,9 @@ const Intro = () => {
           </button>
         </div>
       </Col>
-      <div className="z-0 rotate-45 w-[48.2rem] h-[76rem] bg-[#9abec1] rounded-[50rem] absolute top-[-27rem] right-[-4.8rem] overflow-y-hidden">
+      <div className="z-0 rotate-45 w-[60rem] h-[76rem] bg-[#9abec1] rounded-[50rem] absolute top-[-28.6rem] right-[-3.8rem] overflow-y-hidden">
         <img
-          className=" rotate-[-45deg] absolute h-[45rem] bottom-[7rem] left-[8rem] "
+          className=" rotate-[-45deg] absolute h-[45rem] bottom-[15rem] left-[22rem] "
           preview={false}
           src={CoffeImg}
         />
