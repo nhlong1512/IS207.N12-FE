@@ -36,7 +36,7 @@ export default function Header() {
   }, [handleNavigation]);
 
   return (
-    <div className="w-full h-[10vh]  flex justify-around bg-transparent items-center fixed z-10 ">
+    <div className="w-full h-[10vh] bg-[#EEEEEE] flex justify-around items-center fixed z-10 ">
       <div className="flex justify-center">
         <Image
           preview={false}
