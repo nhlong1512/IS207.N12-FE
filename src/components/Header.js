@@ -1,52 +1,91 @@
-import React from "react";
-import { Col, Image, Row, Typography, Button } from "antd";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { div, Image, Typography, Button } from "antd";
 import Logo from "../images/Logo.png";
-
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import Title from "antd/lib/typography/Title";
 export default function Header() {
   const { Text } = Typography;
+
+  const [y, setY] = useState(document.body.scrollY);
+  const [bgNav, setBgNav] = useState("");
+  const [txtNav, setTxtNav] = useState("text-black");
+  const [borderNav, setBorderNav] = useState("border-white");
+  const handleNavigation = useCallback(
+    (e) => {
+      const window = e.currentTarget;
+      if (y < window.scrollY) {
+        setBgNav("bg-[#CC9966]");
+        setTxtNav("text-[#222]");
+        setBorderNav("border-[#222]");
+      } else if (y > window.scrollY) {
+        setBgNav("");
+        setTxtNav("text-[#CC9966]");
+        setBorderNav("border-white");
+      }
+      setY(window.scrollY);
+    },
+    [y]
+  );
+
+  useEffect(() => {
+    setY(document.body.scrollY);
+    document.body.addEventListener("scroll", handleNavigation);
+
+    return () => {
+      document.body.removeEventListener("scroll", handleNavigation);
+    };
+  }, [handleNavigation]);
+
   return (
-    <Row className="w-full h-[15vh] flex  items-center fixed z-10">
-      <Col span={3} offset={1} className="flex justify-center">
+    <div className="w-full h-[10vh]  flex justify-around bg-transparent items-center fixed z-10 ">
+      <div className="flex justify-center">
         <Image
           preview={false}
-          className="cursor-pointer"
-          width={120}
-          height={40}
+          className="cursor-pointer w-[8rem] h-[2rem]"
           src={Logo}
         />
-      </Col>
-      <Col span={14} offset={1}>
-        <Row className="flex justify-evenly">
-          <Text className="text-[1.3rem] text-white mx-2 font-Jose font-semibold cursor-pointer ">
+      </div>
+      <div>
+        <div className="flex justify-evenly w-[38rem]">
+          <Text
+            className={`text-[1.3rem] text-[#B8860B] mx-2 font-Jose font-normal cursor-pointer `}
+          >
             Câu chuyện
-          </Text>{" "}
-          <Text className="text-[1.3rem] text-white mx-2 font-Jose font-semibold cursor-pointer ">
-            Thực đơn
-          </Text>{" "}
-          <Text className="text-[1.3rem] text-white mx-2 font-Jose font-semibold cursor-pointer ">
-            Blog
-          </Text>{" "}
-          <Text className="text-[1.3rem] text-white mx-2 font-Jose font-semibold cursor-pointer ">
-            Cửa Hàng
-          </Text>{" "}
-          <Text className="text-[1.3rem] text-white mx-2 font-Jose font-semibold cursor-pointer ">
-            Liên Hệ
-          </Text>{" "}
-        </Row>
-      </Col>
-      <Col span={3} className="ml-9">
-        <Row className="flex justify-evenly ">
-          <Text className="text-[1.1rem] text-white self-center cursor-pointer">
-            Sign in
           </Text>
-          <div className="border-r-[0.1rem] border-white"></div>
-          <div className="cursor-pointer text-white">
-            <ShoppingCartOutlined className="text-[1.8rem]" />
+          <Text
+            className={`text-[1.3rem] text-[#B8860B] mx-2 font-Jose font-normal cursor-pointer `}
+          >
+            Thực đơn
+          </Text>
+          <Text
+            className={`text-[1.3rem] text-[#B8860B] mx-2 font-Jose font-normal cursor-pointer `}
+          >
+            Blog
+          </Text>
+          <Text
+            className={`text-[1.3rem] text-[#B8860B] mx-2 font-Jose font-normal cursor-pointer `}
+          >
+            Cửa Hàng
+          </Text>
+          <Text
+            className={`text-[1.3rem] text-[#B8860B] mx-2 font-Jose font-normal cursor-pointer `}
+          >
+            Liên Hệ
+          </Text>
+        </div>
+      </div>
+      <div className="ml-9 w-[9rem]">
+        <div className="flex justify-evenly ">
+          <Text
+            className={`text-[1.1rem] text-[#B8860B] self-center cursor-pointer`}
+          >
+            Đăng nhập
+          </Text>
+          <div className="border-r-[0.1rem] border-[#B8860B]"></div>
+          <div className={`cursor-pointer text-[#B8860B]`}>
+            <ShoppingCartOutlined className="text-[1.8rem] " />
           </div>
-        </Row>
-      </Col>
-    </Row>
+        </div>
+      </div>
+    </div>
   );
 }

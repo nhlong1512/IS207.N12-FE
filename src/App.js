@@ -1,6 +1,6 @@
 import "./App.css";
+import React, { useState, useEffect, useCallback } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import { Button } from "antd";
 import Header from "./components/Header";
 import Home from "./pages/Home";
