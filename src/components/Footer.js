@@ -15,8 +15,8 @@ import {
 
 const Footer = () => {
   return (
-    <div className="w-full h-screen bg-[#000]">
-      <Col span={22} offset={1} className="h-screen">
+    <div className="w-full h-[95vh] bg-[#000]">
+      <Col span={22} offset={1} className="h-[95vh]">
         <div className="flex items-center h-[35vh] border-b-[0.01px] border-[#1d1f23] border-solid border-opacity-95 ">
           <div className="w-1/2 ">
             <Title className="text-[#146d4d]">Morii Coffee</Title>
