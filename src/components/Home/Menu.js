@@ -1,12 +1,12 @@
 import { Col, Image, Row, Typography } from "antd";
 import Title from "antd/lib/typography/Title";
 import React from "react";
-import Item1 from "../images/menu/menu-1.png";
-import Item2 from "../images/menu/menu-2.png";
-import Item3 from "../images/menu/menu-3.png";
-import Item4 from "../images/menu/menu-4.png";
-import Item5 from "../images/menu/menu-5.png";
-import Item6 from "../images/menu/menu-6.png";
+import Item1 from "../../images/menu/menu-1.png";
+import Item2 from "../../images/menu/menu-2.png";
+import Item3 from "../../images/menu/menu-3.png";
+import Item4 from "../../images/menu/menu-4.png";
+import Item5 from "../../images/menu/menu-5.png";
+import Item6 from "../../images/menu/menu-6.png";
 export default function Menu() {
   const { Text } = Typography;
   return (

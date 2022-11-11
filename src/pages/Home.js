@@ -1,9 +1,9 @@
 import React from "react";
-import Blog from "../components/Blog";
-import Contact from "../components/Contact";
-import Feedback from "../components/Feedback";
-import Intro from "../components/Intro";
-import Menu from "../components/Menu";
+import Blog from "../components/Home/Blog";
+import Contact from "../components/Home/Contact";
+import Feedback from "../components/Home/Feedback";
+import Intro from "../components/Home/Intro";
+import Menu from "../components/Home/Menu";
 import "swiper/css/bundle";
 export default function Home() {
   return (

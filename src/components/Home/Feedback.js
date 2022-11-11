@@ -2,9 +2,9 @@ import React from "react";
 import { Card, Col, Row, Typography } from "antd";
 import { Swiper, SwiperSlide } from "swiper/react";
 import styled from "styled-components";
-import Ava1 from "../images/avatar/avatar1.jpg";
-import Ava2 from "../images/avatar/avatar2.jpg";
-import Ava3 from "../images/avatar/avatar3.jpg";
+import Ava1 from "../../images/avatar/avatar1.jpg";
+import Ava2 from "../../images/avatar/avatar2.jpg";
+import Ava3 from "../../images/avatar/avatar3.jpg";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/effect-fade";

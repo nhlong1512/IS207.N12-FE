@@ -1,12 +1,12 @@
 import React from "react";
 import { Card, Col, Row, Typography } from "antd";
 import styled from "styled-components";
-import Blog1 from "../images/blog/MoriiBlog1.jpeg";
-import Blog2 from "../images/blog/MoriiBlog2.jpeg";
-import Blog3 from "../images/blog/MoriiBlog3.jpg";
-import Blog4 from "../images/blog/MoriiBlog4.jpg";
-import Blog5 from "../images/blog/MoriiBlog5.jpg";
-import Blog6 from "../images/blog/MoriiBlog6.jpg";
+import Blog1 from "../../images/blog/MoriiBlog1.jpeg";
+import Blog2 from "../../images/blog/MoriiBlog2.jpeg";
+import Blog3 from "../../images/blog/MoriiBlog3.jpg";
+import Blog4 from "../../images/blog/MoriiBlog4.jpg";
+import Blog5 from "../../images/blog/MoriiBlog5.jpg";
+import Blog6 from "../../images/blog/MoriiBlog6.jpg";
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 
