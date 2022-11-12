@@ -20,6 +20,7 @@ module.exports = {
     },
     fontFamily: {
       Jose: ["Josefin Sans", "sans-serif"],
+      SignIn: ["Montserrat", "sans-serif"],
     },
   },
   corePlugins: {
