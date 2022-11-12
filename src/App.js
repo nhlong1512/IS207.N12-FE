@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Footer from "./components/Footer";
 import Login from "./components/Auth/Login";
 import { useLayoutEffect } from "react";
+import Register from "./components/Auth/Register";
 const excludeHeaderFooterPath = [
   "/signin",
   "/signup",
@@ -41,6 +42,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/signin" element={<Login />} />
+          <Route path="/signup" element={<Register />} />
         </Routes>
       </Wrapper>
       {getFooter()}
