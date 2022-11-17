@@ -79,7 +79,7 @@ export default function Header() {
       <div className="ml-9 w-[9rem]">
         <div className="flex justify-evenly ">
           <Text
-            className={`text-[1.1rem] ${txtNav} self-center cursor-pointer`}
+            className={`text-[1.1rem] ${txtNav}  self-center cursor-pointer`}
           >
             Đăng nhập
           </Text>

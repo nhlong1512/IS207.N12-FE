@@ -17,7 +17,7 @@ export default function Menu() {
         </Title>
       </div>
       <div className="w-full   bg-[#010103] flex justify-around">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center ml-6">
           <div className=" flex items-center justify-around cursor-pointer px-10 py-5 relative">
             <div className=" top z-1 absolute top-[1.8rem] left-0">
               <Image
@@ -26,7 +26,7 @@ export default function Menu() {
                 src={Item1}
               />
             </div>
-            <div className="border-[0.01px] h-[6.2rem] w-[32rem] border-solid border-[#32323D] pl-[5rem] py-6 pr-8 flex justify-between">
+            <div className="border-[0.01px] h-[6.2rem] w-[30rem] border-solid border-[#32323D] pl-[5rem] py-6 pr-8 flex justify-between">
               <Text className=" text-[#ffffff] text-[1.6rem] ">
                 Americano Rosted GRED
               </Text>
@@ -41,7 +41,7 @@ export default function Menu() {
                 src={Item2}
               />
             </div>
-            <div className="border-[0.01px] h-[6.2rem] w-[32rem] border-solid border-[#32323D] pl-[5rem] py-6 pr-8 flex justify-between">
+            <div className="border-[0.01px] h-[6.2rem] w-[30rem] border-solid border-[#32323D] pl-[5rem] py-6 pr-8 flex justify-between">
               <Text className=" text-[#ffffff] text-[1.6rem] ">
                 Americano Rosted GRED
               </Text>
@@ -56,7 +56,7 @@ export default function Menu() {
                 src={Item3}
               />
             </div>
-            <div className="border-[0.01px] h-[6.2rem] w-[32rem] border-solid border-[#32323D] pl-[5rem] py-6 pr-8 flex justify-between">
+            <div className="border-[0.01px] h-[6.2rem] w-[30rem] border-solid border-[#32323D] pl-[5rem] py-6 pr-8 flex justify-between">
               <Text className=" text-[#ffffff] text-[1.6rem] ">
                 Americano Rosted GRED
               </Text>
@@ -73,7 +73,7 @@ export default function Menu() {
                 src={Item4}
               />
             </div>
-            <div className="border-[0.01px] h-[6.2rem] w-[32rem] border-solid border-[#32323D] pl-[5rem] py-6 pr-8 flex justify-between">
+            <div className="border-[0.01px] h-[6.2rem] w-[30rem] border-solid border-[#32323D] pl-[5rem] py-6 pr-8 flex justify-between">
               <Text className=" text-[#ffffff] text-[1.6rem] ">
                 Americano Rosted GRED
               </Text>
@@ -88,7 +88,7 @@ export default function Menu() {
                 src={Item5}
               />
             </div>
-            <div className="border-[0.01px] h-[6.2rem] w-[32rem] border-solid border-[#32323D] pl-[5rem] py-6 pr-8 flex justify-between">
+            <div className="border-[0.01px] h-[6.2rem] w-[30rem] border-solid border-[#32323D] pl-[5rem] py-6 pr-8 flex justify-between">
               <Text className=" text-[#ffffff] text-[1.6rem] ">
                 Americano Rosted GRED
               </Text>
@@ -103,7 +103,7 @@ export default function Menu() {
                 src={Item6}
               />
             </div>
-            <div className="border-[0.01px] h-[6.2rem] w-[32rem] border-solid border-[#32323D] pl-[5rem] py-6 pr-8 flex justify-between">
+            <div className="border-[0.01px] h-[6.2rem] w-[30rem] border-solid border-[#32323D] pl-[5rem] py-6 pr-8 flex justify-between">
               <Text className=" text-[#ffffff] text-[1.6rem] ">
                 Americano Rosted GRED
               </Text>

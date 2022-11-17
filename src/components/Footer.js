@@ -20,7 +20,7 @@ const Footer = () => {
         <div className="flex items-center h-[35vh] border-b-[0.01px] border-[#1d1f23] border-solid border-opacity-95 ">
           <div className="w-1/2 ">
             <Title className="text-[#146d4d]">Morii Coffee</Title>
-            <Text className="w-[1rem] text-[#fff] opacity-80">
+            <Text className="w-2/3 text-[#fff] opacity-80">
               Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do
               Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua.
             </Text>

@@ -54,7 +54,7 @@ export default function Feedback() {
         }}
         loop={true}
         modules={[Autoplay, EffectFade, Navigation, Pagination]}
-        className="mySwiper w-full h-[50vh]  "
+        className="mySwiper w-full h-[55vh]  "
       >
         <SwiperSlide className="w-full bg-white ">
           <div className="z-10  flex-col  ">

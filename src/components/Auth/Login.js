@@ -1,12 +1,50 @@
-import { Button, Checkbox, Col, Input } from "antd";
+import { Button, Checkbox, Col, Input, Tag } from "antd";
 import Title from "antd/lib/typography/Title";
 import Text from "antd/lib/typography/Text";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logoGG from "../../images/gg.png";
 import logoFB from "../../images/fb.png";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../reducer/auth/authAction";
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLoading, message, error } = useSelector((state) => state.auth);
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    password: "",
+  });
+  const [showError, setShowError] = useState(false);
+
+  const handleFormChange = (e) => {
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(login(userInfo, navigate));
+    console.log(error);
+    if (error) {
+      setShowError(true);
+      setTimeout(() => {
+        setShowError(false);
+      }, 3000);
+    }
+  };
+  useEffect(() => {
+    if (error) {
+      setShowError(false);
+      setTimeout(() => {
+        setShowError(false);
+      }, 3000);
+    }
+  }, [error]);
+  // useEffect(() => {
+  //   if (localStorage.getItem("accessToken")) return navigate("/");
+  // }, [localStorage.getItem("accessToken")]);
+
   return (
     <div className="w-full h-screen flex bg-[#E5E5E5]  items-center font-SignIn ">
       <Col className="h-[90vh] bg-[#FFFFFF] rounded-md" span={10} offset={7}>
@@ -22,13 +60,23 @@ export default function Login() {
           <div className="flex-col mt-4">
             <Input
               size="medium"
+              name="email"
+              type="email"
+              onChange={(e) => handleFormChange(e)}
+              value={userInfo.email}
               placeholder="Email"
               className="rounded-md py-2 my-4 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-3  "
+              required
             />
             <Input
+              type="password"
               size="medium"
+              name="password"
+              onChange={(e) => handleFormChange(e)}
+              value={userInfo.password}
               placeholder="Mật Khẩu"
               className="rounded-md py-2 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-3 "
+              required
             />
 
             <div className="flex items-center w-full my-2">
@@ -41,7 +89,15 @@ export default function Login() {
               </span>
             </div>
             <div className="w-full">
-              <Button className="bg-[#E16246] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.7rem] font-bold">
+              {showError && (
+                <Tag className=" border-none bg-white " color="red">
+                  Thông tin đăng nhập không chính xác
+                </Tag>
+              )}
+              <Button
+                onClick={(e) => handleFormSubmit(e)}
+                className="bg-[#E16246] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.7rem] font-bold"
+              >
                 Đăng nhập
               </Button>
             </div>

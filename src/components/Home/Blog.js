@@ -32,7 +32,7 @@ export default function Blog() {
   `;
 
   return (
-    <div className="w-full h-[140vh]">
+    <div className="w-full h-[150vh]">
       <div className="flex-col py-8 ">
         <Title className="text-[#146d4d] w-[15rem] mb-0 mx-auto text-center">
           Morii Blog
