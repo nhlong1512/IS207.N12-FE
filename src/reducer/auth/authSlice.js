@@ -13,24 +13,25 @@ const authSlice = createSlice({
   reducers: {
     loginStart: (state, { payload }) => {
       state.isLoading = true;
+      state.error = true;
     },
     loginSuccess: (state, { payload }) => {
       state.isLoading = false;
       state.isAuthenticated = true;
       state.status = payload.status;
-      state.error = payload.error;
+      state.error = false;
       state.message = payload.message;
     },
     loginFailure: (state, { payload }) => {
       state.isLoading = false;
       state.status = payload.status;
-      state.error = payload.error;
+      state.error = false;
       state.message = payload.message;
     },
     logoutSuccess: (state, { payload }) => {
       state.isAuthenticated = false;
       state.status = payload.status;
-      state.error = payload.error;
+      state.error = true;
       state.message = payload.message;
     },
     setAuth: (state, { payload }) => {

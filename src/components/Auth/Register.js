@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Alert, Button, Checkbox, Col, Input, Tag } from "antd";
+import { Alert, Button, Checkbox, Col, Input, Spin, Tag } from "antd";
 import Title from "antd/lib/typography/Title";
 import Text from "antd/lib/typography/Text";
 import logoGG from "../../images/gg.png";
@@ -10,6 +10,7 @@ import { Link, redirect, useNavigate } from "react-router-dom";
 import { register } from "../../reducer/auth/authAction";
 
 export default function Register() {
+  const { isLoading } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [validateEmail, setValidateEmail] = useState(false);
@@ -149,6 +150,7 @@ export default function Register() {
                 Thông tin đăng ký không chính xác
               </Tag>
             )}
+            {isLoading && <Spin delay={1} />}
             <div className="w-full mt-1">
               <Button
                 className="bg-[#E16246] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.7rem] font-bold"

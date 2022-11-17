@@ -1,4 +1,4 @@
-import { Button, Checkbox, Col, Input, Tag } from "antd";
+import { Button, Checkbox, Col, Input, Tag, Spin } from "antd";
 import Title from "antd/lib/typography/Title";
 import Text from "antd/lib/typography/Text";
 import React, { useEffect, useState } from "react";
@@ -26,21 +26,27 @@ export default function Login() {
     e.preventDefault();
     dispatch(login(userInfo, navigate));
     console.log(error);
-    if (error) {
-      setShowError(true);
-      setTimeout(() => {
-        setShowError(false);
-      }, 3000);
-    }
+    // if (error) {
+    //   setShowError(true);
+    //   setTimeout(() => {
+    //     setShowError(false);
+    //   }, 2000);
+    // }
   };
   useEffect(() => {
-    if (error) {
-      setShowError(false);
+    console.log(isLoading);
+    if (isLoading && error) {
+      setTimeout(() => {
+        setShowError(true);
+      }, 1500);
       setTimeout(() => {
         setShowError(false);
       }, 3000);
+    } else if (isLoading && !error) {
+      setShowError(false);
     }
-  }, [error]);
+  }, [isLoading]);
+
   // useEffect(() => {
   //   if (localStorage.getItem("accessToken")) return navigate("/");
   // }, [localStorage.getItem("accessToken")]);
@@ -94,6 +100,7 @@ export default function Login() {
                   Thông tin đăng nhập không chính xác
                 </Tag>
               )}
+              {isLoading && <Spin delay={1} />}
               <Button
                 onClick={(e) => handleFormSubmit(e)}
                 className="bg-[#E16246] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.7rem] font-bold"
