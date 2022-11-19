@@ -10,7 +10,7 @@ const ProductDetail = () => {
         <Col span={12}>
           <img className="h-[50vh] w-full bg-contain" src={menu1} />
         </Col>
-        <Col span={12}>a</Col>
+        <Col span={12}></Col>
       </Row>
     </div>
   );
