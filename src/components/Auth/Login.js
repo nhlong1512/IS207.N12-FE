@@ -7,6 +7,7 @@ import logoGG from "../../images/gg.png";
 import logoFB from "../../images/fb.png";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../reducer/auth/authAction";
+import { signInWithFacebook, signInWithGoogle } from "../../firebase";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -88,7 +89,7 @@ export default function Login() {
             <div className="flex items-center w-full my-2">
               <input
                 type="checkbox"
-                className="accent-[#E16246] w-[0.7rem] h-[0.7rem] rounded-md cursor-pointer"
+                className="accent-[#146d4d] w-[0.7rem] h-[0.7rem] rounded-md cursor-pointer"
               />
               <span className="ml-2 font-semibold text-[0.7rem] text-center ">
                 Lưu mật khẩu
@@ -103,7 +104,7 @@ export default function Login() {
               {isLoading && <Spin delay={1} />}
               <Button
                 onClick={(e) => handleFormSubmit(e)}
-                className="bg-[#E16246] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.7rem] font-bold"
+                className="bg-[#146d4d] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.7rem] font-bold"
               >
                 Đăng nhập
               </Button>
@@ -112,18 +113,26 @@ export default function Login() {
             <div className="w-full my-3  text-center before:content-[''] before:absolute before:w-[45%] before:border-t-[0.1rem] before:left-0  before:top-1/2 relative before:border-solid before:border-[#CFCFCF] after:content-[''] after:absolute after:w-[45%] after:border-t-[0.1rem] after:right-0  after:top-1/2 relative after:border-solid after:border-[#CFCFCF]  ">
               <span className="w-[1rem] ">or</span>
             </div>
-            <Button className=" w-full rounded-md py-[1rem] flex justify-center items-center text-[#000000] text-[0.7rem] font-bold">
+            <Button
+              onClick={signInWithGoogle}
+              className=" w-full rounded-md py-[1rem] flex justify-center items-center text-[#000000] text-[0.7rem] font-bold"
+            >
               <img className="w-[1rem] h-[1rem] mr-2 " src={logoGG} /> Đăng nhập
               với Google
             </Button>
-            <Button className="bg-[#1877F2] w-full rounded-md py-[1rem] flex justify-center items-center text-[#ffffff] text-[0.7rem] font-bold mt-2">
+            <Button
+              onClick={signInWithFacebook}
+              className="bg-[#1877F2] w-full rounded-md py-[1rem] flex justify-center items-center text-[#ffffff] text-[0.7rem] font-bold mt-2"
+            >
               <img className="w-[1rem] h-[1rem] mr-2   " src={logoFB} /> Đăng
               nhập với Facebook
             </Button>
             <div className="flex w-full justify-between mt-4">
-              <span className="underline text-xs font-semibold text-[1rem] cursor-pointer ">
-                Tạo tài khoản
-              </span>
+              <Link to="/signup">
+                <span className="underline text-black text-xs font-semibold text-[1rem] cursor-pointer ">
+                  Tạo tài khoản
+                </span>
+              </Link>
               <span className="underline text-xs font-semibold text-[1rem] cursor-pointer ">
                 Quên mật khẩu
               </span>

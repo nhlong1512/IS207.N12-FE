@@ -90,9 +90,9 @@ export default function Register() {
       setIsEqualPassword(false);
     }
   }, [userInfo.password, userInfo.password_confirmation, userInfo.email]);
-  useEffect(() => {
-    if (localStorage.getItem("accessToken")) return navigate("/");
-  }, [localStorage.getItem("accessToken")]);
+  // useEffect(() => {
+  //   if (localStorage.getItem("accessToken")) return navigate("/");
+  // }, [localStorage.getItem("accessToken")]);
   return (
     <div className="w-full h-screen flex bg-[#E5E5E5]  items-center font-SignIn ">
       <Col className="h-[97vh] bg-[#FFFFFF] rounded-md" span={10} offset={7}>
@@ -153,7 +153,7 @@ export default function Register() {
             {isLoading && <Spin delay={1} />}
             <div className="w-full mt-1">
               <Button
-                className="bg-[#E16246] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.7rem] font-bold"
+                className="bg-[#146d4d] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.7rem] font-bold"
                 onClick={(e) => handleSubmit(e)}
               >
                 Đăng Ký
