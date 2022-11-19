@@ -30,7 +30,7 @@ const Intro = () => {
         className="mySwiper w-full h-screen relative"
       >
         <SwiperSlide className="w-full h-full bg-banner1 bg-cover after:content-[' '] after:absolute after:bg-black after:top-0 after:bottom-0 after:right-0 after:left-0 after:z-20 after:opacity-40 ">
-          <div className="z-10 ml-[10rem]  pt-[50vh] ">
+          <div className="z-30 ml-[10rem] absolute  pt-[50vh] ">
             <Text className="block text-[5.5rem] font-bold text-white">
               Lorem Ipsum
             </Text>
@@ -45,7 +45,7 @@ const Intro = () => {
           </div>
         </SwiperSlide>
         <SwiperSlide className="w-full h-full bg-banner2 bg-cover after:content-[' '] after:absolute after:bg-black after:top-0 after:bottom-0 after:right-0 after:left-0 after:z-20 after:opacity-40 ">
-          <div className="z-10 ml-[10rem] pt-[50vh] opacity-95">
+          <div className=" z-30 absolute ml-[10rem] pt-[50vh] opacity-95">
             <Text className="block text-[5.5rem] font-bold text-white">
               Lorem Ipsum
             </Text>
@@ -60,7 +60,7 @@ const Intro = () => {
           </div>
         </SwiperSlide>
         <SwiperSlide className="w-full h-full bg-banner3 bg-cover after:content-[' '] after:absolute after:bg-black after:top-0 after:bottom-0 after:right-0 after:left-0 after:z-20 after:opacity-40 ">
-          <div className="z-10 ml-[10rem] pt-[50vh] opacity-95">
+          <div className="z-30 ml-[10rem] absolute pt-[50vh] opacity-95">
             <Text className="block text-[5.5rem] font-bold text-white">
               Lorem Ipsum
             </Text>
@@ -75,7 +75,7 @@ const Intro = () => {
           </div>
         </SwiperSlide>
         <SwiperSlide className="w-full h-full bg-banner4 bg-cover after:content-[' '] after:absolute after:bg-black after:top-0 after:bottom-0 after:right-0 after:left-0 after:z-20 after:opacity-40 ">
-          <div className="z-10 ml-[10rem] pt-[50vh] opacity-95">
+          <div className="z-30 ml-[10rem] absolute pt-[50vh] opacity-95">
             <Text className="block text-[5.5rem] font-bold text-white">
               Lorem Ipsum
             </Text>
@@ -90,7 +90,7 @@ const Intro = () => {
           </div>
         </SwiperSlide>
         <SwiperSlide className="w-full h-full bg-banner5 bg-cover after:content-[' '] after:absolute after:bg-black after:top-0 after:bottom-0 after:right-0 after:left-0 after:z-20 after:opacity-40 ">
-          <div className="z-10 ml-[10rem] pt-[50vh] opacity-95">
+          <div className="z-30 ml-[10rem] absolute pt-[50vh] opacity-95">
             <Text className="block text-[5.5rem] font-bold text-white">
               Lorem Ipsum
             </Text>
