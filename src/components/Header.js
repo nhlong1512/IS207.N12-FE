@@ -5,9 +5,12 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 export default function Header() {
   const { Text } = Typography;
   const [y, setY] = useState(0);
-  const [bgNav, setBgNav] = useState("");
-  const [txtNav, setTxtNav] = useState("text-[#fff]");
-  const [borderNav, setBorderNav] = useState("border-white");
+  // const [bgNav, setBgNav] = useState("");
+  // const [txtNav, setTxtNav] = useState("text-[#fff]");
+  // const [borderNav, setBorderNav] = useState("border-white");
+  const [bgNav, setBgNav] = useState("bg-[#fff]");
+  const [txtNav, setTxtNav] = useState("text-[#000]");
+  const [borderNav, setBorderNav] = useState("border-[#000]");
   const handleNavigation = useCallback(
     (e) => {
       const window = e.currentTarget;
@@ -18,9 +21,12 @@ export default function Header() {
         setTxtNav("text-[#000]");
         setBorderNav("border-[#000]");
       } else {
-        setBgNav("");
-        setTxtNav("text-[#fff]");
-        setBorderNav("border-white");
+        // setBgNav("");
+        // setTxtNav("text-[#fff]");
+        // setBorderNav("border-white");
+        setBgNav("bg-[#fff]");
+        setTxtNav("text-[#000]");
+        setBorderNav("border-[#000]");
       }
       setY(window.scrollTop);
     },

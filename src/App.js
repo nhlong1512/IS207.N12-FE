@@ -22,7 +22,7 @@ const excludeHeaderFooterPath = [
   "/code-validation",
   "/reset-password",
   "/order",
-  "/product-detail",
+  // "/product-detail",
 ];
 
 const getHeader = () => {
