@@ -58,7 +58,7 @@ const ProductDetail = () => {
     }
   };
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto max-w-[1024px]">
       <div className="mt-20 mb-6">
         <Breadcrumb>
           <Breadcrumb.Item>Menu</Breadcrumb.Item>

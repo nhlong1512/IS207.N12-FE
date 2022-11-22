@@ -26,7 +26,7 @@ const ListOrder = () => {
     }
   `;
   return (
-    <div className="container flex h-[160vh] mx-auto mt-10 ">
+    <div className="container flex h-[160vh] mx-auto mt-10 max-w-[1024px]">
       <Col className="flex-col" span={4}>
         <Title>Menu</Title>
         <p className="font-bold">Featured</p>

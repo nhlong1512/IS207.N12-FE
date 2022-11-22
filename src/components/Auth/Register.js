@@ -170,7 +170,7 @@ export default function Register() {
               <img className="w-[1rem] h-[1rem] mr-2   " src={logoFB} />
               Đăng nhập với Facebook
             </Button>
-            <div className="flex w-full justify-center mt-4">
+            <div className="flex w-full justify-center items-center mt-8">
               <span className=" text-xs mr-1 font-semibold text-[1rem] cursor-pointer ">
                 Bạn đã có tài khoản?
               </span>
