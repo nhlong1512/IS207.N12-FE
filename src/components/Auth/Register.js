@@ -7,10 +7,33 @@ import logoFB from "../../images/fb.png";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, redirect, useNavigate } from "react-router-dom";
-import { register } from "../../reducer/auth/authAction";
+import { login, register } from "../../reducer/auth/authAction";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  FacebookAuthProvider,
+} from "firebase/auth";
+import { initializeApp } from "firebase/app";
 
 export default function Register() {
   const { isLoading } = useSelector((state) => state.auth);
+  const firebaseConfig = {
+    apiKey: "AIzaSyBBysSsI4c3kJBlEuBeuNXME1Q25z5cSVI",
+    authDomain: "moriicoffee.firebaseapp.com",
+    projectId: "moriicoffee",
+    storageBucket: "moriicoffee.appspot.com",
+    messagingSenderId: "281244301873",
+    appId: "1:281244301873:web:27334f9f426be81c8f3310",
+    measurementId: "G-N3YF3E150R",
+  };
+
+  // Initialize Firebase
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const ggprovider = new GoogleAuthProvider();
+  const fbprovider = new FacebookAuthProvider();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [validateEmail, setValidateEmail] = useState(false);
@@ -90,6 +113,71 @@ export default function Register() {
       setIsEqualPassword(false);
     }
   }, [userInfo.password, userInfo.password_confirmation, userInfo.email]);
+
+  const signInWithGoogle = (e) => {
+    signInWithPopup(auth, ggprovider)
+      .then((result) => {
+        e.preventDefault();
+        console.log(result);
+        dispatch(
+          register(
+            {
+              hoten: result.user.displayName,
+              email: result.user.email,
+              role: "khachhang",
+              password: result.user.uid,
+              password_confirmation: result.user.uid,
+            },
+            navigate
+          )
+        );
+
+        dispatch(
+          login(
+            {
+              email: result.user.email,
+              password: result.user.uid,
+            },
+            navigate
+          )
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const signInWithFacebook = (e) => {
+    signInWithPopup(auth, fbprovider)
+      .then((result) => {
+        e.preventDefault();
+        console.log(result);
+        dispatch(
+          register(
+            {
+              hoten: result.user.displayName,
+              email: "loginwithfb@gmail.com",
+              role: "khachhang",
+              password: result.user.uid,
+              password_confirmation: result.user.uid,
+            },
+            navigate
+          )
+        );
+
+        dispatch(
+          login(
+            {
+              email: "loginwithfb@gmail.com",
+              password: result.user.uid,
+            },
+            navigate
+          )
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   // useEffect(() => {
   //   if (localStorage.getItem("accessToken")) return navigate("/");
   // }, [localStorage.getItem("accessToken")]);
@@ -162,11 +250,17 @@ export default function Register() {
             <div className="w-full my-4  text-center before:content-[''] before:absolute before:w-[45%] before:border-t-[0.1rem] before:left-0  before:top-1/2 relative before:border-solid before:border-[#CFCFCF] after:content-[''] after:absolute after:w-[45%] after:border-t-[0.1rem] after:right-0  after:top-1/2 relative after:border-solid after:border-[#CFCFCF]  ">
               <span className="w-[1rem] ">or</span>
             </div>
-            <Button className=" w-full rounded-md py-[1rem] flex justify-center items-center text-[#000000] text-[0.7rem] font-bold">
+            <Button
+              onClick={signInWithGoogle}
+              className=" w-full rounded-md py-[1rem] flex justify-center items-center text-[#000000] text-[0.7rem] font-bold"
+            >
               <img className="w-[1rem] h-[1rem] mr-2 " src={logoGG} /> Đăng nhập
               với Google
             </Button>
-            <Button className="bg-[#1877F2] w-full rounded-md py-[1rem] flex justify-center items-center text-[#ffffff] text-[0.7rem] font-bold mt-2">
+            <Button
+              onClick={signInWithFacebook}
+              className="bg-[#1877F2] w-full rounded-md py-[1rem] flex justify-center items-center text-[#ffffff] text-[0.7rem] font-bold mt-2"
+            >
               <img className="w-[1rem] h-[1rem] mr-2   " src={logoFB} />
               Đăng nhập với Facebook
             </Button>

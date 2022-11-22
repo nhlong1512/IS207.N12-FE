@@ -2,9 +2,10 @@ import Title from "antd/lib/typography/Title";
 import Text from "antd/lib/typography/Text";
 import React from "react";
 import styled from "styled-components";
-import { Card, Col, Row, Typography } from "antd";
+import { Breadcrumb, Card, Col, Row, Typography } from "antd";
 import Meta from "antd/lib/card/Meta";
 import order1 from "../images/menu/order1.png";
+import { Link } from "react-router-dom";
 const ListOrder = () => {
   const Img = styled.img`
     -webkit-transform: scale(1);
@@ -26,179 +27,202 @@ const ListOrder = () => {
     }
   `;
   return (
-    <div className="container flex h-[160vh] mx-auto mt-10 max-w-[1024px]">
-      <Col className="flex-col" span={4}>
-        <Title>Menu</Title>
-        <p className="font-bold">Featured</p>
-        <p>Đồ uống</p>
-        <p>Đồ ăn</p>
-      </Col>
-      <Col className="overflow-hidden" span={20}>
-        <Title>Featured</Title>
-        <Row
-          gutter={35}
-          className="border-t-[1px] pt-1 border-solid border-[#ABABAB] "
-        >
-          <Col span={8}>
-            <Card
-              size="large"
-              hoverable
-              className="  mx-0 my-5 rounded-lg"
-              bordered={true}
-              cover={
-                <div className="h-[15rem] overflow-hidden ">
-                  <Img
-                    className=" hover:overflow-hidden "
-                    alt="example"
-                    src={order1}
+    <div className="container  h-[160vh] mx-auto mt-20 max-w-[1024px]">
+      <div className="mb-10 mt-4">
+        <Breadcrumb>
+          <Breadcrumb.Item>Menu</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <a href="/order">Đồ uống</a>
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+      <Row>
+        <Col className="flex-col" span={4}>
+          <Title>Menu</Title>
+          <p className="font-bold">Featured</p>
+          <p className="cursor-pointer">Đồ uống</p>
+          <p className="cursor-pointer">Đồ ăn</p>
+        </Col>
+        <Col className="overflow-hidden" span={20}>
+          <Title>Featured</Title>
+          <Row
+            gutter={35}
+            className="border-t-[1px] pt-1 border-solid border-[#ABABAB] "
+          >
+            <Col span={8}>
+              <Link to="/product-detail">
+                <Card
+                  size="large"
+                  hoverable
+                  className="  mx-0 my-5 rounded-lg"
+                  bordered={true}
+                  cover={
+                    <div className="h-[15rem] overflow-hidden ">
+                      <Img
+                        className=" hover:overflow-hidden "
+                        alt="example"
+                        src={order1}
+                      />
+                    </div>
+                  }
+                >
+                  <Meta
+                    title={
+                      <p className="whitespace-normal mb-0">
+                        Sữa tươi chân châu đường đen
+                      </p>
+                    }
+                    description="30.000đ"
                   />
-                </div>
-              }
-            >
-              <Meta
-                title={
-                  <p className="whitespace-normal mb-0">
-                    Sữa tươi chân châu đường đen
-                  </p>
-                }
-                description="30.000đ"
-              />
-            </Card>
-          </Col>
-          <Col span={8}>
-            <Card
-              size="large"
-              hoverable
-              className="  mx-0 my-5 rounded-lg"
-              bordered={true}
-              cover={
-                <div className="h-[15rem] overflow-hidden ">
-                  <Img
-                    className=" hover:overflow-hidden "
-                    alt="example"
-                    src={order1}
+                </Card>
+              </Link>
+            </Col>
+            <Col span={8}>
+              <Link to="/product-detail">
+                <Card
+                  size="large"
+                  hoverable
+                  className="  mx-0 my-5 rounded-lg"
+                  bordered={true}
+                  cover={
+                    <div className="h-[15rem] overflow-hidden ">
+                      <Img
+                        className=" hover:overflow-hidden "
+                        alt="example"
+                        src={order1}
+                      />
+                    </div>
+                  }
+                >
+                  <Meta
+                    title={
+                      <p className="whitespace-normal mb-0">
+                        Sữa tươi chân châu đường đen
+                      </p>
+                    }
+                    description="30.000đ"
                   />
-                </div>
-              }
-            >
-              <Meta
-                title={
-                  <p className="whitespace-normal mb-0">
-                    Sữa tươi chân châu đường đen
-                  </p>
-                }
-                description="30.000đ"
-              />
-            </Card>
-          </Col>
-          <Col span={8}>
-            <Card
-              size="large"
-              hoverable
-              className="  mx-0 my-5 rounded-lg"
-              bordered={true}
-              cover={
-                <div className="h-[15rem] overflow-hidden ">
-                  <Img
-                    className=" hover:overflow-hidden "
-                    alt="example"
-                    src={order1}
+                </Card>
+              </Link>
+            </Col>
+            <Col span={8}>
+              <Link to="/product-detail">
+                <Card
+                  size="large"
+                  hoverable
+                  className="  mx-0 my-5 rounded-lg"
+                  bordered={true}
+                  cover={
+                    <div className="h-[15rem] overflow-hidden ">
+                      <Img
+                        className=" hover:overflow-hidden "
+                        alt="example"
+                        src={order1}
+                      />
+                    </div>
+                  }
+                >
+                  <Meta
+                    title={
+                      <p className="whitespace-normal mb-0">
+                        Sữa tươi chân châu đường đen
+                      </p>
+                    }
+                    description="30.000đ"
                   />
-                </div>
-              }
-            >
-              <Meta
-                title={
-                  <p className="whitespace-normal mb-0">
-                    Sữa tươi chân châu đường đen
-                  </p>
-                }
-                description="30.000đ"
-              />
-            </Card>
-          </Col>
-        </Row>
-        <Row gutter={35} className=" ">
-          <Col span={8}>
-            <Card
-              size="large"
-              hoverable
-              className="  mx-0 my-5 rounded-lg"
-              bordered={true}
-              cover={
-                <div className="h-[15rem] overflow-hidden ">
-                  <Img
-                    className=" hover:overflow-hidden "
-                    alt="example"
-                    src={order1}
+                </Card>
+              </Link>
+            </Col>
+          </Row>
+
+          <Row gutter={35} className=" pt-1 ">
+            <Col span={8}>
+              <Link to="/product-detail">
+                <Card
+                  size="large"
+                  hoverable
+                  className="  mx-0 my-5 rounded-lg"
+                  bordered={true}
+                  cover={
+                    <div className="h-[15rem] overflow-hidden ">
+                      <Img
+                        className=" hover:overflow-hidden "
+                        alt="example"
+                        src={order1}
+                      />
+                    </div>
+                  }
+                >
+                  <Meta
+                    title={
+                      <p className="whitespace-normal mb-0">
+                        Sữa tươi chân châu đường đen
+                      </p>
+                    }
+                    description="30.000đ"
                   />
-                </div>
-              }
-            >
-              <Meta
-                title={
-                  <p className="whitespace-normal mb-0">
-                    Sữa tươi chân châu đường đen
-                  </p>
-                }
-                description="30.000đ"
-              />
-            </Card>
-          </Col>
-          <Col span={8}>
-            <Card
-              size="large"
-              hoverable
-              className="  mx-0 my-5 rounded-lg"
-              bordered={true}
-              cover={
-                <div className="h-[15rem] overflow-hidden ">
-                  <Img
-                    className=" hover:overflow-hidden "
-                    alt="example"
-                    src={order1}
+                </Card>
+              </Link>
+            </Col>
+            <Col span={8}>
+              <Link to="/product-detail">
+                <Card
+                  size="large"
+                  hoverable
+                  className="  mx-0 my-5 rounded-lg"
+                  bordered={true}
+                  cover={
+                    <div className="h-[15rem] overflow-hidden ">
+                      <Img
+                        className=" hover:overflow-hidden "
+                        alt="example"
+                        src={order1}
+                      />
+                    </div>
+                  }
+                >
+                  <Meta
+                    title={
+                      <p className="whitespace-normal mb-0">
+                        Sữa tươi chân châu đường đen
+                      </p>
+                    }
+                    description="30.000đ"
                   />
-                </div>
-              }
-            >
-              <Meta
-                title={
-                  <p className="whitespace-normal mb-0">
-                    Sữa tươi chân châu đường đen
-                  </p>
-                }
-                description="30.000đ"
-              />
-            </Card>
-          </Col>
-          <Col span={8}>
-            <Card
-              size="large"
-              hoverable
-              className="  mx-0 my-5 rounded-lg"
-              bordered={true}
-              cover={
-                <div className="h-[15rem] overflow-hidden ">
-                  <Img
-                    className=" hover:overflow-hidden "
-                    alt="example"
-                    src={order1}
+                </Card>
+              </Link>
+            </Col>
+            <Col span={8}>
+              <Link to="/product-detail">
+                <Card
+                  size="large"
+                  hoverable
+                  className="  mx-0 my-5 rounded-lg"
+                  bordered={true}
+                  cover={
+                    <div className="h-[15rem] overflow-hidden ">
+                      <Img
+                        className=" hover:overflow-hidden "
+                        alt="example"
+                        src={order1}
+                      />
+                    </div>
+                  }
+                >
+                  <Meta
+                    title={
+                      <p className="whitespace-normal mb-0">
+                        Sữa tươi chân châu đường đen
+                      </p>
+                    }
+                    description="30.000đ"
                   />
-                </div>
-              }
-            >
-              <Meta
-                title={
-                  <p className="whitespace-normal mb-0">
-                    Sữa tươi chân châu đường đen
-                  </p>
-                }
-                description="30.000đ"
-              />
-            </Card>
-          </Col>
-        </Row>
-      </Col>
+                </Card>
+              </Link>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
     </div>
   );
 };

@@ -16,11 +16,7 @@ const userSlice = createSlice({
     },
     getUserSuccess: (state, { payload }) => {
       state.isLoading = false;
-      state.user = {
-        email: payload.email,
-        role: payload.role,
-        _id: payload._id,
-      };
+      state.user = payload.user;
       state.status = payload.status;
     },
     getUserFail: (state, { payload }) => {

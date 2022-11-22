@@ -11,9 +11,9 @@ export const getUserProfile = () => async (dispatch) => {
   dispatch(getUserPending());
   try {
     const response = await fetchUser();
-    console.log("test",response);
+    console.log("test", response);
     if (response.status === true) {
-      dispatch(getUserSuccess(response.user));
+      dispatch(getUserSuccess(response));
       dispatch(setAuth());
     }
 
@@ -26,3 +26,10 @@ export const getUserProfile = () => async (dispatch) => {
 export const deleteUserProfile = () => (dispatch) => {
   dispatch(deleteUserSuccess());
 };
+
+// export const getProfileGoogle = () => (dispatch) => {
+//   dispatch(getUserPending());
+//   try {
+
+//   }
+// };

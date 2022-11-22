@@ -6,10 +6,32 @@ import { Link, useNavigate } from "react-router-dom";
 import logoGG from "../../images/gg.png";
 import logoFB from "../../images/fb.png";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../reducer/auth/authAction";
-import { signInWithFacebook, signInWithGoogle } from "../../firebase";
+import { login, register } from "../../reducer/auth/authAction";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  FacebookAuthProvider,
+} from "firebase/auth";
+import { initializeApp } from "firebase/app";
 
 export default function Login() {
+  const firebaseConfig = {
+    apiKey: "AIzaSyBBysSsI4c3kJBlEuBeuNXME1Q25z5cSVI",
+    authDomain: "moriicoffee.firebaseapp.com",
+    projectId: "moriicoffee",
+    storageBucket: "moriicoffee.appspot.com",
+    messagingSenderId: "281244301873",
+    appId: "1:281244301873:web:27334f9f426be81c8f3310",
+    measurementId: "G-N3YF3E150R",
+  };
+
+  // Initialize Firebase
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const ggprovider = new GoogleAuthProvider();
+  const fbprovider = new FacebookAuthProvider();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoading, message, error } = useSelector((state) => state.auth);
@@ -47,6 +69,71 @@ export default function Login() {
       setShowError(false);
     }
   }, [isLoading]);
+
+  const signInWithGoogle = (e) => {
+    signInWithPopup(auth, ggprovider)
+      .then((result) => {
+        e.preventDefault();
+        console.log(result);
+        dispatch(
+          register(
+            {
+              hoten: result.user.displayName,
+              email: result.user.email,
+              role: "khachhang",
+              password: result.user.uid,
+              password_confirmation: result.user.uid,
+            },
+            navigate
+          )
+        );
+
+        dispatch(
+          login(
+            {
+              email: result.user.email,
+              password: result.user.uid,
+            },
+            navigate
+          )
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const signInWithFacebook = (e) => {
+    signInWithPopup(auth, fbprovider)
+      .then((result) => {
+        e.preventDefault();
+        console.log(result);
+        dispatch(
+          register(
+            {
+              hoten: result.user.displayName,
+              email: "loginwithfb@gmail.com",
+              role: "khachhang",
+              password: result.user.uid,
+              password_confirmation: result.user.uid,
+            },
+            navigate
+          )
+        );
+
+        dispatch(
+          login(
+            {
+              email: "loginwithfb@gmail.com",
+              password: result.user.uid,
+            },
+            navigate
+          )
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   // useEffect(() => {
   //   if (localStorage.getItem("accessToken")) return navigate("/");
