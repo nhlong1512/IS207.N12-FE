@@ -13,6 +13,7 @@ import CodeValidation from "./components/Auth/CodeValidation";
 import ResetPassword from "./components/Auth/ResetPassword";
 import ListOrder from "./pages/ListOrder";
 import ProductDetail from "./pages/ProductDetail";
+import Cart from "./pages/Cart";
 const excludeHeaderFooterPath = [
   "/signin",
   "/signup",
@@ -23,6 +24,7 @@ const excludeHeaderFooterPath = [
   "/reset-password",
   // "/order",
   // "/product-detail",
+  // "/cart",
 ];
 
 const getHeader = () => {
@@ -58,6 +60,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/order" element={<ListOrder />} />
           <Route path="/product-detail" element={<ProductDetail />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </Wrapper>
       {getFooter()}

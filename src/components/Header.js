@@ -242,9 +242,11 @@ export default function Header() {
             </Button>
           </Link>
           <div className={`border-r-[0.1rem] border-solid ${borderNav} `}></div>
-          <div className={`cursor-pointer ${txtNav} ml-4`}>
-            <ShoppingCartOutlined className="text-[1.8rem] " />
-          </div>
+          <Link to="/cart">
+            <div className={`cursor-pointer ${txtNav} ml-4`}>
+              <ShoppingCartOutlined className="text-[1.8rem] " />
+            </div>
+          </Link>
         </div>
       </div>
     </div>
