@@ -7,6 +7,7 @@ import { Card, Col, Row, Typography, Breadcrumb } from "antd";
 import Title from "antd/lib/typography/Title";
 import Text from "antd/lib/typography/Text";
 import styled from "styled-components";
+import { useEffect } from "react";
 const { Meta } = Card;
 const Img = styled.img`
   -webkit-transform: scale(1);
@@ -37,12 +38,13 @@ const ProductDetail = () => {
   const [sizeVuaActive, setSizeVuaActive] = useState(true);
   const [sizeLonActive, setSizeLonActive] = useState(false);
   const [listTopping, setListTopping] = useState([]);
+  const [total, setTotal] = useState(0);
   console.log(listTopping);
   const handleChangeSize = (e) => {
-    if (e.target.value === "vua") {
+    if (e.target.id === "sizeVua") {
       setSizeVuaActive(true);
       setSizeLonActive(false);
-    } else if (e.target.value === "lon") {
+    } else if (e.target.id === "sizeLon") {
       setSizeVuaActive(false);
       setSizeLonActive(true);
     }
@@ -50,13 +52,25 @@ const ProductDetail = () => {
 
   const handleClickTopping = (e) => {
     if (e.target.checked) {
-      setListTopping([...listTopping, e.target.value]);
+      setListTopping([
+        ...listTopping,
+        { name: e.target.name, price: e.target.value },
+      ]);
       console.log(listTopping);
     } else {
-      setListTopping(listTopping.filter((item) => item !== e.target.value));
+      setListTopping(listTopping.filter((item) => item.name !== e.target.name));
       console.log(listTopping);
     }
   };
+
+  useEffect(() => {
+    let total = 30000;
+    listTopping.forEach((item) => {
+      total += parseInt(item.price);
+    });
+    if (sizeLonActive) total += 5000;
+    setTotal(total);
+  }, [listTopping, sizeLonActive, sizeVuaActive]);
   return (
     <div className="container mx-auto max-w-[1024px]">
       <div className="mt-20 mb-6">
@@ -77,7 +91,7 @@ const ProductDetail = () => {
           </Col>
           <Col span={12}>
             <Title level={2}>Capuchino cà phê trứng</Title>
-            <Text className="text-[1.8rem] text-[#146d4d]">49.000 đ</Text>
+            <Text className="text-[1.8rem] text-[#146d4d]">{total}</Text>
             <Text className="text-[1.2rem]  block">Chọn size (bắt buộc)</Text>
             <div className="flex mt-2">
               <div className="relative h-[2.4rem] w-[7rem] flex items-center border-[0.01rem] rounded-[0.3rem] border-solid  ">
@@ -87,7 +101,7 @@ const ProductDetail = () => {
                   id="sizeVua"
                   type="radio"
                   name="sizeTraSua"
-                  value="vua"
+                  value="0"
                 />
                 <label
                   for="sizeVua"
@@ -111,7 +125,7 @@ const ProductDetail = () => {
                   id="sizeLon"
                   type="radio"
                   name="sizeTraSua"
-                  value="lon"
+                  value="5000"
                 />
                 <label
                   for="sizeLon"
@@ -137,8 +151,8 @@ const ProductDetail = () => {
                   className="hidden  "
                   id="trongtin"
                   type="checkbox"
-                  name="Topping"
-                  value="trongtin"
+                  name="Pudding"
+                  value="10000"
                 />
                 <label
                   for="trongtin"
@@ -147,7 +161,7 @@ const ProductDetail = () => {
                   <p
                     className={`text-[0.9rem] mx-auto text-center my-auto py-2  px-3 border-[0.01rem] rounded-[0.3rem] border-solid  `}
                   >
-                    Pudding Socola Machiato cà phê sữa + 5000đ
+                    Pudding Socola Machiato cà phê sữa + 10000đ
                   </p>
                 </label>
               </div>
@@ -157,8 +171,8 @@ const ProductDetail = () => {
                   className="hidden  "
                   id="tranchauden"
                   type="checkbox"
-                  name="Topping"
-                  value="tranchauden"
+                  name="tranchauden"
+                  value="5000"
                 />
                 <label
                   for="tranchauden"
@@ -177,8 +191,8 @@ const ProductDetail = () => {
                   className="hidden  "
                   id="tranchautrang"
                   type="checkbox"
-                  name="Topping"
-                  value="tranchautrang"
+                  name="tranchautrang"
+                  value="6000"
                 />
                 <label
                   for="tranchautrang"
@@ -188,7 +202,7 @@ const ProductDetail = () => {
                     className={`text-[0.9rem] mx-auto text-center my-auto py-2  px-3 border-[0.01rem] rounded-[0.3rem] border-solid  
                     `}
                   >
-                    Trân châu trắng + 5000đ
+                    Trân châu trắng + 6000đ
                   </p>
                 </label>
               </div>
