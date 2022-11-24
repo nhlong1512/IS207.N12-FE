@@ -8,6 +8,7 @@ import Title from "antd/lib/typography/Title";
 import Text from "antd/lib/typography/Text";
 import styled from "styled-components";
 import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 const { Meta } = Card;
 const Img = styled.img`
   -webkit-transform: scale(1);
@@ -35,11 +36,22 @@ const Input_checkbox = styled.input`
   }
 `;
 const ProductDetail = () => {
+  const navigate = useLocation();
   const [sizeVuaActive, setSizeVuaActive] = useState(true);
   const [sizeLonActive, setSizeLonActive] = useState(false);
   const [listTopping, setListTopping] = useState([]);
+  const dataProduct = navigate.state.infoProduct;
+  const id = dataProduct.id;
   const [total, setTotal] = useState(0);
-  console.log(listTopping);
+  const [itemAdded, setItemAdded] = useState({
+    id: id,
+    name: dataProduct.TenSP,
+    price: dataProduct.Gia,
+    size: "Vua",
+    topping: [],
+    total: dataProduct.Gia,
+  });
+  console.log(dataProduct);
   const handleChangeSize = (e) => {
     if (e.target.id === "sizeVua") {
       setSizeVuaActive(true);
@@ -63,8 +75,26 @@ const ProductDetail = () => {
     }
   };
 
+  const handleAddToCart = () => {
+    var listItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    if (dataProduct) {
+      var item = {
+        id: id,
+        name: dataProduct.TenSP,
+        price: dataProduct.Gia,
+        size: sizeVuaActive ? "Vua" : "Lon",
+        topping: listTopping,
+        total: total,
+      };
+      listItems.push(item);
+      localStorage.setItem("cartItems", JSON.stringify(listItems));
+      setItemAdded(item);
+      console.log(item);
+    }
+  };
+
   useEffect(() => {
-    let total = 30000;
+    let total = dataProduct.Gia;
     listTopping.forEach((item) => {
       total += parseInt(item.price);
     });
@@ -80,7 +110,7 @@ const ProductDetail = () => {
             <a href="/order">Đồ uống</a>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
-            <a href="">Capuchino cà phê trứng</a>
+            <a href="">{dataProduct.TenSP}</a>
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>
@@ -90,8 +120,8 @@ const ProductDetail = () => {
             <img className="h-[80vh] w-full bg-contain" src={menu1} />
           </Col>
           <Col span={12}>
-            <Title level={2}>Capuchino cà phê trứng</Title>
-            <Text className="text-[1.8rem] text-[#146d4d]">{total}</Text>
+            <Title level={2}>{dataProduct.TenSP}</Title>
+            <Text className="text-[1.8rem] text-[#146d4d]">{total}đ</Text>
             <Text className="text-[1.2rem]  block">Chọn size (bắt buộc)</Text>
             <div className="flex mt-2">
               <div className="relative h-[2.4rem] w-[7rem] flex items-center border-[0.01rem] rounded-[0.3rem] border-solid  ">
@@ -206,7 +236,10 @@ const ProductDetail = () => {
                   </p>
                 </label>
               </div>
-              <Button className="bg-[#146d4d] w-full rounded-md py-[1.3rem] flex justify-center items-center text-[#fff] text-[0.7rem] mt-7 font-bold">
+              <Button
+                onClick={(id) => handleAddToCart(id)}
+                className="bg-[#146d4d] w-full rounded-md py-[1.3rem] flex justify-center items-center text-[#fff] text-[0.7rem] mt-7 font-bold"
+              >
                 Thêm vào giỏ hàng
               </Button>
             </div>

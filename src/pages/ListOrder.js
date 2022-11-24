@@ -1,31 +1,56 @@
 import Title from "antd/lib/typography/Title";
 import Text from "antd/lib/typography/Text";
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Breadcrumb, Card, Col, Row, Typography } from "antd";
 import Meta from "antd/lib/card/Meta";
 import order1 from "../images/menu/order1.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts } from "../api/bookApi";
+import { fetchProduct } from "../reducer/product/productAction";
+import axios from "axios";
+const Img = styled.img`
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+  -webkit-transition: all 0.3s linear;
+  -moz-transition: all 0.3s linear;
+  -ms-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  &:hover {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform-y: scale(1.2);
+    overflow-y: hidden;
+  }
+`;
 const ListOrder = () => {
-  const Img = styled.img`
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -o-transform: scale(1);
-    transform: scale(1);
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s linear;
-    -ms-transition: all 0.3s linear;
-    -o-transition: all 0.3s linear;
-    transition: all 0.3s linear;
-    &:hover {
-      -webkit-transform: scale(1.2);
-      -moz-transform: scale(1.2);
-      -ms-transform: scale(1.2);
-      -o-transform: scale(1.2);
-      transform-y: scale(1.2);
-      overflow-y: hidden;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { products } = useSelector((state) => state.product);
+  useEffect(() => {
+    dispatch(fetchProduct());
+    console.log(products);
+  }, [dispatch]);
+
+  const handleClickProduct = async (e) => {
+    console.log(e.target.id);
+    const idProduct = e.target.id;
+    const baseUrl = "http://localhost:8000/api/sanpham";
+    const res = await axios.get(`${baseUrl}/${idProduct}`);
+    console.log(res.data.sanpham);
+    if (res.data.status) {
+      navigate(`/sanpham/${idProduct}`, {
+        state: { infoProduct: res.data.sanpham },
+      });
     }
-  `;
+  };
+
   return (
     <div className="container  h-[160vh] mx-auto mt-20 max-w-[1024px]">
       <div className="mb-10 mt-4">
@@ -49,16 +74,23 @@ const ListOrder = () => {
             gutter={35}
             className="border-t-[1px] pt-1 border-solid border-[#ABABAB] "
           >
-            <Col span={8}>
-              <Link to="/product-detail">
+            {products.map((product) => (
+              <Col
+                key={product.id}
+                id={product.id}
+                onClick={(e) => handleClickProduct(e)}
+                span={8}
+              >
                 <Card
+                  id={product.id}
                   size="large"
                   hoverable
-                  className="  mx-0 my-5 rounded-lg"
+                  className="  mx-0 my-5 rounded-lg h-[23rem]"
                   bordered={true}
                   cover={
                     <div className="h-[15rem] overflow-hidden ">
                       <Img
+                        id={product.id}
                         className=" hover:overflow-hidden "
                         alt="example"
                         src={order1}
@@ -67,159 +99,15 @@ const ListOrder = () => {
                   }
                 >
                   <Meta
+                    id={product.id}
                     title={
-                      <p className="whitespace-normal mb-0">
-                        Sữa tươi chân châu đường đen
-                      </p>
+                      <p className="whitespace-normal mb-0">{product.TenSP}</p>
                     }
-                    description="30.000đ"
+                    description={`${product.Gia} VND`}
                   />
                 </Card>
-              </Link>
-            </Col>
-            <Col span={8}>
-              <Link to="/product-detail">
-                <Card
-                  size="large"
-                  hoverable
-                  className="  mx-0 my-5 rounded-lg"
-                  bordered={true}
-                  cover={
-                    <div className="h-[15rem] overflow-hidden ">
-                      <Img
-                        className=" hover:overflow-hidden "
-                        alt="example"
-                        src={order1}
-                      />
-                    </div>
-                  }
-                >
-                  <Meta
-                    title={
-                      <p className="whitespace-normal mb-0">
-                        Sữa tươi chân châu đường đen
-                      </p>
-                    }
-                    description="30.000đ"
-                  />
-                </Card>
-              </Link>
-            </Col>
-            <Col span={8}>
-              <Link to="/product-detail">
-                <Card
-                  size="large"
-                  hoverable
-                  className="  mx-0 my-5 rounded-lg"
-                  bordered={true}
-                  cover={
-                    <div className="h-[15rem] overflow-hidden ">
-                      <Img
-                        className=" hover:overflow-hidden "
-                        alt="example"
-                        src={order1}
-                      />
-                    </div>
-                  }
-                >
-                  <Meta
-                    title={
-                      <p className="whitespace-normal mb-0">
-                        Sữa tươi chân châu đường đen
-                      </p>
-                    }
-                    description="30.000đ"
-                  />
-                </Card>
-              </Link>
-            </Col>
-          </Row>
-
-          <Row gutter={35} className=" pt-1 ">
-            <Col span={8}>
-              <Link to="/product-detail">
-                <Card
-                  size="large"
-                  hoverable
-                  className="  mx-0 my-5 rounded-lg"
-                  bordered={true}
-                  cover={
-                    <div className="h-[15rem] overflow-hidden ">
-                      <Img
-                        className=" hover:overflow-hidden "
-                        alt="example"
-                        src={order1}
-                      />
-                    </div>
-                  }
-                >
-                  <Meta
-                    title={
-                      <p className="whitespace-normal mb-0">
-                        Sữa tươi chân châu đường đen
-                      </p>
-                    }
-                    description="30.000đ"
-                  />
-                </Card>
-              </Link>
-            </Col>
-            <Col span={8}>
-              <Link to="/product-detail">
-                <Card
-                  size="large"
-                  hoverable
-                  className="  mx-0 my-5 rounded-lg"
-                  bordered={true}
-                  cover={
-                    <div className="h-[15rem] overflow-hidden ">
-                      <Img
-                        className=" hover:overflow-hidden "
-                        alt="example"
-                        src={order1}
-                      />
-                    </div>
-                  }
-                >
-                  <Meta
-                    title={
-                      <p className="whitespace-normal mb-0">
-                        Sữa tươi chân châu đường đen
-                      </p>
-                    }
-                    description="30.000đ"
-                  />
-                </Card>
-              </Link>
-            </Col>
-            <Col span={8}>
-              <Link to="/product-detail">
-                <Card
-                  size="large"
-                  hoverable
-                  className="  mx-0 my-5 rounded-lg"
-                  bordered={true}
-                  cover={
-                    <div className="h-[15rem] overflow-hidden ">
-                      <Img
-                        className=" hover:overflow-hidden "
-                        alt="example"
-                        src={order1}
-                      />
-                    </div>
-                  }
-                >
-                  <Meta
-                    title={
-                      <p className="whitespace-normal mb-0">
-                        Sữa tươi chân châu đường đen
-                      </p>
-                    }
-                    description="30.000đ"
-                  />
-                </Card>
-              </Link>
-            </Col>
+              </Col>
+            ))}
           </Row>
         </Col>
       </Row>

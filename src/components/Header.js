@@ -33,8 +33,7 @@ export default function Header() {
   const handleNavigation = useCallback(
     (e) => {
       const window = e.currentTarget;
-      console.log(y);
-      console.log(window.scrollTop);
+
       if (y > 80) {
         setBgNav("bg-[#fff]");
         setTxtNav("text-[#000]");
@@ -81,7 +80,7 @@ export default function Header() {
           >
             Câu chuyện
           </Text>
-          <Link to="/order">
+          <Link to="/sanpham">
             <Text
               className={`text-[1.3rem] ${txtNav} mx-2 font-Jose font-normal cursor-pointer `}
             >

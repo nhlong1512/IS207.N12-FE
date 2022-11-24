@@ -58,9 +58,10 @@ function App() {
           <Route path="/find-account" element={<FindYourAccount />} />
           <Route path="/code-validation" element={<CodeValidation />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/order" element={<ListOrder />} />
-          <Route path="/product-detail" element={<ProductDetail />} />
+          <Route path="/sanpham" element={<ListOrder />} />
+          {/* <Route path="/product-detail" element={<ProductDetail />} /> */}
           <Route path="/cart" element={<Cart />} />
+          <Route path="/sanpham/:id" element={<ProductDetail />} />
         </Routes>
       </Wrapper>
       {getFooter()}
