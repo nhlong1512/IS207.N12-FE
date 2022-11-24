@@ -1,4 +1,4 @@
-import { Button, Image } from "antd";
+import { Button, Image, message } from "antd";
 import React, { useState } from "react";
 import menu1 from "../images/menu/order1.png";
 import icon_tea from "../images/menu/tea.jpg";
@@ -9,6 +9,9 @@ import Text from "antd/lib/typography/Text";
 import styled from "styled-components";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import _ from "underscore";
+import { addProductToCard } from "../reducer/product/productSlice";
 const { Meta } = Card;
 const Img = styled.img`
   -webkit-transform: scale(1);
@@ -36,6 +39,7 @@ const Input_checkbox = styled.input`
   }
 `;
 const ProductDetail = () => {
+  const dispatch = useDispatch();
   const navigate = useLocation();
   const [sizeVuaActive, setSizeVuaActive] = useState(true);
   const [sizeLonActive, setSizeLonActive] = useState(false);
@@ -77,20 +81,43 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     var listItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    if (dataProduct) {
+    const sizeProduct = sizeVuaActive ? "Vua" : "Lon";
+
+    var item = listItems.find(
+      (item) =>
+        item.id === id &&
+        item.size === sizeProduct &&
+        _.isEqual(item.topping, listTopping)
+    );
+
+    if (item) {
+      item.quantity += 1;
+      const totalPriceTopping = item.topping.reduce(
+        (total1, item) => total1 + parseInt(item.price),
+        0
+      );
+      console.log(totalPriceTopping);
+
+      item.total = total * item.quantity;
+      console.log(item.quantity);
+    } else {
       var item = {
         id: id,
         name: dataProduct.TenSP,
         price: dataProduct.Gia,
         size: sizeVuaActive ? "Vua" : "Lon",
         topping: listTopping,
+        quantity: 1,
         total: total,
       };
       listItems.push(item);
-      localStorage.setItem("cartItems", JSON.stringify(listItems));
-      setItemAdded(item);
-      console.log(item);
     }
+    localStorage.setItem("cartItems", JSON.stringify(listItems));
+    dispatch(addProductToCard(listItems.length));
+    message.success("Thêm vào giỏ hàng thành công");
+    setItemAdded(item);
+    console.log(item);
+    // window.location.reload();
   };
 
   useEffect(() => {

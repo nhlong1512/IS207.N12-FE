@@ -6,6 +6,7 @@ const initialState = {
   status: false,
   error: "",
   message: "",
+  numberProduct: 0,
   //   replyTicketError: "",
   //   searchTicketList: [],
   //   selectedTicket: {},
@@ -31,12 +32,21 @@ const productSlice = createSlice({
       state.message = payload.message;
       state.status = payload.status;
     },
+    addProductToCard: (state, { payload }) => {
+      console.log(payload);
+      state.numberProduct = payload;
+      console.log("num", state.numberProduct);
+    },
   },
 });
 
 const { reducer, actions } = productSlice;
 
-export const { fetchProductsLoading, fetchProductsSuccess, fetchProductsFail } =
-  actions;
+export const {
+  fetchProductsLoading,
+  fetchProductsSuccess,
+  fetchProductsFail,
+  addProductToCard,
+} = actions;
 
 export default reducer;

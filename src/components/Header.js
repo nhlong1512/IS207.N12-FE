@@ -10,15 +10,18 @@ export default function Header() {
   const dispatch = useDispatch();
   const { Text } = Typography;
   const [y, setY] = useState(0);
+  const [isShowCount, setIsShowCount] = useState(false);
   // const [bgNav, setBgNav] = useState("");
   // const [txtNav, setTxtNav] = useState("text-[#fff]");
   // const [borderNav, setBorderNav] = useState("border-white");
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const { numberProduct } = useSelector((state) => state.product);
   const { user } = useSelector((state) => state.user);
   const [bgNav, setBgNav] = useState("bg-[#fff]");
   const [txtNav, setTxtNav] = useState("text-[#000]");
   const [borderNav, setBorderNav] = useState("border-[#000]");
   const [isShơwDropdown, setIsShơwDropdown] = useState(false);
+  const [count, setCount] = useState(0);
   const handleClickProfile = () => {
     setIsShơwDropdown(!isShơwDropdown);
   };
@@ -59,6 +62,17 @@ export default function Header() {
       document.body.removeEventListener("scroll", handleNavigation);
     };
   }, [handleNavigation]);
+
+  // var cartItems = null;
+  useEffect(() => {
+    console.log("numberProduct", numberProduct);
+    var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    if (cartItems) {
+      setCount(cartItems.length);
+    }
+    if (count > 0) setIsShowCount(true);
+    else setIsShowCount(false);
+  }, [numberProduct, count]);
 
   return (
     <div
@@ -240,11 +254,18 @@ export default function Header() {
               Đăng Nhập
             </Button>
           </Link>
-          <div className={`border-r-[0.1rem] border-solid ${borderNav} `}></div>
+          <div
+            className={`border-r-[0.05rem] border-solid ${borderNav} `}
+          ></div>
           <Link to="/cart">
-            <div className={`cursor-pointer ${txtNav} ml-4`}>
-              <ShoppingCartOutlined className="text-[1.8rem] " />
+            <div className={`cursor-pointer  ${txtNav}`}>
+              <ShoppingCartOutlined className="text-[1.8rem] pt-1 " />
             </div>
+            {isShowCount && (
+              <div className="fixed text-[#ffffff] bg-[#FF4D4F] rounded-full w-[20px] h-[22px] text-center flex items-center justify-center top-2 right-14 ">
+                {count}
+              </div>
+            )}
           </Link>
         </div>
       </div>
