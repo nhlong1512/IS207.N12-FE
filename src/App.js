@@ -14,6 +14,7 @@ import ResetPassword from "./components/Auth/ResetPassword";
 import ListOrder from "./pages/ListOrder";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
+import Purchase from "./pages/Purchase";
 const excludeHeaderFooterPath = [
   "/signin",
   "/signup",
@@ -62,6 +63,7 @@ function App() {
           {/* <Route path="/product-detail" element={<ProductDetail />} /> */}
           <Route path="/cart" element={<Cart />} />
           <Route path="/sanpham/:id" element={<ProductDetail />} />
+          <Route path="/purchase" element={<Purchase />} />
         </Routes>
       </Wrapper>
       {getFooter()}
