@@ -6,34 +6,62 @@ import { Card } from "antd";
 import order1 from "../../images/menu/order1.png";
 import order2 from "../../images/menu/order2.png";
 const { Meta } = Card;
-const Product = ({ item, id }) => {
-  var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+const Product = ({ item, id, handleChangeItem, size, handleDeleteItem }) => {
+  const [cartItems_state, setCarrItems_state] = useState([]);
   const [totalProduct, setTotalProduct] = useState(item.total);
   const handleStepQuantity = (value) => {
-    const item = cartItems.find((item) => item.id === id);
-    const price1Product = item.total / item.quantity;
+    var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    setCarrItems_state(cartItems);
+    const item = cartItems.find((item) => item.id === id && item.size === size);
+    console.log("1", item.quantity);
+    const priceEachProduct = item.total / item.quantity;
     item.quantity = value;
-    item.total = price1Product * item.quantity;
+    // console.log(item.quantity);
+    item.total = priceEachProduct * item.quantity;
     setTotalProduct(item.total);
-    console.log(item.total);
+    // setCarrItems(cartItems);
+    console.log("2", item.quantity);
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    console.log("3", cartItems);
+
+    // handleChangeItem(totalProduct, id);
+    // console.log(item.total);
   };
 
   useEffect(() => {
     console.log(totalProduct);
-  }, [totalProduct]);
+    handleChangeItem(cartItems_state, totalProduct, id);
+  }, [cartItems_state]);
 
+  // useEffect(() => {
+  //   // const cartItems_lcal = JSON.parse(localStorage.getItem("cartItems")) || [];
+  //   setCarrItems(cartItems_lcal);
+  //   setCarrItems(cartItems);
+  //   console.log(cartItems);
+  // }, [cartItems]);
+
+  const handleDeleteItemChild = () => {
+    var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    // // setCarrItems_state(cartItems);
+    const item = cartItems.find((item) => item.id === id && item.size === size);
+    handleDeleteItem(item);
+    // cartItems.splice(cartItems.indexOf(item), 1);
+    // localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  };
   return (
     <Row className="w-full h-full mt-8 text-[#000] flex items-center ">
       <Col className="flex items-center " span={12}>
         <div className="w-1/2">
           <img className="w-32 h-w-32" src={order2} />
         </div>
-        <div className="w-1/2">
-          <p className="text-[#000] font-bold text-[1.2rem] mb-6">
+        <div className="w-1/2 ml-[-10px]">
+          <p className="text-[#000] font-bold text-[1.1rem] mb-2 leading-5  ">
             {item.name}
           </p>
-          <p className="text-[#146d4d] text-[1rem] mt-4 mb-0">
+          {item.topping.map((item) => (
+            <p className="mb-1">+{item.name}</p>
+          ))}
+          <p className="text-[#146d4d] text-[1rem] mt-2 mb-0">
             {item.price}VND
           </p>
         </div>
@@ -53,7 +81,11 @@ const Product = ({ item, id }) => {
       <Col className="text-[#146d4d] text-[1rem] flex justify-center" span={4}>
         {totalProduct} VND
       </Col>
-      <Col className=" flex justify-center" span={4}>
+      <Col
+        onClick={(id, size) => handleDeleteItemChild(id, size)}
+        className=" flex justify-center"
+        span={4}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

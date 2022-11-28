@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   products: [],
+  totalProduct: [],
   isLoading: false,
   status: false,
   error: "",
@@ -37,6 +38,7 @@ const productSlice = createSlice({
       state.numberProduct = payload;
       console.log("num", state.numberProduct);
     },
+    
   },
 });
 

@@ -1,17 +1,51 @@
 import { Col, Row, InputNumber, Button } from "antd";
 import Title from "antd/lib/typography/Title";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "antd";
 import order1 from "../images/menu/order1.png";
 import order2 from "../images/menu/order2.png";
 import Product from "../components/productInCart/product";
+import { Link } from "react-router-dom";
 const { Meta } = Card;
 const Cart = () => {
   const [quantityProduct, setQuantityProduct] = useState(1);
   var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  const [cartItems_state, setCarrItems_state] = useState(cartItems);
+  const [totalCart, setTotalCart] = useState(0);
+  const sumWithInitial = cartItems.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.total,
+    0
+  );
+  useEffect(() => {
+    setTotalCart(sumWithInitial + 10000);
+  }, [sumWithInitial]);
+
+  const handleChangeItem = (cartItems_state, value, id) => {
+    // const item = cartItems.find((item) => item.id === id);
+    // item.total = value;
+    console.log(cartItems_state);
+    const sumWithInitial1 = cartItems_state.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.total,
+      0
+    );
+    console.log(sumWithInitial1);
+    setTotalCart(sumWithInitial1 + 10000);
+    // localStorage.setItem("cartItems", JSON.stringify(cartItems_state));
+  };
+  // useEffect(() => {
+  //   setCarrItems_state(cartItems);
+  // }, [cartItems_state]);
+  const handleDeleteItem = (item) => {
+    var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    // setCarrItems_state(cartItems);
+
+    cartItems.splice(cartItems.indexOf(item), 1);
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    setCarrItems_state(cartItems);
+  };
 
   return (
-    <div className="container  h-full  max-w-[1024px] mx-auto mt-20 ">
+    <div className="container  h-full  max-w-[1024px] mx-auto pb-40 mt-20 ">
       <Title level={2} className="text-black">
         Giỏ hàng
       </Title>
@@ -30,9 +64,19 @@ const Cart = () => {
               REMOVE
             </Col>
           </Row>
-          {cartItems.map((item) => (
-            <Product item={item} id={item.id} />
-          ))}
+          {cartItems_state.map((item, index) => {
+            return (
+              <Product
+                handleDeleteItem={handleDeleteItem}
+                key={index}
+                size={item.size}
+                handleChangeItem={handleChangeItem}
+                cartItems={cartItems}
+                item={item}
+                id={item.id}
+              />
+            );
+          })}
         </Col>
         <Col className="h-full " span={8}>
           <div className="w-full px-6 h-[70vh] border-[1px] border-solid border-[#F5F5F6] bg-[#F5F5F6] rounded-2xl ">
@@ -54,11 +98,13 @@ const Cart = () => {
             </div>
             <div className="w-full flex mt-10 justify-between ">
               <p>TỔNG CỘNG</p>
-              <p>5.000 VND</p>
+              <p>{totalCart} VND</p>
             </div>
-            <Button className="bg-[#146d4d] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.7rem] font-bold">
-              CHECKOUT
-            </Button>
+            <Link to="/purchase">
+              <Button className="bg-[#146d4d] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.7rem] font-bold">
+                CHECKOUT
+              </Button>
+            </Link>
           </div>
         </Col>
       </Row>

@@ -117,6 +117,7 @@ const Purchase = () => {
               name="payment"
               value="COD"
               className="mx-6 checked:accent-[#146d4d]  "
+              checked
             />
             <label className="flex items-center cursor-pointer" for="COD">
               <img className="w-4 h-4" src={COD} />

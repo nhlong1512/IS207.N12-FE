@@ -208,7 +208,7 @@ const ProductDetail = () => {
                   className="hidden  "
                   id="trongtin"
                   type="checkbox"
-                  name="Pudding"
+                  name="Bánh flan"
                   value="10000"
                 />
                 <label
@@ -218,7 +218,7 @@ const ProductDetail = () => {
                   <p
                     className={`text-[0.9rem] mx-auto text-center my-auto py-2  px-3 border-[0.01rem] rounded-[0.3rem] border-solid  `}
                   >
-                    Pudding Socola Machiato cà phê sữa + 10000đ
+                    Bánh flan
                   </p>
                 </label>
               </div>
@@ -228,7 +228,7 @@ const ProductDetail = () => {
                   className="hidden  "
                   id="tranchauden"
                   type="checkbox"
-                  name="tranchauden"
+                  name="Trân châu đen"
                   value="5000"
                 />
                 <label
@@ -248,7 +248,7 @@ const ProductDetail = () => {
                   className="hidden  "
                   id="tranchautrang"
                   type="checkbox"
-                  name="tranchautrang"
+                  name="Trân châu trắng"
                   value="6000"
                 />
                 <label
