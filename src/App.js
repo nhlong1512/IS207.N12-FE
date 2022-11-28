@@ -15,6 +15,7 @@ import ListOrder from "./pages/ListOrder";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Purchase from "./pages/Purchase";
+import Sidebar from "./components/Profile/Sidebar";
 const excludeHeaderFooterPath = [
   "/signin",
   "/signup",
@@ -26,6 +27,7 @@ const excludeHeaderFooterPath = [
   // "/order",
   // "/product-detail",
   // "/cart",
+  "/profile",
 ];
 
 const getHeader = () => {
@@ -64,6 +66,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/sanpham/:id" element={<ProductDetail />} />
           <Route path="/purchase" element={<Purchase />} />
+          <Route path="/profile" element={<Sidebar />} />
         </Routes>
       </Wrapper>
       {getFooter()}

@@ -6,8 +6,11 @@ import order1 from "../images/menu/order1.png";
 import order2 from "../images/menu/order2.png";
 import Product from "../components/productInCart/product";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addProductToCard } from "../reducer/product/productSlice";
 const { Meta } = Card;
 const Cart = () => {
+  const dispatch = useDispatch();
   const [quantityProduct, setQuantityProduct] = useState(1);
   var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
   const [cartItems_state, setCarrItems_state] = useState(cartItems);
@@ -42,6 +45,7 @@ const Cart = () => {
     cartItems.splice(cartItems.indexOf(item), 1);
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     setCarrItems_state(cartItems);
+    dispatch(addProductToCard(cartItems.length));
   };
 
   return (
