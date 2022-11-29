@@ -2,10 +2,13 @@ import {
   getUserPending,
   getUserSuccess,
   getUserFail,
+  updateUserPending,
+  updateUserSuccess,
+  updateUserFail,
   deleteUserSuccess,
 } from "./userSlice";
 import { setAuth } from "../auth/authSlice";
-import { fetchUser } from "../../api/userApi";
+import { fetchUser, updateUser } from "../../api/userApi";
 
 export const getUserProfile = () => async (dispatch) => {
   dispatch(getUserPending());
@@ -20,6 +23,22 @@ export const getUserProfile = () => async (dispatch) => {
     dispatch(getUserFail(response));
   } catch (err) {
     dispatch(getUserFail({ error: true, message: err.message }));
+  }
+};
+
+export const updateUserProfile = (userInfor, id) => async (dispatch) => {
+  dispatch(updateUserPending());
+  try {
+    const response = await updateUser(userInfor, id);
+    console.log("test", response);
+    if (response.status === true) {
+      dispatch(updateUserSuccess(response));
+      dispatch(setAuth());
+    }
+
+    dispatch(updateUserFail(response));
+  } catch (err) {
+    dispatch(updateUserFail({ error: true, message: err.message }));
   }
 };
 

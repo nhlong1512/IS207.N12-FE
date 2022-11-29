@@ -1,31 +1,71 @@
-import { Avatar, Col, Image, Input, Radio, Row, Upload } from "antd";
+import { Avatar, Button, Col, Image, Input, Radio, Row, Upload } from "antd";
 import Title from "antd/lib/typography/Title";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "../../App.css";
+import {
+  getUserProfile,
+  updateUserProfile,
+} from "../../reducer/user/userAction";
 const Profile = () => {
-  const [selectedImage, setSelectedImage] = useState(
-    "https://www.google.com/imgres?imgurl=https%3A%2F%2Fbenhviennhitrunguong.gov.vn%2Fwp-content%2Fuploads%2F2019%2F10%2FKien-Ba-Khoang-2-1.jpg&imgrefurl=https%3A%2F%2Fbenhviennhitrunguong.gov.vn%2Fcanh-giac-voi-kien-ba-khoang.html&tbnid=CkVHYXzDOVEJtM&vet=12ahUKEwis1vu8ltH7AhURCt4KHXuuCsEQMygBegQIARA9..i&docid=s5adQd_znZdtsM&w=640&h=384&q=kieens&ved=2ahUKEwis1vu8ltH7AhURCt4KHXuuCsEQMygBegQIARA9"
-  );
-  const onChangeImage = (e) => {
-    console.log(e.target.files[0]);
-    setSelectedImage(URL.createObjectURL(e.target.files[0]));
+  const dispatch = useDispatch();
+  const { user, status } = useSelector((state) => state.user);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  // console.log(user);
+  const [selectedImage, setSelectedImage] = useState(user.urlavt);
+  const [userInfo, setUserInfo] = useState("");
+
+  // const [gender, setGender] = useState(0);
+  const handleChangeForm = (e) => {
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+    console.log(userInfo);
   };
 
+  const onChangeImage = (e) => {
+    console.log(e.target.files[0]);
+    const urlImage = URL.createObjectURL(e.target.files[0]);
+    setSelectedImage(urlImage);
+    setUserInfo({
+      ...userInfo,
+      urlavt: urlImage,
+    });
+    console.log(urlImage);
+  };
+
+  const handleChangeGender = (e) => {
+    const gt = e.target.value == "nu" ? 1 : 0;
+    setUserInfo({ ...userInfo, [e.target.name]: gt });
+    console.log(userInfo);
+  };
+  const handleSubmitUpdateProfile = () => {
+    console.log(userInfo);
+    dispatch(updateUserProfile(userInfo, user.id));
+  };
+  const handleChangeBirthDay = (e) => {
+    setUserInfo({ ...userInfo, ngsinh: e.target.value });
+  };
+
+  useEffect(() => {
+    setUserInfo(user);
+  }, [status]);
+  useEffect(() => {
+    dispatch(getUserProfile());
+  }, [isAuthenticated, status]);
   return (
     <div className="w-full h-[135vh] ">
-      <div className="flex items-center mb-6  ">
+      <div className="flex items-center mb-6 w-full  ">
         <Avatar
           src={
             <Image
               preview={false}
               className="w-36 h-36"
-              src={selectedImage}
+              src={userInfo.urlavt}
               alt="avatar"
             />
           }
           className="w-36 h-36 mr-8"
         />
-        <div>
+        <div className="w-full">
           <Title className=" " level={3}>
             PROFILE
           </Title>
@@ -35,9 +75,18 @@ const Profile = () => {
             name="myImage"
             onChange={(e) => onChangeImage(e)}
           /> */}
-          <Title className=" " level={5}>
-            Update your photo and personal details.
-          </Title>
+
+          <div className="flex w-full justify-between">
+            <Title className=" " level={5}>
+              Update your photo and personal details.
+            </Title>
+            <Button
+              onClick={handleSubmitUpdateProfile}
+              className="w-24 h-8 rounded-lg text-white bg-[#146d4d] hover:bg-[#FF5A5F] flex items-center justify-center"
+            >
+              Lưu
+            </Button>
+          </div>
         </div>
       </div>
       <Row className="w-full mb-8 flex items-center ">
@@ -48,11 +97,11 @@ const Profile = () => {
           <Input
             type="text"
             size="medium"
-            name="address"
+            name="hoten"
             placeholder="Họ tên"
             className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-            //   onChange={(e) => handleChangeForm(e)}
-            //   value={userInfo.email}
+            onChange={(e) => handleChangeForm(e)}
+            value={userInfo.hoten}
             required
           />
         </Col>
@@ -65,12 +114,12 @@ const Profile = () => {
           <Input
             type="text"
             size="medium"
-            name="address"
+            name="email"
             placeholder="Email"
             className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-            //   onChange={(e) => handleChangeForm(e)}
-            //   value={userInfo.email}
-            required
+            onChange={(e) => handleChangeForm(e)}
+            value={user.email}
+            disabled
           />
         </Col>
       </Row>
@@ -87,7 +136,7 @@ const Profile = () => {
                 <Image
                   preview={false}
                   className="w-16 h-16"
-                  src={selectedImage}
+                  src={userInfo.urlavt}
                   alt="avatar"
                 />
               }
@@ -99,7 +148,7 @@ const Profile = () => {
             <input
               className="w-[16rem] pl-5 "
               type="file"
-              name="myImage"
+              name="urlavt"
               onChange={(e) => onChangeImage(e)}
             />
           </div>
@@ -113,98 +162,64 @@ const Profile = () => {
           <Input
             type="text"
             size="medium"
-            name="address"
+            name="sdt"
             placeholder="Số điện thoại"
             className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-            //   onChange={(e) => handleChangeForm(e)}
-            //   value={userInfo.email}
+            onChange={(e) => handleChangeForm(e)}
+            value={userInfo.sdt}
             required
           />
         </Col>
       </Row>
-      <Row className="w-full mb-8 flex items-center ">
-        <Col span={6} className="">
-          <Title level={5}>Địa chỉ</Title>
-        </Col>
-        <Col span={18}>
-          <Input
-            type="text"
-            size="medium"
-            name="address"
-            placeholder="Địa chỉ"
-            className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-            //   onChange={(e) => handleChangeForm(e)}
-            //   value={userInfo.email}
-            required
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={6} className="">
-          <Title level={5}>Tỉnh/Thành Phố</Title>
-        </Col>
-        <Col span={18}>
-          <Row gutter={35}>
-            <Col span={8}>
-              <Input
-                type="text"
-                size="medium"
-                name="Provice"
-                placeholder="Tỉnh/Thành phố"
-                className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-                //   onChange={(e) => handleChangeForm(e)}
-                //   value={userInfo.email}
-                required
-              />
-            </Col>
-            <Col span={8}>
-              <Input
-                type="text"
-                size="medium"
-                name="Provice"
-                placeholder="Quận/Huyện"
-                className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-                //   onChange={(e) => handleChangeForm(e)}
-                //   value={userInfo.email}
-                required
-              />
-            </Col>
-            <Col span={8}>
-              <Input
-                type="text"
-                size="medium"
-                name="Provice"
-                placeholder="Phường/Xã"
-                className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-                //   onChange={(e) => handleChangeForm(e)}
-                //   value={userInfo.email}
-                required
-              />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+
       <Row className="w-full mb-8 flex items-center  ">
         <Col span={6} className="">
           <Title level={5}>Giới tính</Title>
         </Col>
         <Col span={18}>
           <div className="flex items-center w-ful ">
-            <input
-              id="nam"
-              type="radio"
-              name="gender"
-              value="nam"
-              className=" mr-1 accent-[#146d4d] w-4 h-4  "
-            />
+            {userInfo.gioitinh == 0 ? (
+              <input
+                onClick={(e) => handleChangeGender(e)}
+                id="nam"
+                type="radio"
+                name="gioitinh"
+                value="nam"
+                className=" mr-1 accent-[#146d4d] w-4 h-4  "
+                checked
+              />
+            ) : (
+              <input
+                onClick={(e) => handleChangeGender(e)}
+                id="nam"
+                type="radio"
+                name="gioitinh"
+                value="nam"
+                className=" mr-1 accent-[#146d4d] w-4 h-4  "
+              />
+            )}
             <label for="nam">Nam</label>
-            <input
-              id="nu"
-              type="radio"
-              name="gender"
-              value="nu"
-              className="ml-10 mr-1 accent-[#146d4d] w-4 h-4 "
-            />
+            {userInfo.gioitinh == 0 ? (
+              <input
+                onClick={(e) => handleChangeGender(e)}
+                id="nu"
+                type="radio"
+                name="gioitinh"
+                value="nu"
+                className="ml-10 mr-1 accent-[#146d4d] w-4 h-4 "
+              />
+            ) : (
+              <input
+                onClick={(e) => handleChangeGender(e)}
+                id="nu"
+                type="radio"
+                name="gioitinh"
+                value="nu"
+                className="ml-10 mr-1 accent-[#146d4d] w-4 h-4 "
+                checked
+              />
+            )}
+
             <label for="nu">Nữ</label>
           </div>
         </Col>
@@ -217,11 +232,11 @@ const Profile = () => {
           <Input
             type="text"
             size="medium"
-            name="address"
+            name="ngsinh"
             placeholder="27/12/2003"
             className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-            //   onChange={(e) => handleChangeForm(e)}
-            //   value={userInfo.email}
+            onChange={(e) => handleChangeBirthDay(e)}
+            value={userInfo?.ngsinh}
             required
           />
         </Col>

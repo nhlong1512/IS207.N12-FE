@@ -27,7 +27,7 @@ const excludeHeaderFooterPath = [
   // "/order",
   // "/product-detail",
   // "/cart",
-  "/profile",
+  // "/profile",
 ];
 
 const getHeader = () => {
