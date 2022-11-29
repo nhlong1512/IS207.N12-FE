@@ -5,6 +5,8 @@ const initialState = {
   isLoading: false,
   status: false,
   message: "",
+  updateStatus: false,
+  changePasswordStatus: false,
 };
 
 const userSlice = createSlice({
@@ -32,14 +34,27 @@ const userSlice = createSlice({
     updateUserSuccess: (state, { payload }) => {
       state.isLoading = false;
       state.user = payload.user;
-      state.status = payload.status;
+      state.updateStatus = payload.status;
     },
     updateUserFail: (state, { payload }) => {
       state.isLoading = false;
-      state.status = payload.status;
+      state.updateStatus = payload.status;
     },
     deleteUserSuccess: (state, { payload }) => {
       state.user = {};
+    },
+    changePassWordUserPending: (state) => {
+      state.isLoading = true;
+    },
+    changePassWordUserSuccess: (state, { payload }) => {
+      // console.log(payload);
+      state.isLoading = false;
+      // state.changePasswordStatus = payload.status;
+    },
+    changePassWordUserFail: (state, { payload }) => {
+      console.log(payload);
+      state.isLoading = false;
+      // state.changePasswordStatus = payload.status;
     },
   },
 });
@@ -51,6 +66,9 @@ export const {
   updateUserPending,
   updateUserSuccess,
   updateUserFail,
+  changePassWordUserPending,
+  changePassWordUserSuccess,
+  changePassWordUserFail,
   deleteUserSuccess,
 } = userSlice.actions;
 

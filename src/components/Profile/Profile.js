@@ -1,6 +1,18 @@
-import { Avatar, Button, Col, Image, Input, Radio, Row, Upload } from "antd";
+import {
+  Avatar,
+  Button,
+  Col,
+  Image,
+  Input,
+  Radio,
+  Row,
+  Upload,
+  Spin,
+  message,
+} from "antd";
 import Title from "antd/lib/typography/Title";
 import React, { useEffect, useState } from "react";
+import { LoadingOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import "../../App.css";
 import {
@@ -9,7 +21,9 @@ import {
 } from "../../reducer/user/userAction";
 const Profile = () => {
   const dispatch = useDispatch();
-  const { user, status } = useSelector((state) => state.user);
+  const { user, status, updateStatus, isLoading } = useSelector(
+    (state) => state.user
+  );
   const { isAuthenticated } = useSelector((state) => state.auth);
   // console.log(user);
   const [selectedImage, setSelectedImage] = useState(user.urlavt);
@@ -40,6 +54,7 @@ const Profile = () => {
   const handleSubmitUpdateProfile = () => {
     console.log(userInfo);
     dispatch(updateUserProfile(userInfo, user.id));
+    if (isLoading == false) message.success("Cập nhật thông tin thành công");
   };
   const handleChangeBirthDay = (e) => {
     setUserInfo({ ...userInfo, ngsinh: e.target.value });
@@ -52,7 +67,15 @@ const Profile = () => {
     dispatch(getUserProfile());
   }, [isAuthenticated, status]);
   return (
-    <div className="w-full h-[135vh] ">
+    <div className="w-full h-[135vh]  ">
+      {isLoading && (
+        <LoadingOutlined
+          style={{
+            fontSize: 20,
+          }}
+          spin
+        />
+      )}
       <div className="flex items-center mb-6 w-full  ">
         <Avatar
           src={
@@ -69,6 +92,7 @@ const Profile = () => {
           <Title className=" " level={3}>
             PROFILE
           </Title>
+
           {/* <input
             // className="hidden"
             type="file"
@@ -80,6 +104,7 @@ const Profile = () => {
             <Title className=" " level={5}>
               Update your photo and personal details.
             </Title>
+
             <Button
               onClick={handleSubmitUpdateProfile}
               className="w-24 h-8 rounded-lg text-white bg-[#146d4d] hover:bg-[#FF5A5F] flex items-center justify-center"
