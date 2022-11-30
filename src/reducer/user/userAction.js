@@ -48,12 +48,12 @@ export const ChangePassWordUser = (userInfor, id) => async (dispatch) => {
   dispatch(changePassWordUserPending());
   try {
     const response = await changePassword(userInfor, id);
- 
+    console.log("action", response);
     if (response.status === true) {
       dispatch(changePassWordUserSuccess(response));
     }
 
-    // dispatch(changePassWordUserFail(response));
+    //  setTimeout(() => dispatch(changePassWordUserFail(response)), 2000);
   } catch (err) {
     dispatch(changePassWordUserFail({ error: true, message: err.message }));
   }

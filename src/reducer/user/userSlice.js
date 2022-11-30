@@ -47,14 +47,14 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     changePassWordUserSuccess: (state, { payload }) => {
-      // console.log(payload);
+      console.log(payload.status);
       state.isLoading = false;
-      // state.changePasswordStatus = payload.status;
+      state.changePasswordStatus = true;
     },
     changePassWordUserFail: (state, { payload }) => {
-      console.log(payload);
+      console.log(payload.status);
       state.isLoading = false;
-      // state.changePasswordStatus = payload.status;
+      state.changePasswordStatus = false;
     },
   },
 });

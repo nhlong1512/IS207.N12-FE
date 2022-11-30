@@ -50,19 +50,18 @@ const ChangePassWord = () => {
   }, [confirmNewPassword, userInfo.newPassword]);
 
   useEffect(() => {
-    if (changePasswordStatus == true) setIsSuccess(true);
-    else setIsSuccess(false);
-    console.log(changePasswordStatus);
-  }, [isLoading, changePasswordStatus]);
+    if (changePasswordStatus == true && isLoading == false)
+      message.success("Cập nhật thông tin thành công");
+    else if (changePasswordStatus == false && isLoading == false) {
+      message.error("Cập nhật thông tin thất bại");
+    }
+  }, [isLoading]);
 
   const handleSubmitUpdatePassWord = () => {
     console.log(isEqualNewPassword);
     dispatch(ChangePassWordUser(userInfo, user.id));
     console.log(isSuccess);
-    if (isSuccess == false)
-      message.error("Cập nhật thông tin thất bại");
-    else if (isSuccess == true && isLoading == false)
-      message.success("Cập nhật thông tin thành công");
+   
   };
   return (
     <div className="w-full h-[135vh] ">
@@ -135,7 +134,7 @@ const ChangePassWord = () => {
 
       <Row className="w-full mb-8 flex items-center ">
         <Col span={6} className="">
-          <Title level={5}>Xác nhận mật khẩu mơi</Title>
+          <Title level={5}>Xác nhận mật khẩu mới</Title>
         </Col>
         <Col span={18}>
           <Input
