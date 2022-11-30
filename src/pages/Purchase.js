@@ -6,6 +6,9 @@ import momo from "../images/payment/momo.jpg";
 import paypal from "../images/payment/paypal.jpg";
 
 const Purchase = () => {
+
+// const {user}
+
   const [valuePayment, setValuePayment] = useState("COD");
   const onChangePayment = (e) => {
     setValuePayment(e.target.value);

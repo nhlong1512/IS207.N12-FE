@@ -26,11 +26,13 @@ const Profile = () => {
   );
   const { isAuthenticated } = useSelector((state) => state.auth);
   // console.log(user);
+  const [isFirst,setIsFirst] = useState(true);
   const [selectedImage, setSelectedImage] = useState(user.urlavt);
   const [userInfo, setUserInfo] = useState("");
 
   // const [gender, setGender] = useState(0);
   const handleChangeForm = (e) => {
+    setIsFirst(false);
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
     console.log(userInfo);
   };
@@ -53,9 +55,18 @@ const Profile = () => {
   };
   const handleSubmitUpdateProfile = () => {
     console.log(userInfo);
+    setIsFirst(false);
     dispatch(updateUserProfile(userInfo, user.id));
-    if (isLoading == false) message.success("Cập nhật thông tin thành công");
+   
   };
+  useEffect(() => {
+    if (isFirst == false) {
+      if (isLoading == false && updateStatus == true)
+      message.success("Cập nhật thông tin thành công");
+    else if (isLoading == false && updateStatus == false)
+      message.error("Cập nhật thông tin thất bại");
+    }
+  }, [ isLoading]);
   const handleChangeBirthDay = (e) => {
     setUserInfo({ ...userInfo, ngsinh: e.target.value });
   };
@@ -80,9 +91,9 @@ const Profile = () => {
         <Avatar
           src={
             <Image
-              preview={false}
+              preview={false} 
               className="w-36 h-36"
-              src={userInfo.urlavt}
+              src={user.urlavt}
               alt="avatar"
             />
           }
@@ -268,6 +279,6 @@ const Profile = () => {
       </Row>
     </div>
   );
-};
+};;
 
 export default Profile;

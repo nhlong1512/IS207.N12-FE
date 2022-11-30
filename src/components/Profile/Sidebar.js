@@ -6,7 +6,7 @@ import Profile from "./Profile";
 import ChangePassWord from "./ChangePassWord";
 import Orders from "./Orders";
 const Sidebar = () => {
-  const arrayProfile = [<Profile />, <ChangePassWord />, <Orders />, ""];
+  const arrayProfile = [<Profile />, <ChangePassWord />, <Orders />];
   return (
     <div className="mt-10 h-[160vh] container mx-auto max-w-[1124px]">
       <Title className="ml-5 border-b-2 border-solid pb-5" level={2}>
@@ -26,7 +26,7 @@ const Sidebar = () => {
           if (id === 0) label = "Profile";
           else if (id === 1) label = "Password";
           else if (id === 2) label = "Orders";
-          else label = "Log out";
+
           return {
             label: label,
             key: id,

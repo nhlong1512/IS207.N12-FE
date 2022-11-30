@@ -18,51 +18,55 @@ import { useEffect } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 const ChangePassWord = () => {
   const dispatch = useDispatch();
+const [isFirst, setIsFirst] = useState(true);
+const { user, changePasswordStatus, isLoading } = useSelector(
+  (state) => state.user
+);
+const [isSuccess, setIsSuccess] = useState(false);
+const [confirmNewPassword, setConfirmNewPassword] = useState("");
+const [userInfo, setUserInfo] = useState({
+  email: user.email,
+  role: "khachhang",
+  password: "",
+  newPassword: "",
+});
+const [isEqualNewPassword, setIsEqualNewPassword] = useState(false);
+const handleChangeCfNewPassWord = (e) => {
+  setConfirmNewPassword(e.target.value);
 
-  const { user, changePasswordStatus, isLoading } = useSelector(
-    (state) => state.user
-  );
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [userInfo, setUserInfo] = useState({
-    email: user.email,
-    role: "khachhang",
-    password: "",
-    newPassword: "",
-  });
-  const [isEqualNewPassword, setIsEqualNewPassword] = useState(false);
-  const handleChangeCfNewPassWord = (e) => {
-    setConfirmNewPassword(e.target.value);
+  console.log(userInfo);
+};
+const handleChangeForm = (e) => {
+  setIsFirst(false);
+  console.log(userInfo);
+  setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+};
 
-    console.log(userInfo);
-  };
-  const handleChangeForm = (e) => {
-    console.log(userInfo);
-    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
-  };
+useEffect(() => {
+  console.log(userInfo.newPassword);
+  console.log(confirmNewPassword);
+  console.log(isEqualNewPassword);
+  if (userInfo.newPassword == confirmNewPassword) setIsEqualNewPassword(true);
+  else setIsEqualNewPassword(false);
+}, [confirmNewPassword, userInfo.newPassword]);
 
-  useEffect(() => {
-    console.log(userInfo.newPassword);
-    console.log(confirmNewPassword);
-    console.log(isEqualNewPassword);
-    if (userInfo.newPassword == confirmNewPassword) setIsEqualNewPassword(true);
-    else setIsEqualNewPassword(false);
-  }, [confirmNewPassword, userInfo.newPassword]);
-
-  useEffect(() => {
+useEffect(() => {
+  if (isFirst == false) {
     if (changePasswordStatus == true && isLoading == false)
       message.success("Cập nhật thông tin thành công");
     else if (changePasswordStatus == false && isLoading == false) {
       message.error("Cập nhật thông tin thất bại");
     }
-  }, [isLoading]);
+  }
+}, [isLoading]);
 
-  const handleSubmitUpdatePassWord = () => {
-    console.log(isEqualNewPassword);
-    dispatch(ChangePassWordUser(userInfo, user.id));
-    console.log(isSuccess);
-   
-  };
+const handleSubmitUpdatePassWord = () => {
+  setIsFirst(false);
+
+  console.log(isEqualNewPassword);
+  dispatch(ChangePassWordUser(userInfo, user.id));
+  console.log(isSuccess);
+};
   return (
     <div className="w-full h-[135vh] ">
       {isLoading && (

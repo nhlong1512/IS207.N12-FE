@@ -2,11 +2,12 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { div, Image, Typography, Button, Avatar } from "antd";
 import Logo from "../images/Logo.png";
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import { getUserProfile } from "../reducer/user/userAction";
+import { Link, useNavigate } from "react-router-dom";
+import { deleteUserProfile, getUserProfile } from "../reducer/user/userAction";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Header() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { Text } = Typography;
   const [y, setY] = useState(0);
@@ -20,10 +21,13 @@ export default function Header() {
   const [bgNav, setBgNav] = useState("bg-[#fff]");
   const [txtNav, setTxtNav] = useState("text-[#000]");
   const [borderNav, setBorderNav] = useState("border-[#000]");
-  const [isShơwDropdown, setIsShơwDropdown] = useState(false);
+  const [isShowDropdown, setIsShowDropdown] = useState(false);
   const [count, setCount] = useState(0);
   const handleClickProfile = () => {
-    setIsShơwDropdown(!isShơwDropdown);
+    setIsShowDropdown(!isShowDropdown);
+  };
+  const handleClickOutsideProfile = () => {
+    setIsShowDropdown(false);
   };
   useEffect(() => {
     console.log("user", user);
@@ -74,6 +78,15 @@ export default function Header() {
     else setIsShowCount(false);
   }, [numberProduct, count]);
 
+  const handleClickLogout = () => {
+    // localStorage.removeItem("accessToken")
+    setIsShowDropdown(false);
+    console.log("logout");
+    dispatch(deleteUserProfile());
+    localStorage.removeItem("accessToken");
+    navigate("/signin");
+  };
+
   return (
     <div
       className={`w-full h-[10vh] ${bgNav}  flex justify-around items-center fixed z-50 `}
@@ -118,7 +131,7 @@ export default function Header() {
           </Text>
         </div>
       </div>
-      <div className="ml-9 w-[11rem]">
+      <div className="ml-9 w-[15.4rem]">
         <div className="flex justify-evenly ">
           {/* a triangle by taiwind css */}
           <div>
@@ -126,7 +139,7 @@ export default function Header() {
               className={`fixed top-[3.8rem] right-[6rem]
               z-[1000] w-[10rem] rounded-md shadow-xl
                  h-[10rem] bg-[#146d4d] text-[#fff] before:fixed before:content-[''] before:top-[3.3rem] before:right-[8.3rem]  before:border-solid before:w-0 before:h-0 before:border-x-[8px] before:border-b-[8px] before:border-x-transparent before:border-b-[#146d4d] ${
-                   isShơwDropdown ? "" : "hidden "
+                   isShowDropdown ? "" : "hidden "
                  } `}
             >
               <a
@@ -196,6 +209,7 @@ export default function Header() {
                 <p className="mb-0">Đơn Đặt</p>
               </a>
               <a
+                onClick={handleClickLogout}
                 className="text-[#fff] flex items-center pl-[0.4rem] py-2 hover:bg-white hover:opacity-90 hover:text-[#146d4d] hover:font-bold"
                 href="#"
               >
@@ -218,10 +232,18 @@ export default function Header() {
                 <p className="mb-0">Đăng xuất</p>
               </a>
             </div>
+
+            {isShowDropdown && (
+              <div
+                onClick={handleClickOutsideProfile}
+                className="fixed bg-black opacity-60 w-full h-full top-0 left-0 z-[999]"
+              ></div>
+            )}
+
             {isAuthenticated && (
               <div
                 onClick={handleClickProfile}
-                className="flex items-center w-8rem "
+                className="flex items-center w-8rem h-full z-50"
               >
                 {user && (
                   <p className="text-[#000] mb-0 mr-3 mt-2 cursor-pointer">
@@ -229,16 +251,14 @@ export default function Header() {
                   </p>
                 )}
                 <Avatar
-                  className={`cursor-pointer  ${
+                  className={`cursor-pointer h-full w-10  ${
                     isAuthenticated ? "" : "hidden"
                   } `}
                   src={
-                    <Image
-                      preview={false}
-                      src="https://joeschmoe.io/api/v1/random"
-                      style={{
-                        width: 32,
-                      }}
+                    <img
+                      className="h-10 w-10 "
+                      alt=""
+                      src={user.urlavt || ""}
                     />
                   }
                 />
@@ -255,14 +275,14 @@ export default function Header() {
             </Button>
           </Link>
           <div
-            className={`border-r-[0.05rem] border-solid ${borderNav} `}
+            className={`border-r-[0.05rem]  border-solid ${borderNav} `}
           ></div>
           <Link to="/cart">
             <div className={`cursor-pointer  ${txtNav}`}>
               <ShoppingCartOutlined className="text-[1.8rem] pt-1 " />
             </div>
             {isShowCount && (
-              <div className="fixed text-[#ffffff] bg-[#FF4D4F] rounded-full w-[20px] h-[22px] text-center flex items-center justify-center top-2 right-14 ">
+              <div className="fixed text-[#ffffff] bg-[#FF4D4F] rounded-full w-[20px] h-[22px] text-center flex items-center justify-center top-2 right-11 ">
                 {count}
               </div>
             )}

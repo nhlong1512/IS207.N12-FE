@@ -34,11 +34,11 @@ const userSlice = createSlice({
     updateUserSuccess: (state, { payload }) => {
       state.isLoading = false;
       state.user = payload.user;
-      state.updateStatus = payload.status;
+      state.updateStatus =true;
     },
     updateUserFail: (state, { payload }) => {
       state.isLoading = false;
-      state.updateStatus = payload.status;
+      state.updateStatus = false;
     },
     deleteUserSuccess: (state, { payload }) => {
       state.user = {};

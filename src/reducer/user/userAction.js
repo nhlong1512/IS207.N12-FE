@@ -12,6 +12,7 @@ import {
 } from "./userSlice";
 import { setAuth } from "../auth/authSlice";
 import { changePassword, fetchUser, updateUser } from "../../api/userApi";
+import { userLogout } from "../../api/authApi";
 
 export const getUserProfile = () => async (dispatch) => {
   dispatch(getUserPending());
@@ -39,7 +40,7 @@ export const updateUserProfile = (userInfor, id) => async (dispatch) => {
       dispatch(setAuth());
     }
 
-    dispatch(updateUserFail(response));
+    // dispatch(updateUserFail(response));
   } catch (err) {
     dispatch(updateUserFail({ error: true, message: err.message }));
   }
@@ -59,8 +60,18 @@ export const ChangePassWordUser = (userInfor, id) => async (dispatch) => {
   }
 };
 
-export const deleteUserProfile = () => (dispatch) => {
-  dispatch(deleteUserSuccess());
+export const deleteUserProfile = () => async (dispatch) => {
+  try {
+    const response = await userLogout();
+    console.log("logout", response);
+    if (response.status === true) {
+      dispatch(deleteUserSuccess());
+    }
+
+    //  setTimeout(() => dispatch(changePassWordUserFail(response)), 2000);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 
