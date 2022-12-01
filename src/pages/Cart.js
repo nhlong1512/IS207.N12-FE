@@ -5,12 +5,13 @@ import { Card } from "antd";
 import order1 from "../images/menu/order1.png";
 import order2 from "../images/menu/order2.png";
 import Product from "../components/productInCart/product";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addProductToCard } from "../reducer/product/productSlice";
 const { Meta } = Card;
 const Cart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [quantityProduct, setQuantityProduct] = useState(1);
   var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
   const [cartItems_state, setCarrItems_state] = useState(cartItems);
@@ -22,6 +23,12 @@ const Cart = () => {
   useEffect(() => {
     setTotalCart(sumWithInitial + 10000);
   }, [sumWithInitial]);
+
+  const handleClickCheckOut = () => {
+    navigate(`/purchase`, {
+      state: { totalCart: totalCart },
+    });
+  };
 
   const handleChangeItem = (cartItems_state, value, id) => {
     // const item = cartItems.find((item) => item.id === id);
@@ -104,11 +111,12 @@ const Cart = () => {
               <p>TỔNG CỘNG</p>
               <p>{totalCart} VND</p>
             </div>
-            <Link to="/purchase">
-              <Button className="bg-[#146d4d] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.7rem] font-bold">
-                CHECKOUT
-              </Button>
-            </Link>
+            <Button
+              onClick={handleClickCheckOut}
+              className="bg-[#146d4d] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.7rem] font-bold"
+            >
+              CHECKOUT
+            </Button>
           </div>
         </Col>
       </Row>

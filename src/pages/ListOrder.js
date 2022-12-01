@@ -33,8 +33,10 @@ const ListOrder = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.product);
+ 
   useEffect(() => {
     dispatch(fetchProduct());
+
     console.log(products);
   }, [dispatch]);
 
@@ -74,40 +76,45 @@ const ListOrder = () => {
             gutter={35}
             className="border-t-[1px] pt-1 border-solid border-[#ABABAB] "
           >
-            {products.map((product) => (
-              <Col
-                key={product.id}
-                id={product.id}
-                onClick={(e) => handleClickProduct(e)}
-                span={8}
-              >
-                <Card
+            {products.map((product) => {
+              if (product.MaPL == 3) return;
+              return (
+                <Col
+                  key={product.id}
                   id={product.id}
-                  size="large"
-                  hoverable
-                  className="  mx-0 my-5 rounded-lg h-[23rem]"
-                  bordered={true}
-                  cover={
-                    <div className="h-[15rem] overflow-hidden ">
-                      <Img
-                        id={product.id}
-                        className=" hover:overflow-hidden "
-                        alt="example"
-                        src={order1}
-                      />
-                    </div>
-                  }
+                  onClick={(e) => handleClickProduct(e)}
+                  span={8}
                 >
-                  <Meta
+                  <Card
                     id={product.id}
-                    title={
-                      <p className="whitespace-normal mb-0">{product.TenSP}</p>
+                    size="large"
+                    hoverable
+                    className="  mx-0 my-5 rounded-lg h-[23rem]"
+                    bordered={true}
+                    cover={
+                      <div className="h-[15rem] overflow-hidden ">
+                        <Img
+                          id={product.id}
+                          className=" hover:overflow-hidden "
+                          alt="example"
+                          src={order1}
+                        />
+                      </div>
                     }
-                    description={`${product.Gia} VND`}
-                  />
-                </Card>
-              </Col>
-            ))}
+                  >
+                    <Meta
+                      id={product.id}
+                      title={
+                        <p className="whitespace-normal mb-0">
+                          {product.TenSP}
+                        </p>
+                      }
+                      description={`${product.Gia} VND`}
+                    />
+                  </Card>
+                </Col>
+              );
+            })}
           </Row>
         </Col>
       </Row>

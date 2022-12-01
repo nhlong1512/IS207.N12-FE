@@ -208,7 +208,7 @@ const ProductDetail = () => {
                   className="hidden  "
                   id="trongtin"
                   type="checkbox"
-                  name="Bánh flan"
+                  name="Kem chese"
                   value="10000"
                 />
                 <label
@@ -218,7 +218,7 @@ const ProductDetail = () => {
                   <p
                     className={`text-[0.9rem] mx-auto text-center my-auto py-2  px-3 border-[0.01rem] rounded-[0.3rem] border-solid  `}
                   >
-                    Bánh flan
+                    Kemchese + 10000đ
                   </p>
                 </label>
               </div>
@@ -229,7 +229,7 @@ const ProductDetail = () => {
                   id="tranchauden"
                   type="checkbox"
                   name="Trân châu đen"
-                  value="5000"
+                  value="10000"
                 />
                 <label
                   for="tranchauden"
@@ -249,7 +249,7 @@ const ProductDetail = () => {
                   id="tranchautrang"
                   type="checkbox"
                   name="Trân châu trắng"
-                  value="6000"
+                  value="5000"
                 />
                 <label
                   for="tranchautrang"
@@ -259,7 +259,7 @@ const ProductDetail = () => {
                     className={`text-[0.9rem] mx-auto text-center my-auto py-2  px-3 border-[0.01rem] rounded-[0.3rem] border-solid  
                     `}
                   >
-                    Trân châu trắng + 6000đ
+                    Trân châu trắng + 5000đ
                   </p>
                 </label>
               </div>

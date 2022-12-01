@@ -1,18 +1,38 @@
 import { Col, Input, Row, Radio, Button } from "antd";
 import Title from "antd/lib/typography/Title";
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import COD from "../images/payment/COD.jpg";
 import momo from "../images/payment/momo.jpg";
 import paypal from "../images/payment/paypal.jpg";
+import { getUserProfile } from "../reducer/user/userAction";
 
 const Purchase = () => {
-
-// const {user}
-
+  const navigate = useLocation();
+  const dispatch = useDispatch();
+  const totalCart = navigate.state.totalCart;
+  const { user, status, updateStatus, isLoading } = useSelector(
+    (state) => state.user
+  );
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const [userInfo, setUserInfo] = useState("");
   const [valuePayment, setValuePayment] = useState("COD");
   const onChangePayment = (e) => {
     setValuePayment(e.target.value);
   };
+
+  const handleChangeForm = (e) => {
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+    console.log(userInfo);
+  };
+  useEffect(() => {
+    setUserInfo(user);
+  }, [status]);
+  useEffect(() => {
+    dispatch(getUserProfile());
+  }, [isAuthenticated, status]);
   return (
     <div className="container max-w-[1024px] h-full py-20 mx-auto flex  ">
       <Col
@@ -26,8 +46,8 @@ const Purchase = () => {
           name="name"
           placeholder="Họ tên"
           className="rounded-md py-2 my-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-          //   onChange={(e) => handleChangeForm(e)}
-          //   value={userInfo.email}
+          onChange={(e) => handleChangeForm(e)}
+          value={userInfo.hoten}
           required
         />
         <Input
@@ -36,8 +56,8 @@ const Purchase = () => {
           name="phone"
           placeholder="Số điện thoại"
           className="rounded-md py-2 mb-3  placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-          //   onChange={(e) => handleChangeForm(e)}
-          //   value={userInfo.email}
+          onChange={(e) => handleChangeForm(e)}
+          value={userInfo.sdt}
           required
         />
         <Input
@@ -46,8 +66,8 @@ const Purchase = () => {
           name="email"
           placeholder="Email"
           className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-          //   onChange={(e) => handleChangeForm(e)}
-          //   value={userInfo.email}
+          onChange={(e) => handleChangeForm(e)}
+          value={userInfo.email}
           required
         />
         <Input
@@ -56,8 +76,8 @@ const Purchase = () => {
           name="address"
           placeholder="Địa chỉ"
           className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-          //   onChange={(e) => handleChangeForm(e)}
-          //   value={userInfo.email}
+          onChange={(e) => handleChangeForm(e)}
+          value={userInfo.diachi}
           required
         />
         <Row gutter={10}>
@@ -175,7 +195,7 @@ const Purchase = () => {
           </div>
           <div className="w-full flex mt-10 justify-between ">
             <p>TỔNG CỘNG</p>
-            <p>5.000 VND</p>
+            <p>{totalCart} VND</p>
           </div>
           <Button className="bg-[#146d4d] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.8rem] font-bold">
             Purchase

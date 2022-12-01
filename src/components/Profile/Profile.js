@@ -10,6 +10,7 @@ import {
   Spin,
   message,
 } from "antd";
+import axios from "axios";
 import Title from "antd/lib/typography/Title";
 import React, { useEffect, useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -26,7 +27,7 @@ const Profile = () => {
   );
   const { isAuthenticated } = useSelector((state) => state.auth);
   // console.log(user);
-  const [isFirst,setIsFirst] = useState(true);
+  const [isFirst, setIsFirst] = useState(true);
   const [selectedImage, setSelectedImage] = useState(user.urlavt);
   const [userInfo, setUserInfo] = useState("");
 
@@ -37,15 +38,26 @@ const Profile = () => {
     console.log(userInfo);
   };
 
-  const onChangeImage = (e) => {
+  const onChangeImage = async (e) => {
     console.log(e.target.files[0]);
     const urlImage = URL.createObjectURL(e.target.files[0]);
     setSelectedImage(urlImage);
-    setUserInfo({
-      ...userInfo,
-      urlavt: urlImage,
-    });
-    console.log(urlImage);
+
+    const formData = new FormData();
+    formData.append("file", e.target.files[0]);
+    formData.append("upload_preset", "themorrii");
+    const res = await axios.post(
+      "https://api.cloudinary.com/v1_1/dql5y1xex/image/upload",
+      formData
+    );
+    const url = res.data.secure_url;
+    setUserInfo({ ...userInfo, urlavt: url });
+    console.log(url);
+
+    // setUserInfo({
+    //   ...userInfo,
+    //   urlavt: urlImage,
+    // });
   };
 
   const handleChangeGender = (e) => {
@@ -57,16 +69,15 @@ const Profile = () => {
     console.log(userInfo);
     setIsFirst(false);
     dispatch(updateUserProfile(userInfo, user.id));
-   
   };
   useEffect(() => {
     if (isFirst == false) {
       if (isLoading == false && updateStatus == true)
-      message.success("Cập nhật thông tin thành công");
-    else if (isLoading == false && updateStatus == false)
-      message.error("Cập nhật thông tin thất bại");
+        message.success("Cập nhật thông tin thành công");
+      else if (isLoading == false && updateStatus == false)
+        message.error("Cập nhật thông tin thất bại");
     }
-  }, [ isLoading]);
+  }, [isLoading]);
   const handleChangeBirthDay = (e) => {
     setUserInfo({ ...userInfo, ngsinh: e.target.value });
   };
@@ -91,7 +102,7 @@ const Profile = () => {
         <Avatar
           src={
             <Image
-              preview={false} 
+              preview={false}
               className="w-36 h-36"
               src={user.urlavt}
               alt="avatar"
@@ -273,6 +284,23 @@ const Profile = () => {
             className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
             onChange={(e) => handleChangeBirthDay(e)}
             value={userInfo?.ngsinh}
+            required
+          />
+        </Col>
+      </Row>
+      <Row className="w-full mb-8 flex items-center ">
+        <Col span={6} className="">
+          <Title level={5}>Địa chỉ</Title>
+        </Col>
+        <Col span={18}>
+          <Input
+            type="text"
+            size="medium"
+            name="diachi"
+            placeholder="Địa chỉ"
+            className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
+            onChange={(e) => handleChangeForm(e)}
+            value={userInfo.diachi}
             required
           />
         </Col>
