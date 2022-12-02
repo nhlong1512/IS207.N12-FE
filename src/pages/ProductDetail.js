@@ -47,11 +47,12 @@ const ProductDetail = () => {
   const dataProduct = navigate.state.infoProduct;
   const id = dataProduct.id;
   const [total, setTotal] = useState(0);
+
   const [itemAdded, setItemAdded] = useState({
     id: id,
     name: dataProduct.TenSP,
     price: dataProduct.Gia,
-    size: "Vua",
+    size: "M",
     topping: [],
     total: dataProduct.Gia,
   });
@@ -70,7 +71,7 @@ const ProductDetail = () => {
     if (e.target.checked) {
       setListTopping([
         ...listTopping,
-        { name: e.target.name, price: e.target.value },
+        { name: e.target.name, price: e.target.value, MaSP: e.target.id },
       ]);
       console.log(listTopping);
     } else {
@@ -81,7 +82,7 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     var listItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const sizeProduct = sizeVuaActive ? "Vua" : "Lon";
+    const sizeProduct = sizeVuaActive ? "M" : "L";
 
     var item = listItems.find(
       (item) =>
@@ -105,7 +106,7 @@ const ProductDetail = () => {
         id: id,
         name: dataProduct.TenSP,
         price: dataProduct.Gia,
-        size: sizeVuaActive ? "Vua" : "Lon",
+        size: sizeVuaActive ? "M" : "L",
         topping: listTopping,
         quantity: 1,
         total: total,
@@ -134,7 +135,7 @@ const ProductDetail = () => {
         <Breadcrumb>
           <Breadcrumb.Item>Menu</Breadcrumb.Item>
           <Breadcrumb.Item>
-            <a href="/order">Đồ uống</a>
+            <a href="/sanpham">Đồ uống</a>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
             <a href="">{dataProduct.TenSP}</a>
@@ -148,7 +149,7 @@ const ProductDetail = () => {
           </Col>
           <Col span={12}>
             <Title level={2}>{dataProduct.TenSP}</Title>
-            <Text className="text-[1.8rem] text-[#146d4d]">{total}đ</Text>
+            <Text className="text-[1.8rem] text-[#146d4d]">{total.toLocaleString()}đ</Text>
             <Text className="text-[1.2rem]  block">Chọn size (bắt buộc)</Text>
             <div className="flex mt-2">
               <div className="relative h-[2.4rem] w-[7rem] flex items-center border-[0.01rem] rounded-[0.3rem] border-solid  ">
@@ -195,7 +196,7 @@ const ProductDetail = () => {
                       sizeLonActive ? "bg-[#146d4d] text-[#fff]" : "text-[#000]"
                     }`}
                   >
-                    Lớn + 5000đ
+                    Lớn + 5,000đ
                   </p>
                 </label>
               </div>
@@ -206,19 +207,19 @@ const ProductDetail = () => {
                 <Input_checkbox
                   onClick={handleClickTopping}
                   className="hidden  "
-                  id="trongtin"
+                  id="6"
                   type="checkbox"
                   name="Kem chese"
                   value="10000"
                 />
                 <label
-                  for="trongtin"
+                  for="6"
                   className={`cursor-pointer w-full box-border	 block `}
                 >
                   <p
                     className={`text-[0.9rem] mx-auto text-center my-auto py-2  px-3 border-[0.01rem] rounded-[0.3rem] border-solid  `}
                   >
-                    Kemchese + 10000đ
+                    Kemchese + 10,000đ
                   </p>
                 </label>
               </div>
@@ -226,19 +227,19 @@ const ProductDetail = () => {
                 <Input_checkbox
                   onClick={handleClickTopping}
                   className="hidden  "
-                  id="tranchauden"
+                  id="4"
                   type="checkbox"
                   name="Trân châu đen"
-                  value="10000"
+                  value="5000"
                 />
                 <label
-                  for="tranchauden"
+                  for="4"
                   className={`cursor-pointer w-full box-border	 block `}
                 >
                   <p
                     className={`text-[0.9rem] mx-auto text-center my-auto py-2  px-3 border-[0.01rem] rounded-[0.3rem] border-solid `}
                   >
-                    Trân châu đen + 5000đ
+                    Trân châu đen + 5,000đ
                   </p>
                 </label>
               </div>
@@ -246,20 +247,20 @@ const ProductDetail = () => {
                 <Input_checkbox
                   onClick={handleClickTopping}
                   className="hidden  "
-                  id="tranchautrang"
+                  id="5"
                   type="checkbox"
                   name="Trân châu trắng"
                   value="5000"
                 />
                 <label
-                  for="tranchautrang"
+                  for="5"
                   className={`cursor-pointer w-full box-border	 block `}
                 >
                   <p
                     className={`text-[0.9rem] mx-auto text-center my-auto py-2  px-3 border-[0.01rem] rounded-[0.3rem] border-solid  
                     `}
                   >
-                    Trân châu trắng + 5000đ
+                    Trân châu trắng + 5,000đ
                   </p>
                 </label>
               </div>

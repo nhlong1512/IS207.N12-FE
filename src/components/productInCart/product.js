@@ -62,7 +62,7 @@ const Product = ({ item, id, handleChangeItem, size, handleDeleteItem }) => {
             <p className="mb-1">+{item.name}</p>
           ))}
           <p className="text-[#146d4d] text-[1rem] mt-2 mb-0">
-            {item.price}VND
+            {item.price.toLocaleString()}VND
           </p>
         </div>
       </Col>
@@ -79,7 +79,7 @@ const Product = ({ item, id, handleChangeItem, size, handleDeleteItem }) => {
         />
       </Col>
       <Col className="text-[#146d4d] text-[1rem] flex justify-center" span={4}>
-        {totalProduct} VND
+        {totalProduct.toLocaleString()} VND
       </Col>
       <Col
         onClick={(id, size) => handleDeleteItemChild(id, size)}

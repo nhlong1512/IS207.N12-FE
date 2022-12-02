@@ -1,21 +1,36 @@
 import { Col, Input, Row, Radio, Button } from "antd";
 import Title from "antd/lib/typography/Title";
+import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { PurchaseApi } from "../api/PurchaseApi";
 import COD from "../images/payment/COD.jpg";
 import momo from "../images/payment/momo.jpg";
 import paypal from "../images/payment/paypal.jpg";
 import { getUserProfile } from "../reducer/user/userAction";
 
 const Purchase = () => {
-  const navigate = useLocation();
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const totalCart = navigate.state.totalCart;
+  var arrayInput = [];
+  const totalCart = location.state.totalCart;
+  var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
   const { user, status, updateStatus, isLoading } = useSelector(
     (state) => state.user
   );
+  cartItems.map((item) => {
+    arrayInput.push({
+      MaSP: item.id,
+      SoLuong: item.quantity,
+      Size: item.size,
+      MaPL: 1,
+      MaKM: 0,
+      Topping: item.topping,
+    });
+  });
   const { isAuthenticated } = useSelector((state) => state.auth);
   const [userInfo, setUserInfo] = useState("");
   const [valuePayment, setValuePayment] = useState("COD");
@@ -33,6 +48,16 @@ const Purchase = () => {
   useEffect(() => {
     dispatch(getUserProfile());
   }, [isAuthenticated, status]);
+
+  const handleClickPurchase = async () => {
+    var formData = { MaKH: user.id, list: arrayInput };
+    // const formDataJSON = JSON.stringify(formData);
+    PurchaseApi(formData);
+    localStorage.removeItem("cartItems");
+    navigate("/profile", { state: { default: 2 } });
+    window.location.reload();
+  };
+
   return (
     <div className="container max-w-[1024px] h-full py-20 mx-auto flex  ">
       <Col
@@ -176,7 +201,7 @@ const Purchase = () => {
         </div>
       </Col>
       <Col className="h-full pl-[40px]" span={10}>
-        <div className="w-full px-6 h-[70vh] border-[1px] border-solid border-[#F5F5F6] bg-[#F5F5F6] rounded-2xl ">
+        <div className="w-full px-6 h-[82vh] border-[1px] border-solid border-[#F5F5F6] bg-[#F5F5F6] rounded-2xl ">
           <Title
             className="border-b-[0.01rem] border-solid border-[#C6BDBD] py-3 mt-3"
             level={5}
@@ -189,15 +214,22 @@ const Purchase = () => {
               <p>5.000 VND</p>
             </div>
             <div className="w-full flex mt-10 justify-between ">
+              <p>PHÍ SHIP</p>
+              <p>30.000 VND</p>
+            </div>
+            <div className="w-full flex mt-10 justify-between ">
               <p>THUẾ GTGT</p>
               <p>5.000 VND</p>
             </div>
           </div>
           <div className="w-full flex mt-10 justify-between ">
             <p>TỔNG CỘNG</p>
-            <p>{totalCart} VND</p>
+            <p>{totalCart + 30000} VND</p>
           </div>
-          <Button className="bg-[#146d4d] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.8rem] font-bold">
+          <Button
+            onClick={handleClickPurchase}
+            className="bg-[#146d4d] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.8rem] font-bold"
+          >
             Purchase
           </Button>
         </div>

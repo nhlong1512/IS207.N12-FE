@@ -5,7 +5,10 @@ import Title from "antd/lib/typography/Title";
 import Profile from "./Profile";
 import ChangePassWord from "./ChangePassWord";
 import Orders from "./Orders";
+import { useLocation } from "react-router-dom";
 const Sidebar = () => {
+  const location = useLocation();
+  const defaultActiveKey = location.state?.default;
   const arrayProfile = [<Profile />, <ChangePassWord />, <Orders />];
   return (
     <div className="mt-10 h-[160vh] container mx-auto max-w-[1124px]">
@@ -15,7 +18,7 @@ const Sidebar = () => {
       <Tabs
         className="text-left h-[135vh]"
         centered={false}
-        defaultActiveKey="1"
+        defaultActiveKey={defaultActiveKey || 0}
         tabPosition="left"
         style={{
           height: 220,

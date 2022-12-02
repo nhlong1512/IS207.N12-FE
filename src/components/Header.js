@@ -86,7 +86,14 @@ export default function Header() {
     localStorage.removeItem("accessToken");
     navigate("/signin");
   };
-
+  const handleNavigateDoiMatKhau = () => {
+    setIsShowDropdown(false);
+    navigate("/profile", { state: { default: 1 } });
+  };
+  const handleNavigateDonDat = () => {
+    setIsShowDropdown(false);
+    navigate("/profile", { state: { default: 2 } });
+  };
   return (
     <div
       className={`w-full h-[10vh] ${bgNav}  flex justify-around items-center fixed z-50 `}
@@ -136,9 +143,9 @@ export default function Header() {
           {/* a triangle by taiwind css */}
           <div>
             <div
-              className={`fixed top-[3.8rem] right-[6rem]
+              className={`fixed top-[3.8rem] right-[7.6rem]
               z-[1000] w-[10rem] rounded-md shadow-xl
-                 h-[10rem] bg-[#146d4d] text-[#fff] before:fixed before:content-[''] before:top-[3.3rem] before:right-[8.3rem]  before:border-solid before:w-0 before:h-0 before:border-x-[8px] before:border-b-[8px] before:border-x-transparent before:border-b-[#146d4d] ${
+                 h-[10rem] bg-[#146d4d] text-[#fff] before:fixed before:content-[''] before:top-[3.3rem] before:right-[10.5rem]  before:border-solid before:w-0 before:h-0 before:border-x-[8px] before:border-b-[8px] before:border-x-transparent before:border-b-[#146d4d] ${
                    isShowDropdown ? "" : "hidden "
                  } `}
             >
@@ -184,7 +191,9 @@ export default function Header() {
                     />
                   </svg>
                 </div>
-                <p className="mb-0">Đổi Mật Khẩu</p>
+                <p onClick={handleNavigateDoiMatKhau} className="mb-0">
+                  Đổi Mật Khẩu
+                </p>
               </a>
               <a
                 className="text-[#fff] flex items-center pl-[0.4rem] py-2 hover:bg-white hover:opacity-90 hover:text-[#146d4d] hover:font-bold"
@@ -206,7 +215,9 @@ export default function Header() {
                     />
                   </svg>
                 </div>
-                <p className="mb-0">Đơn Đặt</p>
+                <p onClick={handleNavigateDonDat} className="mb-0">
+                  Đơn Đặt
+                </p>
               </a>
               <a
                 onClick={handleClickLogout}
@@ -282,7 +293,7 @@ export default function Header() {
               <ShoppingCartOutlined className="text-[1.8rem] pt-1 " />
             </div>
             {isShowCount && (
-              <div className="fixed text-[#ffffff] bg-[#FF4D4F] rounded-full w-[20px] h-[22px] text-center flex items-center justify-center top-2 right-14 ">
+              <div className="fixed text-[#ffffff] bg-[#FF4D4F] rounded-full w-[20px] h-[22px] text-center flex items-center justify-center top-2 right-[46px] ">
                 {count}
               </div>
             )}

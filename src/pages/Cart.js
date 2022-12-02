@@ -109,7 +109,7 @@ const Cart = () => {
             </div>
             <div className="w-full flex mt-10 justify-between ">
               <p>TỔNG CỘNG</p>
-              <p>{totalCart} VND</p>
+              <p>{totalCart.toLocaleString()} VND</p>
             </div>
             <Button
               onClick={handleClickCheckOut}

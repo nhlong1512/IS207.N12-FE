@@ -109,7 +109,7 @@ const ListOrder = () => {
                           {product.TenSP}
                         </p>
                       }
-                      description={`${product.Gia} VND`}
+                      description={`${product.Gia.toLocaleString()} VND`}
                     />
                   </Card>
                 </Col>

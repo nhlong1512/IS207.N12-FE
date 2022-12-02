@@ -16,6 +16,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Purchase from "./pages/Purchase";
 import Sidebar from "./components/Profile/Sidebar";
+import BillDetail from "./pages/BillDetail";
 const excludeHeaderFooterPath = [
   "/signin",
   "/signup",
@@ -67,6 +68,7 @@ function App() {
           <Route path="/sanpham/:id" element={<ProductDetail />} />
           <Route path="/purchase" element={<Purchase />} />
           <Route path="/profile" element={<Sidebar />} />
+          <Route path="/bill/:id" element={<BillDetail />} />
         </Routes>
       </Wrapper>
       {getFooter()}
