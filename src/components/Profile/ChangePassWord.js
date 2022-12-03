@@ -19,7 +19,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 const ChangePassWord = () => {
   const dispatch = useDispatch();
 const [isFirst, setIsFirst] = useState(true);
-const { user, changePasswordStatus, isLoading } = useSelector(
+const { user, changePasswordStatus, isChangePasswordLoading } = useSelector(
   (state) => state.user
 );
 const [isSuccess, setIsSuccess] = useState(false);
@@ -52,13 +52,16 @@ useEffect(() => {
 
 useEffect(() => {
   if (isFirst == false) {
-    if (changePasswordStatus == true && isLoading == false)
+    if (changePasswordStatus == true && isChangePasswordLoading == false)
       message.success("Cập nhật thông tin thành công");
-    else if (changePasswordStatus == false && isLoading == false) {
+    else if (
+      changePasswordStatus == false &&
+      isChangePasswordLoading == false
+    ) {
       message.error("Cập nhật thông tin thất bại");
     }
   }
-}, [isLoading]);
+}, [isChangePasswordLoading]);
 
 const handleSubmitUpdatePassWord = () => {
   setIsFirst(false);
@@ -66,95 +69,103 @@ const handleSubmitUpdatePassWord = () => {
   console.log(isEqualNewPassword);
   dispatch(ChangePassWordUser(userInfo, user.id));
   console.log(isSuccess);
+
+  setConfirmNewPassword("");
+  setUserInfo({
+    email: user.email,
+    role: "khachhang",
+    password: "",
+    newPassword: "",
+  });
 };
-  return (
-    <div className="w-full h-[135vh] ">
-      {isLoading && (
-        <LoadingOutlined
-          style={{
-            fontSize: 20,
-          }}
-          spin
-        />
-      )}
-      <div className="flex items-center mb-8 w-full ">
-        <div className="w-full">
-          <Title className=" " level={3}>
-            PASSWORD
-          </Title>
-          {/* <input
+return (
+  <div className="w-full h-[135vh] ">
+    {isChangePasswordLoading && (
+      <LoadingOutlined
+        style={{
+          fontSize: 20,
+        }}
+        spin
+      />
+    )}
+    <div className="flex items-center mb-8 w-full ">
+      <div className="w-full">
+        <Title className=" " level={3}>
+          PASSWORD
+        </Title>
+        {/* <input
             // className="hidden"
             type="file"
             name="myImage"
             onChange={(e) => onChangeImage(e)}
           /> */}
-          <div className="flex w-full justify-between">
-            <Title className=" " level={5}>
-              Please never share or give out your password.
-            </Title>
-            <Button
-              onClick={handleSubmitUpdatePassWord}
-              className="w-24 h-8 rounded-lg text-white bg-[#146d4d] hover:bg-[#FF5A5F] flex items-center justify-center"
-            >
-              Lưu
-            </Button>
-          </div>
+        <div className="flex w-full justify-between">
+          <Title className=" " level={5}>
+            Please never share or give out your password.
+          </Title>
+          <Button
+            onClick={handleSubmitUpdatePassWord}
+            className="w-24 h-8 rounded-lg text-white bg-[#146d4d] hover:bg-[#FF5A5F] flex items-center justify-center"
+          >
+            Lưu
+          </Button>
         </div>
       </div>
-      <Row className="w-full mb-8 flex items-center ">
-        <Col span={6} className="">
-          <Title level={5}>Mật khẩu hiện tại</Title>
-        </Col>
-        <Col span={18}>
-          <Input
-            type="password"
-            size="medium"
-            name="password"
-            placeholder="Mật khẩu hiện tại"
-            className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-            onChange={(e) => handleChangeForm(e)}
-            value={userInfo.password}
-            required
-          />
-        </Col>
-      </Row>
-      <Row className="w-full mb-8 flex items-center ">
-        <Col span={6} className="">
-          <Title level={5}>Mậy khẩu mới</Title>
-        </Col>
-        <Col span={18}>
-          <Input
-            type="password"
-            size="medium"
-            name="newPassword"
-            placeholder="Mật khẩu mới"
-            className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-            onChange={(e) => handleChangeForm(e)}
-            value={userInfo.newPassword}
-            required
-          />
-        </Col>
-      </Row>
-
-      <Row className="w-full mb-8 flex items-center ">
-        <Col span={6} className="">
-          <Title level={5}>Xác nhận mật khẩu mới</Title>
-        </Col>
-        <Col span={18}>
-          <Input
-            type="password"
-            size="medium"
-            name="confirmNewPassword"
-            placeholder="Xác nhận mật khẩu mới"
-            className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-            onChange={(e) => handleChangeCfNewPassWord(e)}
-            value={confirmNewPassword}
-            required
-          />
-        </Col>
-      </Row>
     </div>
-  );
+    <Row className="w-full mb-8 flex items-center ">
+      <Col span={6} className="">
+        <Title level={5}>Mật khẩu hiện tại</Title>
+      </Col>
+      <Col span={18}>
+        <Input
+          type="password"
+          size="medium"
+          name="password"
+          placeholder="Mật khẩu hiện tại"
+          className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
+          onChange={(e) => handleChangeForm(e)}
+          value={userInfo.password}
+          required
+        />
+      </Col>
+    </Row>
+    <Row className="w-full mb-8 flex items-center ">
+      <Col span={6} className="">
+        <Title level={5}>Mậy khẩu mới</Title>
+      </Col>
+      <Col span={18}>
+        <Input
+          type="password"
+          size="medium"
+          name="newPassword"
+          placeholder="Mật khẩu mới"
+          className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
+          onChange={(e) => handleChangeForm(e)}
+          value={userInfo.newPassword}
+          required
+        />
+      </Col>
+    </Row>
+
+    <Row className="w-full mb-8 flex items-center ">
+      <Col span={6} className="">
+        <Title level={5}>Xác nhận mật khẩu mới</Title>
+      </Col>
+      <Col span={18}>
+        <Input
+          type="password"
+          size="medium"
+          name="confirmNewPassword"
+          placeholder="Xác nhận mật khẩu mới"
+          className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
+          onChange={(e) => handleChangeCfNewPassWord(e)}
+          value={confirmNewPassword}
+          required
+        />
+      </Col>
+    </Row>
+  </div>
+);
 };
 
 export default ChangePassWord;

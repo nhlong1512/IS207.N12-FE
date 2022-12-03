@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: {},
   isLoading: false,
+  isChangePasswordLoading: false,
+  isChangeProfileLoading: false,
   status: false,
   message: "",
   updateStatus: false,
@@ -29,31 +31,32 @@ const userSlice = createSlice({
       state.user = {};
     },
     updateUserPending: (state) => {
-      state.isLoading = true;
+      state.isChangeProfileLoading = true;
     },
     updateUserSuccess: (state, { payload }) => {
-      state.isLoading = false;
+      state.isChangeProfileLoading = false;
       state.user = payload.user;
-      state.updateStatus =true;
+      state.updateStatus = true;
     },
     updateUserFail: (state, { payload }) => {
-      state.isLoading = false;
+      state.isChangeProfileLoading = false;
       state.updateStatus = false;
     },
     deleteUserSuccess: (state, { payload }) => {
       state.user = {};
     },
     changePassWordUserPending: (state) => {
-      state.isLoading = true;
+      // state.isLoading = true;
+      state.isChangePasswordLoading = true;
     },
     changePassWordUserSuccess: (state, { payload }) => {
       console.log(payload.status);
-      state.isLoading = false;
+      state.isChangePasswordLoading = false;
       state.changePasswordStatus = true;
     },
     changePassWordUserFail: (state, { payload }) => {
       console.log(payload.status);
-      state.isLoading = false;
+      state.isChangePasswordLoading = false;
       state.changePasswordStatus = false;
     },
   },

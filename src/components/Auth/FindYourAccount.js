@@ -1,7 +1,30 @@
 import React from "react";
 import { Alert, Button, Checkbox, Col, Input, Spin, Tag } from "antd";
+import emailjs from "@emailjs/browser";
 import Title from "antd/lib/typography/Title";
 const FindYourAccount = () => {
+  var templateParams = {
+    otp: 123556,
+    username_mail: "trantrongtin01012002@gmail.com",
+  };
+  const handleSubmit = () => {
+    // console.log("submit");
+    emailjs
+      .send(
+        "service_bnk4p9n",
+        "template_95pe4x5",
+        templateParams,
+        "G2m-hpF_YM594u7IJ"
+      )
+      .then(
+        (response) => {
+          console.log("SUCCESS!", response.status, response.text);
+        },
+        (err) => {
+          console.log("FAILED...", err);
+        }
+      );
+  };
   return (
     <div className="w-full h-screen flex bg-[#E5E5E5]  items-center font-SignIn ">
       <Col className="h-[65vh] bg-[#FFFFFF] rounded-md" span={8} offset={8}>
@@ -13,7 +36,7 @@ const FindYourAccount = () => {
             <Input
               type="email"
               size="medium"
-              name="email"
+              name="username-mail"
               placeholder="Email"
               className="rounded-md py-2 my-4 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
               //   onChange={(e) => handleChangeForm(e)}
@@ -23,7 +46,7 @@ const FindYourAccount = () => {
             <div className="w-full mt-32">
               <Button
                 className="bg-[#146d4d] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.7rem] font-bold"
-                // onClick={(e) => handleSubmit(e)}
+                onClick={(e) => handleSubmit(e)}
               >
                 Kiểm tra
               </Button>

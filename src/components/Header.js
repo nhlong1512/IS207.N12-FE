@@ -85,6 +85,7 @@ export default function Header() {
     dispatch(deleteUserProfile());
     localStorage.removeItem("accessToken");
     navigate("/signin");
+    window.location.reload();
   };
   const handleNavigateDoiMatKhau = () => {
     setIsShowDropdown(false);
