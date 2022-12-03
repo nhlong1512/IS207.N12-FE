@@ -21,7 +21,7 @@ const excludeHeaderFooterPath = [
   "/signin",
   "/signup",
   "/forgotpassword",
-  "/storelocator",
+  // "/storelocator",
   "/find-account",
   "/code-validation",
   "/reset-password",
