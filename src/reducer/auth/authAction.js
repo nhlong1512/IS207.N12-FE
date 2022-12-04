@@ -1,10 +1,13 @@
-import { userLogin, userRegister } from "../../api/authApi";
+import { checkEmailExist, userLogin, userRegister } from "../../api/authApi";
 import { deleteUserProfile, getUserProfile } from "../user/userAction";
 import {
   loginFailure,
   loginStart,
   loginSuccess,
   logoutSuccess,
+  getForgotEmailStart,
+  getForgotEmailSuccess,
+  getForgotEmailFailure,
 } from "./authSlice";
 
 export const login = (userInfo, navigate) => async (dispatch) => {
@@ -18,6 +21,7 @@ export const login = (userInfo, navigate) => async (dispatch) => {
       window.localStorage.setItem("accessToken", response.data.token);
       dispatch(getUserProfile());
       navigate("/");
+      window.location.reload();
     }
 
     dispatch(loginFailure(response));
@@ -52,4 +56,21 @@ export const logout = () => async (dispatch) => {
   window.localStorage.removeItem("accessToken");
   dispatch(deleteUserProfile());
   dispatch(logoutSuccess({ error: false, message: "Đăng xuất thành công" }));
+};
+
+export const checkMail = (email) => async (dispatch) => {
+  dispatch(getForgotEmailStart());
+  try {
+    const response = await checkEmailExist(email);
+    console.log(response);
+    console.log("exist");
+
+    if (response.status === true) {
+      dispatch(getForgotEmailSuccess(false));
+    }
+
+    // dispatch(getForgotEmailFailure(response));
+  } catch (err) {
+    dispatch(loginFailure({ error: true, message: err.message }));
+  }
 };

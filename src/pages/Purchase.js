@@ -52,7 +52,8 @@ const Purchase = () => {
   const handleClickPurchase = async () => {
     var formData = { MaKH: user.id, list: arrayInput };
     // const formDataJSON = JSON.stringify(formData);
-    PurchaseApi(formData);
+    console.log(formData);
+    await PurchaseApi(formData);
     localStorage.removeItem("cartItems");
     navigate("/profile", { state: { default: 2 } });
     window.location.reload();
@@ -98,7 +99,7 @@ const Purchase = () => {
         <Input
           type="text"
           size="medium"
-          name="address"
+          name="diachi"
           placeholder="Địa chỉ"
           className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
           onChange={(e) => handleChangeForm(e)}

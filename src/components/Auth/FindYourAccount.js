@@ -1,30 +1,79 @@
-import React from "react";
-import { Alert, Button, Checkbox, Col, Input, Spin, Tag } from "antd";
+import React, { useState } from "react";
+import { Alert, Button, Checkbox, Col, Input, message, Spin, Tag } from "antd";
 import emailjs from "@emailjs/browser";
 import Title from "antd/lib/typography/Title";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getForgotEmail, getOTP } from "../../reducer/auth/authSlice";
+import { checkMail } from "../../reducer/auth/authAction";
+import { checkEmailExist } from "../../api/authApi";
 const FindYourAccount = () => {
-  var templateParams = {
-    otp: 123556,
-    username_mail: "trantrongtin01012002@gmail.com",
+  const { isEmailExist, isLoading } = useSelector((state) => state.auth);
+  const regex_email =
+    /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [username_mail, setUsername_mail] = useState("");
+  const [isExists, setIsExists] = useState(false);
+  const [isFirst, setIsFirst] = useState(true);
+
+  const handleChangeForm = (e) => {
+    setIsFirst(false);
+    setUsername_mail(e.target.value);
+    console.log(username_mail);
   };
-  const handleSubmit = () => {
-    // console.log("submit");
-    emailjs
-      .send(
-        "service_bnk4p9n",
-        "template_95pe4x5",
-        templateParams,
-        "G2m-hpF_YM594u7IJ"
-      )
-      .then(
-        (response) => {
-          console.log("SUCCESS!", response.status, response.text);
-        },
-        (err) => {
-          console.log("FAILED...", err);
-        }
-      );
+  const [templateParams, setTemplateParams] = useState({
+    otp: 0,
+    username_mail: "",
+  });
+
+  useEffect(() => {
+    var OTP = Math.floor(100000 + Math.random() * 900000);
+    setTemplateParams({
+      otp: OTP,
+      username_mail: username_mail,
+    });
+    dispatch(getOTP(OTP));
+    console.log(OTP);
+    console.log(templateParams);
+  }, [username_mail]);
+  const handleSubmit = async () => {
+    console.log(isEmailExist);
+    if (regex_email.test(username_mail) == false) {
+      message.error("Email không hợp lệ");
+    } else {
+      dispatch(getForgotEmail(username_mail));
+      dispatch(checkMail(username_mail));
+    }
   };
+
+  useEffect(() => {
+    if (isFirst == false) {
+      if (isEmailExist == true) {
+        emailjs
+          .send(
+            "service_bnk4p9n",
+            "template_95pe4x5",
+            templateParams,
+            "G2m-hpF_YM594u7IJ"
+          )
+          .then(
+            (response) => {
+              console.log("SUCCESS!", response.status, response.text);
+              message.success("Gửi mã OTP thành công");
+              navigate("/code-validation");
+            },
+            (err) => {
+              console.log("FAILED...", err);
+            }
+          );
+        navigate("/code-validation");
+      } else if (isEmailExist == false && isLoading == false) {
+        message.error("Email không tồn tại");
+      }
+    }
+  }, [isEmailExist, isLoading]);
   return (
     <div className="w-full h-screen flex bg-[#E5E5E5]  items-center font-SignIn ">
       <Col className="h-[65vh] bg-[#FFFFFF] rounded-md" span={8} offset={8}>
@@ -39,8 +88,8 @@ const FindYourAccount = () => {
               name="username-mail"
               placeholder="Email"
               className="rounded-md py-2 my-4 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
-              //   onChange={(e) => handleChangeForm(e)}
-              //   value={userInfo.email}
+              onChange={(e) => handleChangeForm(e)}
+              value={username_mail}
               required
             />
             <div className="w-full mt-32">

@@ -51,3 +51,31 @@ export const userLogout = () => {
     }
   });
 };
+
+
+
+export const checkEmailExist = (email) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await axios.get(`${baseUrl}/auth/checkEmail/${email}`);
+      if (data.status === true) {
+        console.log(data);
+        resolve(data);
+      }
+    } catch (error) {
+      reject(error.response.data);
+    }
+  });
+};
+
+export const resetPassword = (userInfor) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await axios.post(`${baseUrl}/auth/resetpw`, userInfor);
+      console.log("data", data);
+      resolve(data);
+    } catch (error) {
+      reject(error.response.data);
+    }
+  });
+};
