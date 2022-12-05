@@ -40,7 +40,9 @@ const Input_checkbox = styled.input`
 `;
 const ProductDetail = () => {
   const dispatch = useDispatch();
+  const navigate1 = useNavigate();
   const navigate = useLocation();
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const [sizeVuaActive, setSizeVuaActive] = useState(true);
   const [sizeLonActive, setSizeLonActive] = useState(false);
   const [listTopping, setListTopping] = useState([]);
@@ -81,43 +83,48 @@ const ProductDetail = () => {
   };
 
   const handleAddToCart = () => {
-    var listItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const sizeProduct = sizeVuaActive ? "M" : "L";
+    if (isAuthenticated) {
+      var listItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      const sizeProduct = sizeVuaActive ? "M" : "L";
 
-    var item = listItems.find(
-      (item) =>
-        item.id === id &&
-        item.size === sizeProduct &&
-        _.isEqual(item.topping, listTopping)
-    );
-
-    if (item) {
-      item.quantity += 1;
-      const totalPriceTopping = item.topping.reduce(
-        (total1, item) => total1 + parseInt(item.price),
-        0
+      var item = listItems.find(
+        (item) =>
+          item.id === id &&
+          item.size === sizeProduct &&
+          _.isEqual(item.topping, listTopping)
       );
-      console.log(totalPriceTopping);
 
-      item.total = total * item.quantity;
-      console.log(item.quantity);
+      if (item) {
+        item.quantity += 1;
+        const totalPriceTopping = item.topping.reduce(
+          (total1, item) => total1 + parseInt(item.price),
+          0
+        );
+        console.log(totalPriceTopping);
+
+        item.total = total * item.quantity;
+        console.log(item.quantity);
+      } else {
+        var item = {
+          id: id,
+          name: dataProduct.TenSP,
+          price: dataProduct.Gia,
+          size: sizeVuaActive ? "M" : "L",
+          topping: listTopping,
+          quantity: 1,
+          total: total,
+        };
+        listItems.push(item);
+      }
+      localStorage.setItem("cartItems", JSON.stringify(listItems));
+      dispatch(addProductToCard(listItems.length));
+      message.success("Thêm vào giỏ hàng thành công");
+      setItemAdded(item);
+      console.log(item);
     } else {
-      var item = {
-        id: id,
-        name: dataProduct.TenSP,
-        price: dataProduct.Gia,
-        size: sizeVuaActive ? "M" : "L",
-        topping: listTopping,
-        quantity: 1,
-        total: total,
-      };
-      listItems.push(item);
+      message.error("Vui lòng đăng nhập để thêm vào giỏ hàng");
+      navigate1("/signin");
     }
-    localStorage.setItem("cartItems", JSON.stringify(listItems));
-    dispatch(addProductToCard(listItems.length));
-    message.success("Thêm vào giỏ hàng thành công");
-    setItemAdded(item);
-    console.log(item);
     // window.location.reload();
   };
 

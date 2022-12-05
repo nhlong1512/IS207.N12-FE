@@ -96,6 +96,14 @@ export default function Header() {
     setIsShowDropdown(false);
     navigate("/profile", { state: { default: 2 } });
   };
+
+  const handleClickCart = () => {
+    if (isAuthenticated) {
+      navigate("/cart");
+    } else {
+      navigate("/signin");
+    }
+  };
   return (
     <div
       className={`w-full h-[10vh] ${bgNav}  flex justify-around items-center fixed z-50 `}
@@ -290,16 +298,17 @@ export default function Header() {
           <div
             className={`border-r-[0.05rem]  border-solid ${borderNav} `}
           ></div>
-          <Link to="/cart">
-            <div className={`cursor-pointer  ${txtNav}`}>
-              <ShoppingCartOutlined className="text-[1.8rem] pt-1 " />
+          <div
+            onClick={handleClickCart}
+            className={`cursor-pointer  ${txtNav}`}
+          >
+            <ShoppingCartOutlined className="text-[1.8rem] pt-1 " />
+          </div>
+          {isShowCount && (
+            <div className="fixed text-[#ffffff] bg-[#FF4D4F] rounded-full w-[20px] h-[22px] text-center flex items-center justify-center top-3 right-[75px] ">
+              {count}
             </div>
-            {isShowCount && (
-              <div className="fixed text-[#ffffff] bg-[#FF4D4F] rounded-full w-[20px] h-[22px] text-center flex items-center justify-center top-3 right-[75px] ">
-                {count}
-              </div>
-            )}
-          </Link>
+          )}
         </div>
       </div>
     </div>
