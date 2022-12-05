@@ -1,8 +1,18 @@
 import Title from "antd/lib/typography/Title";
+import { AudioOutlined } from "@ant-design/icons";
 import Text from "antd/lib/typography/Text";
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Breadcrumb, Card, Col, Row, Typography } from "antd";
+import {
+  Breadcrumb,
+  Card,
+  Col,
+  Pagination,
+  Row,
+  Typography,
+  Input,
+  Space,
+} from "antd";
 import Meta from "antd/lib/card/Meta";
 import order1 from "../images/menu/order1.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,6 +20,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../api/bookApi";
 import { fetchProduct } from "../reducer/product/productAction";
 import axios from "axios";
+import Search from "antd/lib/input/Search";
+import {
+  onFilterProduct,
+  searchFilterChanged,
+} from "../reducer/product/productSlice";
 const Img = styled.img`
   -webkit-transform: scale(1);
   -moz-transform: scale(1);
@@ -32,18 +47,17 @@ const Img = styled.img`
 const ListOrder = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.product);
- 
+  const { products, currentPage } = useSelector((state) => state.product);
+
   useEffect(() => {
     dispatch(fetchProduct());
-
     console.log(products);
-  }, [dispatch]);
+  }, []);
 
   const handleClickProduct = async (e) => {
     console.log(e.target.id);
     const idProduct = e.target.id;
-    const baseUrl = "http://localhost:8000/api/sanpham";
+    const baseUrl = `http://localhost:8000/api/sanpham`;
     const res = await axios.get(`${baseUrl}/${idProduct}`);
     console.log(res.data.sanpham);
     if (res.data.status) {
@@ -52,9 +66,18 @@ const ListOrder = () => {
       });
     }
   };
+  const onSearch = (e) => {
+    dispatch(searchFilterChanged(e.target.value));
+    dispatch(onFilterProduct(e.target.value));
+    console.log(e.target.value);
+  };
+  const OnPageChange = (page, pageSize) => {
+    console.log(page, pageSize);
+    dispatch(fetchProduct(page));
+  };
 
   return (
-    <div className="container  h-[160vh] mx-auto mt-20 max-w-[1024px]">
+    <div className="container  h-full mx-auto mt-20 max-w-[1024px]">
       <div className="mb-10 mt-4">
         <Breadcrumb>
           <Breadcrumb.Item>Menu</Breadcrumb.Item>
@@ -71,7 +94,19 @@ const ListOrder = () => {
           <p className="cursor-pointer">Đồ ăn</p>
         </Col>
         <Col className="overflow-hidden" span={20}>
-          <Title>Featured</Title>
+          <div className="flex ">
+            <Title>Featured</Title>
+
+            <Search
+              className="pt-2"
+              placeholder="Tìm kiếm sản phẩm"
+              onChange={(e) => onSearch(e)}
+              style={{
+                marginLeft: "40px",
+                width: 300,
+              }}
+            />
+          </div>
           <Row
             gutter={35}
             className="border-t-[1px] pt-1 border-solid border-[#ABABAB] "
@@ -117,6 +152,16 @@ const ListOrder = () => {
             })}
           </Row>
         </Col>
+
+        <Row className="h-full w-full flex justify-end">
+          <Pagination
+            className="h-[10rem]  py-10 overflow-y-visible"
+            defaultCurrent={1}
+            size="large"
+            total={30}
+            onChange={(page, pageSize) => OnPageChange(page, pageSize)}
+          />
+        </Row>
       </Row>
     </div>
   );

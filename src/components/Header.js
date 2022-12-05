@@ -84,6 +84,7 @@ export default function Header() {
     console.log("logout");
     dispatch(deleteUserProfile());
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("cartItems");
     navigate("/signin");
     window.location.reload();
   };

@@ -8,4 +8,25 @@
   font-family: "Josefin Sans", sans-serif;
   scroll-behavior: smooth;
   overflow-x: hidden;
+  
+}
+
+
+
+.ant-pagination-prev,
+.ant-pagination-next,
+.ant-pagination-jump-prev,
+.ant-pagination-jump-next {
+  display: inline-block;
+  min-width: 32px;
+  height: auto !important;
+  color: rgba(0, 0, 0, 0.85);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  line-height: 32px;
+  text-align: center;
+  vertical-align: middle;
+  list-style: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
 }
