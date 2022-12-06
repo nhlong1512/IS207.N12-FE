@@ -300,15 +300,15 @@ export default function Header() {
           ></div>
           <div
             onClick={handleClickCart}
-            className={`cursor-pointer  ${txtNav}`}
+            className={`cursor-pointer relative w-[4rem] ${txtNav}`}
           >
             <ShoppingCartOutlined className="text-[1.8rem] pt-1 " />
+            {isShowCount && (
+              <div className="absolute text-[#ffffff] bg-[#FF4D4F] rounded-full w-[20px] h-[22px] text-center flex items-center justify-center top-0 right-[25px] ">
+                {count}
+              </div>
+            )}
           </div>
-          {isShowCount && (
-            <div className="fixed text-[#ffffff] bg-[#FF4D4F] rounded-full w-[20px] h-[22px] text-center flex items-center justify-center top-3 right-[75px] ">
-              {count}
-            </div>
-          )}
         </div>
       </div>
     </div>

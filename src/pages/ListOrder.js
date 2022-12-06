@@ -1,7 +1,7 @@
 import Title from "antd/lib/typography/Title";
 import { AudioOutlined } from "@ant-design/icons";
 import Text from "antd/lib/typography/Text";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   Breadcrumb,
@@ -23,6 +23,7 @@ import axios from "axios";
 import Search from "antd/lib/input/Search";
 import {
   onFilterProduct,
+  onPhanLoai,
   searchFilterChanged,
 } from "../reducer/product/productSlice";
 const Img = styled.img`
@@ -48,7 +49,9 @@ const ListOrder = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { products, currentPage } = useSelector((state) => state.product);
-
+  const [isTatcaActiveFilter, setIsTatcaActiveFilter] = useState(true);
+  const [isDoUongActiveFilter, setIsDoUongActiveFilter] = useState(false);
+  const [isDoAnActiveFilter, setIsDoAnActiveFilter] = useState(false);
   useEffect(() => {
     dispatch(fetchProduct());
     console.log(products);
@@ -73,7 +76,30 @@ const ListOrder = () => {
   };
   const OnPageChange = (page, pageSize) => {
     console.log(page, pageSize);
+    dispatch(onPhanLoai(0));
+    setIsTatcaActiveFilter(true);
+    setIsDoUongActiveFilter(false);
+    setIsDoAnActiveFilter(false);
     dispatch(fetchProduct(page));
+  };
+
+  const handleClickTatCa = () => {
+    dispatch(onPhanLoai(0));
+    setIsTatcaActiveFilter(true);
+    setIsDoUongActiveFilter(false);
+    setIsDoAnActiveFilter(false);
+  };
+  const handleClickDoUong = () => {
+    dispatch(onPhanLoai(1));
+    setIsTatcaActiveFilter(false);
+    setIsDoUongActiveFilter(true);
+    setIsDoAnActiveFilter(false);
+  };
+  const handleClickDoAn = () => {
+    dispatch(onPhanLoai(2));
+    setIsTatcaActiveFilter(false);
+    setIsDoUongActiveFilter(false);
+    setIsDoAnActiveFilter(true);
   };
 
   return (
@@ -89,13 +115,34 @@ const ListOrder = () => {
       <Row>
         <Col className="flex-col" span={4}>
           <Title>Menu</Title>
-          <p className="font-bold">Featured</p>
-          <p className="cursor-pointer">Đồ uống</p>
-          <p className="cursor-pointer">Đồ ăn</p>
+          <p
+            onClick={handleClickTatCa}
+            className={`cursor-pointer text-[1rem] ${
+              isTatcaActiveFilter ? "font-bold" : ""
+            }`}
+          >
+            Tất cả
+          </p>
+          <p
+            onClick={handleClickDoUong}
+            className={`cursor-pointer text-[1rem] ${
+              isDoUongActiveFilter ? "font-bold" : ""
+            }`}
+          >
+            Đồ uống
+          </p>
+          <p
+            onClick={handleClickDoAn}
+            className={`cursor-pointer text-[1rem] ${
+              isDoAnActiveFilter ? "font-bold" : ""
+            }`}
+          >
+            Đồ ăn
+          </p>
         </Col>
         <Col className="overflow-hidden" span={20}>
           <div className="flex ">
-            <Title>Featured</Title>
+            <Title level={2}>Featured</Title>
 
             <Search
               className="pt-2"

@@ -58,6 +58,18 @@ const productSlice = createSlice({
         state.products = filterProduct;
       } else state.products = state.totalProduct;
     },
+    onPhanLoai: (state, { payload }) => {
+      if (payload > 0) {
+        const filterProduct = state.totalProduct.filter(
+          (product) => product.MaPL === payload
+        );
+
+        console.log(filterProduct);
+        state.products = filterProduct;
+      } else {
+        state.products = state.totalProduct;
+      }
+    },
   },
 });
 
@@ -70,6 +82,7 @@ export const {
   addProductToCard,
   searchFilterChanged,
   onFilterProduct,
+  onPhanLoai,
 } = actions;
 
 export default reducer;
