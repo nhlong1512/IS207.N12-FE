@@ -32,7 +32,7 @@ const AppMenu = () => {
   }
 
   const redirectTo = (path) => {
-    navigate("/" + path);
+    navigate("/admin/" + path);
   };
 
   const dispatch = useDispatch();
@@ -92,14 +92,14 @@ const AppMenu = () => {
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
     >
-      <div className="flex items-center justify-center gap-4 p-4">
-        <img src={Logo} alt="Application Logo" className="w-8 h-8" />
+      <div className="flex  justify-center gap-4 p-6">
+        <img src={Logo} alt="Application Logo" className="w-9 h-5" />
         <h1
           className={`text-white font-extrabold transition-opacity duration-100 ${
             collapsed ? "absolute opacity-0" : ""
           }`}
         >
-          HAMBURSY
+          Morrii Coffee
         </h1>
       </div>
       <Menu

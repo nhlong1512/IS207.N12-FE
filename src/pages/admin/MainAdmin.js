@@ -1,15 +1,21 @@
 import React from "react";
-import { Layout } from "antd";
+import { Button, Layout, Space, Table, Tag } from "antd";
 import AppMenu from "../../components/admin/AppMenu";
+import { getAlUser } from "../../api/admin/Users";
+import { useEffect } from "react";
+import { useState } from "react";
+import Users_admin from "../../components/admin/Users_admin";
+import { Outlet } from "react-router-dom";
+
 const { Header, Footer, Sider, Content } = Layout;
 const MainAdmin = () => {
+  const [data, setData] = useState([]);
+
   return (
-    <Layout className="min-h-screen">
+    <Layout className="min-h-screen bg-[#fff]">
       <AppMenu />
-      <Layout className="">
-        <Header className="bg-white">Header</Header>
-        <Content>Content</Content>
-        <Footer className="bg-orange-500">Footer</Footer>
+      <Layout className="bg-[#fff]">
+        <Outlet  />
       </Layout>
     </Layout>
   );

@@ -18,6 +18,11 @@ import Purchase from "./pages/Purchase";
 import Sidebar from "./components/Profile/Sidebar";
 import BillDetail from "./pages/BillDetail";
 import MainAdmin from "./pages/admin/MainAdmin";
+import Users_admin from "./components/admin/Users_admin";
+import MainLayout from "./layouts/MainLayout";
+import Staffs_admin from "./components/admin/Staffs_admin";
+import AddPerSon from "./components/admin/FormAdd/AddPerSon";
+import DetailPerSon from "./components/admin/FormAdd/DetailPerSon";
 const excludeHeaderFooterPath = [
   "/signin",
   "/signup",
@@ -55,26 +60,31 @@ const Wrapper = ({ children }) => {
 function App() {
   return (
     <>
-      {getHeader()}
       <Wrapper>
         <Routes>
-          <Route exact path="/" element={<Home />} />
           <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/find-account" element={<FindYourAccount />} />
           <Route path="/code-validation" element={<CodeValidation />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/sanpham" element={<ListOrder />} />
-          {/* <Route path="/product-detail" element={<ProductDetail />} /> */}
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/sanpham/:id" element={<ProductDetail />} />
-          <Route path="/purchase" element={<Purchase />} />
-          <Route path="/profile" element={<Sidebar />} />
-          <Route path="/bill/:id" element={<BillDetail />} />
-          <Route path="/admin" element={<MainAdmin />} />
+          <Route path="/admin/" element={<MainAdmin />}>
+            <Route path="user" element={<Users_admin />} />
+            <Route path="staff/" element={<Staffs_admin />} />
+            <Route path="staff/add-staff" element={<AddPerSon />} />
+            <Route path="staff/detail-staff" element={<DetailPerSon />} />
+          </Route>
+          <Route element={<MainLayout />}>
+            <Route exact path="/" element={<Home />} />
+            <Route path="/sanpham" element={<ListOrder />} />
+            {/* <Route path="/product-detail" element={<ProductDetail />} /> */}
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/sanpham/:id" element={<ProductDetail />} />
+            <Route path="/purchase" element={<Purchase />} />
+            <Route path="/profile" element={<Sidebar />} />
+            <Route path="/bill/:id" element={<BillDetail />} />
+          </Route>
         </Routes>
       </Wrapper>
-      {getFooter()}
     </>
   );
 }

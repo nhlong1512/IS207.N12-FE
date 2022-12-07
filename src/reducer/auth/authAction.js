@@ -21,7 +21,6 @@ export const login = (userInfo, navigate) => async (dispatch) => {
       window.localStorage.setItem("accessToken", response.data.token);
       dispatch(getUserProfile());
       navigate("/");
-      window.location.reload();
     }
 
     dispatch(loginFailure(response));
