@@ -25,6 +25,7 @@ import AddPerSon from "./components/admin/FormAdd/AddPerSon";
 import DetailPerSon from "./components/admin/FormAdd/DetailPerSon";
 import Products_admin from "./components/admin/Products_admin";
 import AddProduct from "./components/admin/FormAdd/AddProduct";
+import DetailProduct from "./components/admin/FormAdd/DetailProduct";
 const excludeHeaderFooterPath = [
   "/signin",
   "/signup",
@@ -76,6 +77,7 @@ function App() {
             <Route path="staff/detail-staff" element={<DetailPerSon />} />
             <Route path="product" element={<Products_admin />} />
             <Route path="product/add-product" element={<AddProduct />} />
+            <Route path="product/detail-product" element={<DetailProduct />} />
           </Route>
           <Route element={<MainLayout />}>
             <Route exact path="/" element={<Home />} />

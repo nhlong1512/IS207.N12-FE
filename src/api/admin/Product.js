@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseUrl = "http://localhost:8000/api";
 
-export const getAlUser = (id) => {
+export const createProduct = (productInfor) => {
   return new Promise(async (resolve, reject) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
@@ -10,7 +10,7 @@ export const getAlUser = (id) => {
       if (!accessToken) {
         reject({ error: true, message: "Token not found!" });
       }
-      const res = await axios.get(`${baseUrl}/nguoidung`, {
+      const res = await axios.post(`${baseUrl}/sanpham`, productInfor, {
         headers: { Authorization: "Bearer " + accessToken },
       });
       console.log("res", res);
@@ -21,42 +21,24 @@ export const getAlUser = (id) => {
   });
 };
 
-export const getDetailUserApi = (id) => {
+export const getDetailProductApi = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const res = await axios.get(`${baseUrl}/nguoidung/${id}`);
-      console.log("res", res);
-      resolve(res.data);
+      const { data } = await axios.get(`${baseUrl}/sanpham/${id}`);
+      console.log(data);
+
+      resolve(data);
     } catch (error) {
       reject(error.response.data);
     }
   });
 };
 
-export const createUser = (userInfor) => {
+export const updateProduct = (productInfo, id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
-      console.log(accessToken);
-      if (!accessToken) {
-        reject({ error: true, message: "Token not found!" });
-      }
-      const res = await axios.post(`${baseUrl}/nguoidung`, userInfor, {
-        headers: { Authorization: "Bearer " + accessToken },
-      });
-      console.log("res", res);
-      resolve(res.data);
-    } catch (error) {
-      reject(error.response.data);
-    }
-  });
-};
-
-export const updateStaff = (userInfo, id) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const accessToken = localStorage.getItem("accessToken");
-      const res = await axios.put(`${baseUrl}/nguoidung/${id}`, userInfo, {
+      const res = await axios.put(`${baseUrl}/sanpham/${id}`, productInfo, {
         headers: { Authorization: "Bearer " + accessToken },
       });
       console.log("data", res.data);
@@ -67,24 +49,17 @@ export const updateStaff = (userInfo, id) => {
   });
 };
 
-export const deleteStaff = (id) => {
+export const deleteProduct = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
-      console.log(accessToken);
-      if (!accessToken) {
-        reject({ error: true, message: "Token not found!" });
-      }
-      const res = await axios.delete(`${baseUrl}/nguoidung/${id}`, {
+      const res = await axios.delete(`${baseUrl}/sanpham/${id}`, {
         headers: { Authorization: "Bearer " + accessToken },
       });
-      console.log("res", res);
-      resolve(res.data);
+      console.log("data", res.data);
+      resolve(res);
     } catch (error) {
       reject(error.response.data);
     }
   });
 };
-
-
-

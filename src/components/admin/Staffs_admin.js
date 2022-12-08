@@ -40,7 +40,9 @@ const Staffs_admin = () => {
 
     console.log(detailUser);
     dispatch(getDetailUser(detailUser));
-    navigate("/admin/staff/detail-staff");
+    navigate("/admin/staff/detail-staff", {
+      state: { detailStaff: detailUser },
+    });
   };
   const handleClickDeleteStaff = async (e) => {
     const id = e.target.id;
@@ -94,7 +96,10 @@ const Staffs_admin = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <div onClick={(e) => handleClickDetailPerson(e)}>
+          <div
+            className="cursor-pointer"
+            onClick={(e) => handleClickDetailPerson(e)}
+          >
             <svg
               id={record.id}
               xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +117,10 @@ const Staffs_admin = () => {
               />
             </svg>
           </div>
-          <div onClick={(e) => handleClickDeleteStaff(e)}>
+          <div
+            className="cursor-pointer"
+            onClick={(e) => handleClickDeleteStaff(e)}
+          >
             <svg
               id={record.id}
               xmlns="http://www.w3.org/2000/svg"

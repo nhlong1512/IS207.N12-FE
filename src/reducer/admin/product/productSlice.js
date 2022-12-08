@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   products: [],
   totalProduct: [],
-
+  detailProduct: {},
   isLoading: false,
   status: false,
   error: "",
@@ -34,6 +34,23 @@ const productSlice = createSlice({
     fetchProductsFail: (state, { payload }) => {
       state.isLoading = false;
       state.message = payload.message;
+      state.status = payload.status;
+    },
+
+    getDetailProduct: (state, { payload }) => {
+      console.log(payload);
+      state.detailProduct = payload;
+    },
+    updateProductPending: (state) => {
+      state.isLoading = true;
+    },
+    updateProductSuccess: (state, { payload }) => {
+      state.isLoading = false;
+      state.detailUser = payload.sanpham;
+      state.status = payload.status;
+    },
+    updateProductFail: (state, { payload }) => {
+      state.isLoading = false;
       state.status = payload.status;
     },
     // addProductToCard: (state, { payload }) => {
@@ -76,6 +93,10 @@ export const {
   fetchProductsLoading,
   fetchProductsSuccess,
   fetchProductsFail,
+  getDetailProduct,
+  updateProductPending,
+  updateProductSuccess,
+  updateProductFail,
   //   addProductToCard,
   //   searchFilterChanged,
   //   onFilterProduct,

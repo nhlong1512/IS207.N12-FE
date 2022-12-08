@@ -20,27 +20,31 @@ import {
   getUserProfile,
   updateUserProfile,
 } from "../../../reducer/user/userAction";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { createUser } from "../../../api/admin/Users";
 import { getAllUserProfile } from "../../../reducer/admin/user/userAction";
-import { fetchProduct } from "../../../reducer/admin/product/productAction";
-import { createProduct } from "../../../api/admin/Product";
+import {
+  fetchProduct,
+  updateDetailProduct,
+} from "../../../reducer/admin/product/productAction";
+import { createProduct, getDetailProductApi } from "../../../api/admin/Product";
 import { stringify } from "postcss";
+import { getDetailProduct } from "../../../reducer/admin/product/productSlice";
 // import {
 //   getUserProfile,
 //   updateUserProfile,
 // } from "../../reducer/user/userAction";
-const AddProduct = () => {
+const DetailProduct = () => {
   const dispatch = useDispatch();
-
+  const location = useLocation();
+  const detailProductLocation = location.state.detailProduct;
   // console.log(user);
+  const { detailProduct, status, isLoading } = useSelector(
+    (state) => state.product_admin
+  );
   const [isFirst, setIsFirst] = useState(true);
   const [selectedImage, setSelectedImage] = useState("");
-  const [productInfo, setProductInfo] = useState({
-    TenSP: "",
-    Gia: "",
-    MaPL: 1,
-  });
+  const [productInfo, setProductInfo] = useState({});
 
   //validate date
 
@@ -75,6 +79,7 @@ const AddProduct = () => {
   };
 
   const handleChangeGender = (e) => {
+    setIsFirst(false);
     const gt = e.target.value;
     setProductInfo({ ...productInfo, [e.target.name]: gt });
     console.log(gt);
@@ -84,48 +89,63 @@ const AddProduct = () => {
       message.error("Giá phải là số");
     } else {
       console.log(productInfo);
-      const res = await createProduct(productInfo);
-      console.log(res);
-      if (res.status == true) {
-        dispatch(fetchProduct());
-        message.success("Thêm sản phẩm thành công");
-      }
+      dispatch(updateDetailProduct(productInfo, detailProductLocation.id));
     }
   };
-
+  useEffect(() => {
+    if (isFirst == false) {
+      if (isLoading == false && status == true)
+        message.success("Cập nhật thông tin thành công");
+      else if (isLoading == false && status == false)
+        message.error("Cập nhật thông tin thất bại");
+    }
+  }, [isLoading]);
+  useEffect(() => {
+    setProductInfo(detailProductLocation);
+  }, [detailProduct]);
   // }
-
+  useEffect(() => {
+    const fetchDetailProduct = async () => {
+      const data = await getDetailProductApi(detailProductLocation.id);
+      if (data.status == true) {
+        setProductInfo(data.sanpham);
+        dispatch(getDetailProduct(data.sanpham));
+      }
+      console.log("data", data);
+    };
+    fetchDetailProduct();
+  }, [status]);
   return (
     <div className="container mx-auto max-w-4xl h-[100vh]  ">
       {/* {isChangeProfileLoading && (
-          <LoadingOutlined
-            style={{
-              fontSize: 20,
-            }}
-            spin
-          />
-        )} */}
+            <LoadingOutlined
+              style={{
+                fontSize: 20,
+              }}
+              spin
+            />
+          )} */}
       <div className="flex items-center mb-6 mt-10  w-full  ">
-        {selectedImage && (
+        {productInfo.HinhAnh && (
           <Image
             preview={false}
-            className="w-32 h-32"
-            src={selectedImage}
+            className="w-32 h-32 pr-2"
+            src={productInfo?.HinhAnh}
             alt="avatar"
           />
         )}
 
-        <div className="w-full ml-4">
+        <div className="w-full ">
           <Title className=" " level={3}>
             PRODUCT
           </Title>
 
           {/* <input
-                // className="hidden"
-                type="file"
-                name="myImage"
-                onChange={(e) => onChangeImage(e)}
-              /> */}
+                  // className="hidden"
+                  type="file"
+                  name="myImage"
+                  onChange={(e) => onChangeImage(e)}
+                /> */}
 
           <div className="flex w-full justify-between">
             <Title className=" " level={5}>
@@ -136,7 +156,7 @@ const AddProduct = () => {
               onClick={handleSubmitUpdateProfile}
               className="w-24 h-8 rounded-lg text-white bg-[#146d4d] hover:bg-[#FF5A5F] flex items-center justify-center"
             >
-              Tạo
+              Lưu
             </Button>
           </div>
         </div>
@@ -170,6 +190,7 @@ const AddProduct = () => {
               type="radio"
               name="MaPL"
               value="2"
+              defaultChecked={detailProductLocation.MaPL == 2 ? true : false}
               className=" mr-1 accent-[#146d4d] w-4 h-4  "
             />
             <label className="ml-1" for="doan">
@@ -181,6 +202,7 @@ const AddProduct = () => {
               type="radio"
               name="MaPL"
               value="1"
+              defaultChecked={detailProductLocation.MaPL == 1 ? true : false}
               className="ml-10 mr-1 accent-[#146d4d] w-4 h-4 "
             />
             <label className="ml-1" for="douong">
@@ -192,6 +214,7 @@ const AddProduct = () => {
               type="radio"
               name="MaPL"
               value="3"
+              defaultChecked={detailProductLocation.MaPL == 3 ? true : false}
               className="ml-10 mr-1 accent-[#146d4d] w-4 h-4 "
             />
 
@@ -252,4 +275,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default DetailProduct;

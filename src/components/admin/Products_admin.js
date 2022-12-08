@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Layout, Space, Table, Tag, Spin } from "antd";
+import { Button, Layout, Space, Table, Tag, Spin, Image } from "antd";
 import { LoadingOutlined, UserAddOutlined } from "@ant-design/icons";
 import AppMenu from "../../components/admin/AppMenu";
 import { getAlUser } from "../../api/admin/Users";
@@ -10,13 +10,28 @@ import { getAllUserProfile } from "../../reducer/admin/user/userAction";
 import Search from "antd/lib/input/Search";
 import { fetchProduct } from "../../reducer/admin/product/productAction";
 import { useNavigate } from "react-router-dom";
+import { getDetailProduct } from "../../reducer/admin/product/productSlice";
+import { deleteProduct } from "../../api/admin/Product";
 const Products_admin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { products, isLoading } = useSelector((state) => state.product_admin);
   const [data, setData] = useState([]);
-  const handleClickDetailProduct = (e) => {};
-  const handleClickDeleteProduct = (e) => {};
+  const handleClickDetailProduct = (e) => {
+    const id = e.target.id;
+    const detailProduct = products.find(
+      (item) => parseInt(item.id) === parseInt(id)
+    );
+    dispatch(getDetailProduct(detailProduct));
+    navigate("detail-product", {
+      state: { detailProduct: detailProduct },
+    });
+  };
+  const handleClickDeleteProduct = async (e) => {
+    const id = e.target.id;
+    await deleteProduct(id);
+    dispatch(fetchProduct());
+  };
 
   const antIcon = (
     <LoadingOutlined
@@ -46,6 +61,8 @@ const Products_admin = () => {
       title: "Hình ảnh",
       dataIndex: "image",
       key: "image",
+      render: (url) =>
+        url && <Image preview={false} src={url} className="w-10 h-10" />,
     },
     {
       title: "Giá",
@@ -62,7 +79,10 @@ const Products_admin = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <div onClick={(e) => handleClickDetailProduct(e)}>
+          <div
+            className="cursor-pointer"
+            onClick={(e) => handleClickDetailProduct(e)}
+          >
             <svg
               id={record.id}
               xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +100,10 @@ const Products_admin = () => {
               />
             </svg>
           </div>
-          <div onClick={(e) => handleClickDeleteProduct(e)}>
+          <div
+            className="cursor-pointer"
+            onClick={(e) => handleClickDeleteProduct(e)}
+          >
             <svg
               id={record.id}
               xmlns="http://www.w3.org/2000/svg"

@@ -23,8 +23,14 @@ import {
   fetchDetailStaff,
   updateDetailStaff,
 } from "../../../reducer/admin/user/userAction";
+import { useLocation } from "react-router-dom";
+import { getDetailUserApi } from "../../../api/admin/Users";
+import { isFulfilled } from "@reduxjs/toolkit";
+import { getDetailUser } from "../../../reducer/admin/user/userSlice";
 
 const DetailPerSon = () => {
+  const location = useLocation();
+  const detailStaffLocation = location.state.detailStaff;
   const dispatch = useDispatch();
 
   const { detailUser, status, isLoading } = useSelector(
@@ -74,6 +80,7 @@ const DetailPerSon = () => {
   };
 
   const onChangeImage = async (e) => {
+    setIsFirst(false);
     console.log(e.target.files[0]);
     const urlImage = URL.createObjectURL(e.target.files[0]);
     setSelectedImage(urlImage);
@@ -96,6 +103,7 @@ const DetailPerSon = () => {
   };
 
   const handleChangeGender = (e) => {
+    setIsFirst(false);
     const gt = e.target.value == "nu" ? 1 : 0;
     setUserInfo({ ...userInfo, [e.target.name]: gt });
     console.log(userInfo);
@@ -123,14 +131,22 @@ const DetailPerSon = () => {
     setUserInfo({ ...userInfo, ngsinh: e.target.value });
   };
 
-  useEffect(() => {
-    setUserInfo(detailUser);
-    console.log(detailUser);
-  }, [detailUser, status]);
+  // useEffect(() => {
+  //   setUserInfo(detailUser);
+  //   console.log(detailUser);
+  // }, [detailUser, status]);
 
-  //   useEffect(() => {
-  //     dispatch(getUserProfile());
-  //   }, [status]);
+  useEffect(() => {
+    const fetchDetailUser = async () => {
+      const data = await getDetailUserApi(detailStaffLocation.id);
+      if (data.status == true) {
+        setUserInfo(data.user);
+        dispatch(getDetailUser(data.user));
+      }
+      console.log("data", data);
+    };
+    fetchDetailUser();
+  }, [status]);
   return (
     <div className="w-full max-w-4xl mx-auto  h-[135vh]  ">
       {isLoading && (
