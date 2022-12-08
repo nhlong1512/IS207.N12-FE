@@ -1,25 +1,23 @@
 import React from "react";
 import { Button, Layout, Space, Table, Tag, Spin } from "antd";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  LoadingOutlined,
-  UserAddOutlined,
-} from "@ant-design/icons";
+import { LoadingOutlined, UserAddOutlined } from "@ant-design/icons";
 import AppMenu from "../../components/admin/AppMenu";
-import { deleteStaff, getAlUser } from "../../api/admin/Users";
+import { getAlUser } from "../../api/admin/Users";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUserProfile } from "../../reducer/admin/user/userAction";
 import Search from "antd/lib/input/Search";
+import { fetchProduct } from "../../reducer/admin/product/productAction";
 import { useNavigate } from "react-router-dom";
-import { getDetailUser } from "../../reducer/admin/user/userSlice";
-const Staffs_admin = () => {
+const Products_admin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { users, isLoading } = useSelector((state) => state.user_admin);
+  const { products, isLoading } = useSelector((state) => state.product_admin);
   const [data, setData] = useState([]);
+  const handleClickDetailProduct = (e) => {};
+  const handleClickDeleteProduct = (e) => {};
+
   const antIcon = (
     <LoadingOutlined
       style={{
@@ -29,72 +27,42 @@ const Staffs_admin = () => {
     />
   );
 
-  const handleClickAddStaff = () => {
-    navigate("/admin/staff/add-staff");
-  };
-  const handleClickDetailPerson = (e) => {
-    const id = e.target.id;
-    const detailUser = users?.find(
-      (user) => parseInt(user.id) === parseInt(id)
-    );
-
-    console.log(detailUser);
-    dispatch(getDetailUser(detailUser));
-    navigate("/admin/staff/detail-staff");
-  };
-  const handleClickDeleteStaff = async (e) => {
-    const id = e.target.id;
-    await deleteStaff(id);
-    dispatch(getAllUserProfile());
+  const handleClickAddProduct = (e) => {
+    navigate("/admin/product/add-product");
   };
   const columns = [
     {
-      title: "Tên",
+      title: "Mã sản phẩm",
+      dataIndex: "id",
+      key: "id",
+      render: (text) => <p className="ml-10">{text}</p>,
+    },
+    {
+      title: "Tên sản phẩm",
       dataIndex: "name",
       key: "name",
-      render: (text) => <a>{text}</a>,
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Hình ảnh",
+      dataIndex: "image",
+      key: "image",
     },
     {
-      title: "Ngày sinh",
-      dataIndex: "birthDay",
-      key: "birthDay",
+      title: "Giá",
+      dataIndex: "price",
+      key: "price",
     },
     {
-      title: "SĐT",
-      dataIndex: "phone",
-      key: "phone",
-    },
-    {
-      title: "Địa chỉ",
-      key: "Adress",
-      dataIndex: "Adress",
-      // render: (_, { tags }) => (
-      //   <>
-      //     {tags.map((tag) => {
-      //       let color = tag.length > 5 ? "geekblue" : "green";
-      //       if (tag === "loser") {
-      //         color = "volcano";
-      //       }
-      //       return (
-      //         <Tag color={color} key={tag}>
-      //           {tag.toUpperCase()}
-      //         </Tag>
-      //       );
-      //     })}
-      //   </>
-      // ),
+      title: "Loại sản phẩm",
+      dataIndex: "type",
+      key: "type",
     },
     {
       title: "Action",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <div onClick={(e) => handleClickDetailPerson(e)}>
+          <div onClick={(e) => handleClickDetailProduct(e)}>
             <svg
               id={record.id}
               xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +80,7 @@ const Staffs_admin = () => {
               />
             </svg>
           </div>
-          <div onClick={(e) => handleClickDeleteStaff(e)}>
+          <div onClick={(e) => handleClickDeleteProduct(e)}>
             <svg
               id={record.id}
               xmlns="http://www.w3.org/2000/svg"
@@ -135,34 +103,36 @@ const Staffs_admin = () => {
     },
   ];
   useEffect(() => {
-    dispatch(getAllUserProfile());
-    console.log(users);
+    dispatch(fetchProduct());
+    console.log(products);
   }, []);
   useEffect(() => {
     // console.log(users);
-    let listUsers = [];
-    users?.map((item, index) => {
-      if (item?.role !== "khachhang") {
-        const user = {
-          key: index,
-          id: item.id,
-          email: item.email,
-          name: item.hoten,
-          birthDay: item.ngsinh,
-          phone: item.sdt,
-          Adress: item.diachi,
-        };
-        listUsers.push(user);
-      }
+    let listProduct = [];
+    products?.map((item, index) => {
+      let loaiProduct = "Profile";
+      if (item.MaPL === 1) loaiProduct = "Đồ uống";
+      else if (item.MaPL === 2) loaiProduct = "Đồ ăn";
+      else if (item.MaPL === 3) loaiProduct = "Topping";
+      const product = {
+        key: index,
+        id: item.id,
+        name: item.TenSP,
+        image: item.HinhAnh,
+        price: item.Gia.toLocaleString(),
+        type: loaiProduct,
+      };
+      listProduct.push(product);
     });
-    setData(listUsers);
-  }, [users]);
+    setData(listProduct);
+  }, [products]);
+
   return (
     <>
       <div className="w-full my-5 flex justify-start ">
         <Search
           className="w-[15rem]"
-          placeholder="Tìm kiếm nhân viên"
+          placeholder="Tìm kiếm sản phẩm"
           //   onChange={(e) => onSearch(e)}
           style={{
             marginLeft: "20px",
@@ -170,17 +140,17 @@ const Staffs_admin = () => {
           }}
         />
         <Button
-          onClick={handleClickAddStaff}
+          onClick={handleClickAddProduct}
           className="w-[12rem] flex items-center justify-center accent-[#146d4d] hover:text-[#146d4d] hover:border-[#146d4d]  ml-[20px] "
         >
           <UserAddOutlined className="h-full pr-1" />
-          <p className="mb-0 h-full">Thêm nhân viên</p>
+          <p className="mb-0 h-full">Thêm sản phẩm</p>
         </Button>
       </div>
       <div className="px-4 pt-4 pb-14 bg-[#F0F2F5]">
-        <p className="text-[1.3rem] font-bold mb-1">Nhân viên</p>
+        <p className="text-[1.3rem] font-bold mb-1">Người dùng</p>
         <Table
-          pagination={false}
+          //   pagination={false}
           style={{
             boxSizing: "padding-box",
           }}
@@ -194,4 +164,4 @@ const Staffs_admin = () => {
   );
 };
 
-export default Staffs_admin;
+export default Products_admin;

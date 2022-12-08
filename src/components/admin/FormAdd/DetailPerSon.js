@@ -19,14 +19,17 @@ import {
   getUserProfile,
   updateUserProfile,
 } from "../../../reducer/user/userAction";
+import {
+  fetchDetailStaff,
+  updateDetailStaff,
+} from "../../../reducer/admin/user/userAction";
 
 const DetailPerSon = () => {
   const dispatch = useDispatch();
-  const { status, updateStatus, isChangeProfileLoading } = useSelector(
-    (state) => state.user
-  );
 
-  const { detailUser } = useSelector((state) => state.user_admin);
+  const { detailUser, status, isLoading } = useSelector(
+    (state) => state.user_admin
+  );
   // console.log(user);
   const [isFirst, setIsFirst] = useState(true);
   const [selectedImage, setSelectedImage] = useState(detailUser.urlavt);
@@ -105,31 +108,32 @@ const DetailPerSon = () => {
     } else if (isValidDate(userInfo.ngsinh) == false) {
       message.error("Ngày sinh không hợp lệ");
     } else {
-      setIsFirst(false);
-      dispatch(updateUserProfile(userInfo, detailUser.id));
+      dispatch(updateDetailStaff(userInfo, detailUser.id));
     }
   };
   useEffect(() => {
     if (isFirst == false) {
-      if (isChangeProfileLoading == false && updateStatus == true)
+      if (isLoading == false && status == true)
         message.success("Cập nhật thông tin thành công");
-      else if (isChangeProfileLoading == false && updateStatus == false)
+      else if (isLoading == false && status == false)
         message.error("Cập nhật thông tin thất bại");
     }
-  }, [isChangeProfileLoading]);
+  }, [isLoading]);
   const handleChangeBirthDay = (e) => {
     setUserInfo({ ...userInfo, ngsinh: e.target.value });
   };
 
   useEffect(() => {
     setUserInfo(detailUser);
-  }, [detailUser]);
+    console.log(detailUser);
+  }, [detailUser, status]);
+
   //   useEffect(() => {
   //     dispatch(getUserProfile());
   //   }, [status]);
   return (
     <div className="w-full max-w-4xl mx-auto  h-[135vh]  ">
-      {isChangeProfileLoading && (
+      {isLoading && (
         <LoadingOutlined
           style={{
             fontSize: 20,
@@ -312,7 +316,7 @@ const DetailPerSon = () => {
       </Row>
       <Row className="w-full mb-8 flex items-center ">
         <Col span={6} className="">
-          <Title level={5}>Ngày sinh</Title>
+          <Title level={5}>Ngày sinh(yyyy-mm-dd) </Title>
         </Col>
         <Col span={18}>
           <Input

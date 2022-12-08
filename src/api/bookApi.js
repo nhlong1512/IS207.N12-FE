@@ -14,3 +14,18 @@ export const getAllProducts = (id) => {
     }
   });
 };
+
+
+export const getAllProductsAdmin = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await axios.get(`${baseUrl}/sanpham`);
+      console.log(data);
+
+      resolve(data);
+    } catch (error) {
+      reject(error.response.data);
+    }
+  });
+};
+

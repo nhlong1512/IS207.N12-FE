@@ -3,8 +3,11 @@ import {
   getAllUserSuccess,
   getAllUserFail,
   getDetailUser,
+  updateStaffPending,
+  updateStaffSuccess,
+  updateStaffFail,
 } from "./userSlice";
-import { getAlUser } from "../../../api/admin/Users";
+import { getAlUser, updateStaff } from "../../../api/admin/Users";
 
 export const getAllUserProfile = () => async (dispatch) => {
   dispatch(getAllUserPending());
@@ -18,6 +21,21 @@ export const getAllUserProfile = () => async (dispatch) => {
     dispatch(getAllUserFail(response));
   } catch (err) {
     dispatch(getAllUserFail({ error: true, message: err.message }));
+  }
+};
+
+export const updateDetailStaff = (userInfo, id) => async (dispatch) => {
+  dispatch(updateStaffPending());
+  try {
+    const { data } = await updateStaff(userInfo, id);
+    console.log("test", data);
+    if (data.status === true) {
+      dispatch(updateStaffSuccess(data));
+    }
+
+    dispatch(updateStaffFail(data));
+  } catch (err) {
+    dispatch(updateStaffFail({ error: true, message: err.message }));
   }
 };
 
