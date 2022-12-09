@@ -5,6 +5,7 @@ import productReducer from "./reducer/product/productSlice";
 import billReducer from "./reducer/bill/billSlice";
 import user_adminReducer from "./reducer/admin/user/userSlice";
 import product_adminReducer from "./reducer/admin/product/productSlice";
+import order_adminReducer from "./reducer/admin/order/orderSlice";
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -13,6 +14,7 @@ const store = configureStore({
     bill: billReducer,
     user_admin: user_adminReducer,
     product_admin: product_adminReducer,
+    order_admin: order_adminReducer,
   },
 });
 
