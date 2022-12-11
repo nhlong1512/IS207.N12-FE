@@ -1,4 +1,5 @@
 import React from "react";
+import "antd/dist/antd.css";
 import {
   Button,
   Layout,
@@ -25,11 +26,13 @@ import Search from "antd/lib/input/Search";
 import { useNavigate } from "react-router-dom";
 import { getDetailUser } from "../../reducer/admin/user/userSlice";
 import { getAllOrders } from "../../reducer/admin/order/orderActions";
+import { confirmOrder } from "../../api/admin/Order";
 const Orders_admin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { orders, isLoading } = useSelector((state) => state.order_admin);
   const [data, setData] = useState([]);
+  const [isConfirm, setIsConfirm] = useState(false);
   const antIcon = (
     <LoadingOutlined
       style={{
@@ -58,14 +61,15 @@ const Orders_admin = () => {
     // await deleteStaff(id);
     // dispatch(getAllUserProfile());
   };
-  const confirm = (e) => {
-    console.log(e);
-    message.success("Click on Yes");
+
+  const handleClickConfirmOrder = async (e) => {
+    const id = e.target.id;
+    const element = orders.find((item) => parseInt(item.id) === parseInt(id));
+    console.log(element);
+    await confirmOrder(id, element);
+    dispatch(getAllOrders());
   };
-  const cancel = (e) => {
-    console.log(e);
-    message.error("Click on No");
-  };
+
   const columns = [
     {
       title: "Mã Đơn hàng",
@@ -87,21 +91,11 @@ const Orders_admin = () => {
       title: "Trạng thái",
       key: "TrangThai",
       dataIndex: "TrangThai",
-      // render: (_, { tags }) => (
-      //   <>
-      //     {tags.map((tag) => {
-      //       let color = tag.length > 5 ? "geekblue" : "green";
-      //       if (tag === "loser") {
-      //         color = "volcano";
-      //       }
-      //       return (
-      //         <Tag color={color} key={tag}>
-      //           {tag.toUpperCase()}
-      //         </Tag>
-      //       );
-      //     })}
-      //   </>
-      // ),
+      render: (_, record) => (
+        <Button className="bg-[#FFCC33]  h-3 w-24 p-3 px-1 rounded-lg  flex justify-center items-center text-[#fff] text-[0.65rem] font-bold">
+          {record.TrangThai}
+        </Button>
+      ),
     },
     {
       title: "PTTT",
@@ -124,6 +118,7 @@ const Orders_admin = () => {
           >
             <svg
               id={record.id}
+              value={record.key}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -132,6 +127,7 @@ const Orders_admin = () => {
               className="w-6 h-6"
             >
               <path
+                value={record.key}
                 id={record.id}
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -148,22 +144,43 @@ const Orders_admin = () => {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
               className="w-6 h-6"
             >
               <path
                 id={record.id}
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
               />
             </svg>
           </div>
-
-          <Popconfirm title="Are you sure？" okText="Yes" cancelText="No">
-            <a href="#">Delete</a>
-          </Popconfirm>
+          <div
+            className="cursor-pointer relative w-30 h-30"
+            onClick={(e) => handleClickConfirmOrder(e)}
+          >
+            {record.TrangThai === "Chưa xác nhận" && (
+              <svg
+                id={record.id}
+                values={record.key}
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  id={record.id}
+                  values={record.key}
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4.5 12.75l6 6 9-13.5"
+                />
+              </svg>
+            )}
+          </div>
         </Space>
       ),
     },
@@ -178,6 +195,7 @@ const Orders_admin = () => {
     orders?.map((item, index) => {
       const order = {
         key: index,
+        id: item.id,
         MaHD: item.id,
         HoTen: item.HoTen,
         SDT: item.SDT,
@@ -194,23 +212,16 @@ const Orders_admin = () => {
       <div className="w-full my-5 flex justify-start ">
         <Search
           className="w-[15rem]"
-          placeholder="Tìm kiếm nhân viên"
+          placeholder="Tìm kiếm đơn hàng"
           //   onChange={(e) => onSearch(e)}
           style={{
             marginLeft: "20px",
             width: 300,
           }}
         />
-        <Button
-          onClick={handleClickAddStaff}
-          className="w-[12rem] flex items-center justify-center accent-[#146d4d] hover:text-[#146d4d] hover:border-[#146d4d]  ml-[20px] "
-        >
-          <UserAddOutlined className="h-full pr-1" />
-          <p className="mb-0 h-full">Thêm nhân viên</p>
-        </Button>
       </div>
       <div className="px-4 pt-4 pb-14 bg-[#F0F2F5]">
-        <p className="text-[1.3rem] font-bold mb-1">Nhân viên</p>
+        <p className="text-[1.3rem] font-bold mb-1">Đơn hàng</p>
         <Table
           pagination={false}
           style={{

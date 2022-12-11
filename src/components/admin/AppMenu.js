@@ -104,6 +104,7 @@ const AppMenu = () => {
       </div>
       <Menu
         theme="dark"
+        className="relative"
         selectedKeys={getDefaultSelectedKeys()}
         mode="inline"
         items={items}

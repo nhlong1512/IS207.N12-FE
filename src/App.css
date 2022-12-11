@@ -1,5 +1,5 @@
-@import "~antd/dist/antd.css";
-
+/* @import "~antd/dist/antd.css"; */
+/* import 'antd/dist/antd.css'; */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
