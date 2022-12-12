@@ -54,20 +54,7 @@ const Orders_admin = () => {
     const id = e.target.id;
     const order = orders.find((item) => parseInt(item.id) === parseInt(id));
     dispatch(fetchBill(order.MaKH));
-    const billDetail = bill.find(
-      (item) =>
-        parseInt(item.MaHD) === parseInt(order.MaHD) &&
-        parseInt(item.MaKH) === parseInt(order.MaKH)
-    );
-    // dispatch(getMaHDAndMaKH({ MaHD: order.MaHD, MaKH: order.MaKH }));
-    // navigate("detail-bill");
-    // const detailUser = orders?.find(
-    //   (user) => parseInt(user.id) === parseInt(id)
-    // );
-    // console.log(detailUser);
-    // dispatch(getDetailUser(detailUser));
-    // console.log("b", billDetail);
-    // dispatch(getDetailBill(billDetail));
+   
     navigate("/admin/order/detail-bill", {
       state: { MaHD: order.MaHD, MaKH: order.MaKH },
     });

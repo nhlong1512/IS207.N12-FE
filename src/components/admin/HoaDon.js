@@ -18,15 +18,15 @@ const HoaDon = () => {
   const dispatch = useDispatch();
   const { hoadon, isLoading } = useSelector((state) => state.hoadon_admin);
   const [data, setData] = useState([]);
-  const handleClickDetailProduct = (e) => {
+  const handleClickDetailHoaDon = (e) => {
     const id = e.target.id;
     // const detailProduct = products.find(
     //   (item) => parseInt(item.id) === parseInt(id)
     // );
     // dispatch(getDetailProduct(detailProduct));
-    // navigate("detail-product", {
-    //   state: { detailProduct: detailProduct },
-    // });
+    navigate("/admin/hoadon/hoadon-detail", {
+      state: { MaHD: id },
+    });
   };
   const handleClickDeleteProduct = async (e) => {
     // const id = e.target.id;
@@ -80,7 +80,7 @@ const HoaDon = () => {
         <Space size="middle">
           <div
             className="cursor-pointer"
-            onClick={(e) => handleClickDetailProduct(e)}
+            onClick={(e) => handleClickDetailHoaDon(e)}
           >
             <svg
               id={record.id}
@@ -99,7 +99,7 @@ const HoaDon = () => {
               />
             </svg>
           </div>
-          <div
+          {/* <div
             className="cursor-pointer"
             onClick={(e) => handleClickDeleteProduct(e)}
           >
@@ -119,7 +119,7 @@ const HoaDon = () => {
                 d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
               />
             </svg>
-          </div>
+          </div> */}
         </Space>
       ),
     },
@@ -166,11 +166,11 @@ const HoaDon = () => {
           className="w-[12rem] flex items-center justify-center accent-[#146d4d] hover:text-[#146d4d] hover:border-[#146d4d]  ml-[20px] "
         >
           <UserAddOutlined className="h-full pr-1" />
-          <p className="mb-0 h-full">Thêm sản phẩm</p>
+          <p className="mb-0 h-full">Thêm hóa đơn</p>
         </Button>
       </div>
       <div className="px-4 pt-4 pb-14 bg-[#F0F2F5]">
-        <p className="text-[1.3rem] font-bold mb-1">Sản phẩm</p>
+        <p className="text-[1.3rem] font-bold mb-1">Hóa đơn</p>
         <Table
           //   pagination={false}
           style={{
