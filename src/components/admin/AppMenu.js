@@ -53,7 +53,7 @@ const AppMenu = () => {
   // Return menu items here
   const items = [
     getItem("Order", "1", <MdFastfood />, () => redirectTo("order")),
-    getItem("All Orders", "2", <GiFoodTruck />, () => redirectTo("all-orders")),
+    getItem("Hóa đơn", "2", <GiFoodTruck />, () => redirectTo("hoadon")),
     getItem("Product", "3", <AppstoreOutlined />, () => redirectTo("product")),
     getItem("User", "4", <UserOutlined />, () => redirectTo("user")),
     getItem("Staff", "5", <IdcardOutlined />, () => redirectTo("staff")),
@@ -69,7 +69,7 @@ const AppMenu = () => {
     switch (pathname) {
       case "order":
         return ["1"];
-      case "all-orders":
+      case "Hóa đơn":
         return ["2"];
       case "product":
         return ["3"];
