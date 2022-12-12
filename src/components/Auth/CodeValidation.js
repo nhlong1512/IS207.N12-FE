@@ -20,6 +20,9 @@ const CodeValidation = () => {
     if (parseInt(OTPInput) === parseInt(OTP)) {
       setIsMatchOTP(true);
       console.log("đúng rồi");
+    } else {
+      setIsMatchOTP(false);
+      console.log("sai rồi");
     }
   }, [OTPInput]);
 

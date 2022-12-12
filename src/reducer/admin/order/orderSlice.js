@@ -5,6 +5,8 @@ const initialState = {
   detailOrder: {},
   isLoading: false,
   status: false,
+  MaHD: "",
+  MaKH: "",
 };
 
 const orderSlice = createSlice({
@@ -23,6 +25,10 @@ const orderSlice = createSlice({
     getAllOrderFail: (state, { payload }) => {
       state.isLoading = false;
       state.status = payload.status;
+    },
+    getMaHDAndMaKH: (state, { payload }) => {
+      state.MaHD = payload.MaHD;
+      state.MaKH = payload.MaKH;
     },
 
     // updateStaffPending: (state) => {
@@ -44,7 +50,11 @@ const orderSlice = createSlice({
   },
 });
 
-export const { getAllOrderPending, getAllOrderSuccess, getAllOrderFail } =
-  orderSlice.actions;
+export const {
+  getAllOrderPending,
+  getAllOrderSuccess,
+  getAllOrderFail,
+  getMaHDAndMaKH,
+} = orderSlice.actions;
 
 export default orderSlice.reducer;

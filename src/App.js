@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { Button } from "antd";
+import { Button, Popconfirm } from "antd";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Footer from "./components/Footer";
@@ -27,6 +27,7 @@ import Products_admin from "./components/admin/Products_admin";
 import AddProduct from "./components/admin/FormAdd/AddProduct";
 import DetailProduct from "./components/admin/FormAdd/DetailProduct";
 import Orders_admin from "./components/admin/Orders_admin";
+import BillDetailadmin from "./components/admin/BillDetailadmin";
 const excludeHeaderFooterPath = [
   "/signin",
   "/signup",
@@ -80,6 +81,7 @@ function App() {
             <Route path="product/add-product" element={<AddProduct />} />
             <Route path="product/detail-product" element={<DetailProduct />} />
             <Route path="order" element={<Orders_admin />} />
+            <Route path="order/detail-bill" element={<BillDetailadmin />} />
           </Route>
           <Route element={<MainLayout />}>
             <Route exact path="/" element={<Home />} />

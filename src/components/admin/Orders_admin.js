@@ -26,11 +26,16 @@ import Search from "antd/lib/input/Search";
 import { useNavigate } from "react-router-dom";
 import { getDetailUser } from "../../reducer/admin/user/userSlice";
 import { getAllOrders } from "../../reducer/admin/order/orderActions";
+import { getMaHDAndMaKH } from "../../reducer/admin/order/orderSlice";
 import { confirmOrder } from "../../api/admin/Order";
+import { fetchBill } from "../../reducer/bill/billAction";
+import { getDetailBill } from "../../reducer/bill/billSlice";
+import { cancelBillUser } from "../../api/billApi";
 const Orders_admin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { orders, isLoading } = useSelector((state) => state.order_admin);
+  const { bill } = useSelector((state) => state.bill);
   const [data, setData] = useState([]);
   const [isConfirm, setIsConfirm] = useState(false);
   const antIcon = (
@@ -45,16 +50,27 @@ const Orders_admin = () => {
   const handleClickAddStaff = () => {
     navigate("/admin/staff/add-staff");
   };
-  const handleClickDetailPerson = (e) => {
-    // const id = e.target.id;
+  const handleClickDetailBill = (e) => {
+    const id = e.target.id;
+    const order = orders.find((item) => parseInt(item.id) === parseInt(id));
+    dispatch(fetchBill(order.MaKH));
+    const billDetail = bill.find(
+      (item) =>
+        parseInt(item.MaHD) === parseInt(order.MaHD) &&
+        parseInt(item.MaKH) === parseInt(order.MaKH)
+    );
+    // dispatch(getMaHDAndMaKH({ MaHD: order.MaHD, MaKH: order.MaKH }));
+    // navigate("detail-bill");
     // const detailUser = orders?.find(
     //   (user) => parseInt(user.id) === parseInt(id)
     // );
     // console.log(detailUser);
     // dispatch(getDetailUser(detailUser));
-    // navigate("/admin/staff/detail-staff", {
-    //   state: { detailStaff: detailUser },
-    // });
+    // console.log("b", billDetail);
+    // dispatch(getDetailBill(billDetail));
+    navigate("/admin/order/detail-bill", {
+      state: { MaHD: order.MaHD, MaKH: order.MaKH },
+    });
   };
   const handleClickDeleteStaff = async (e) => {
     // const id = e.target.id;
@@ -66,10 +82,22 @@ const Orders_admin = () => {
     const id = e.target.id;
     const element = orders.find((item) => parseInt(item.id) === parseInt(id));
     console.log(element);
-    await confirmOrder(id, element);
+    await confirmOrder(id);
     dispatch(getAllOrders());
   };
-
+  const handleClickDeleteBill = async (e) => {
+    const idString = e.target.id;
+    const id = parseInt(idString);
+    console.log(id);
+    await cancelBillUser(id);
+    dispatch(getAllOrders());
+  };
+  useEffect(() => {
+    dispatch(getAllOrders());
+  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchBill(MaKH));
+  // }, []);
   const columns = [
     {
       title: "Mã Đơn hàng",
@@ -92,7 +120,15 @@ const Orders_admin = () => {
       key: "TrangThai",
       dataIndex: "TrangThai",
       render: (_, record) => (
-        <Button className="bg-[#FFCC33]  h-3 w-24 p-3 px-1 rounded-lg  flex justify-center items-center text-[#fff] text-[0.65rem] font-bold">
+        <Button
+          className={` h-3 w-24 p-3 px-1 rounded-lg  flex justify-center items-center text-[#fff] text-[0.65rem] font-bold
+          ${record.TrangThai == "Chưa xác nhận" && "bg-[#EC870E]"} ${
+            record.TrangThai == "Đã hủy" && "bg-[#DD0000]"
+          }
+            ${record.TrangThai == "Đang giao" && "bg-[#FFCC33]"}
+            ${record.TrangThai == "Đã giao" && "bg-[#50A625]"}
+          `}
+        >
           {record.TrangThai}
         </Button>
       ),
@@ -114,7 +150,7 @@ const Orders_admin = () => {
         <Space size="middle">
           <div
             className="cursor-pointer"
-            onClick={(e) => handleClickDetailPerson(e)}
+            onClick={(e) => handleClickDetailBill(e)}
           >
             <svg
               id={record.id}
@@ -135,7 +171,7 @@ const Orders_admin = () => {
               />
             </svg>
           </div>
-          <div
+          {/* <div
             className="cursor-pointer"
             onClick={(e) => handleClickDeleteStaff(e)}
           >
@@ -155,7 +191,7 @@ const Orders_admin = () => {
                 d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
               />
             </svg>
-          </div>
+          </div> */}
           <div
             className="cursor-pointer relative w-30 h-30"
             onClick={(e) => handleClickConfirmOrder(e)}
@@ -167,20 +203,44 @@ const Orders_admin = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
-                class="w-6 h-6"
+                className="w-6 h-6"
               >
                 <path
                   id={record.id}
                   values={record.key}
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M4.5 12.75l6 6 9-13.5"
                 />
               </svg>
             )}
           </div>
+          {record.TrangThai === "Đang giao" ||
+            (record.TrangThai === "Chưa xác nhận" && (
+              <div
+                className="cursor-pointer relative w-30 h-30"
+                onClick={(e) => handleClickDeleteBill(e)}
+              >
+                <svg
+                  id={record.MaHD}
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-wMaHDth="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    id={record.id}
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </div>
+            ))}
         </Space>
       ),
     },
@@ -196,7 +256,7 @@ const Orders_admin = () => {
       const order = {
         key: index,
         id: item.id,
-        MaHD: item.id,
+        MaHD: item.MaHD,
         HoTen: item.HoTen,
         SDT: item.SDT,
         TrangThai: item.TrangThai,
@@ -223,7 +283,7 @@ const Orders_admin = () => {
       <div className="px-4 pt-4 pb-14 bg-[#F0F2F5]">
         <p className="text-[1.3rem] font-bold mb-1">Đơn hàng</p>
         <Table
-          pagination={false}
+          // pagination={false}
           style={{
             boxSizing: "padding-box",
           }}

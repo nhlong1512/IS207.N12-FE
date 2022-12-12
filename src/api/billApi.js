@@ -21,7 +21,7 @@ export const getAllBillUser = (id) => {
   });
 };
 
-export const deleteBillUser = (id) => {
+export const cancelBillUser = (id, orderInfor) => {
   return new Promise(async (resolve, reject) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
@@ -29,7 +29,25 @@ export const deleteBillUser = (id) => {
       if (!accessToken) {
         reject({ error: true, message: "Token not found!" });
       }
-      const res = await axios.delete(`${baseUrl}/donhang/${id}`, {
+      const res = await axios.put(`${baseUrl}/donhangcancel/${id}`, {
+        headers: { Authorization: "Bearer " + accessToken },
+      });
+      console.log("res", res);
+      resolve(res);
+    } catch (error) {
+      reject(error.response.data);
+    }
+  });
+};
+export const doneBillUser = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      console.log(accessToken);
+      if (!accessToken) {
+        reject({ error: true, message: "Token not found!" });
+      }
+      const res = await axios.put(`${baseUrl}/donhangdone/${id}`, {
         headers: { Authorization: "Bearer " + accessToken },
       });
       console.log("res", res);

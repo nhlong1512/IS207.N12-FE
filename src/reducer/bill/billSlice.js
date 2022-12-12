@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   bill: [],
+  detailBill: {},
   isLoading: false,
   status: false,
   error: "",
@@ -15,6 +16,7 @@ const billSlice = createSlice({
       state.isLoading = true;
     },
     fetchBillSuccess: (state, { payload }) => {
+      console.log("payload", payload.donhang);
       state.bill = payload.donhang;
       state.isLoading = false;
     },
@@ -23,10 +25,18 @@ const billSlice = createSlice({
       state.message = payload.message;
       state.status = payload.status;
     },
+
+    getDetailBill: (state, { payload }) => {
+      state.detailBill = payload;
+    },
   },
 });
 
-export const { fetchBillLoading, fetchBillSuccess, fetchBillFail } =
-  billSlice.actions;
+export const {
+  fetchBillLoading,
+  fetchBillSuccess,
+  fetchBillFail,
+  getDetailBill,
+} = billSlice.actions;
 
 export default billSlice.reducer;

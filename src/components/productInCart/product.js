@@ -58,11 +58,17 @@ const Product = ({ item, id, handleChangeItem, size, handleDeleteItem }) => {
           <p className="text-[#000] font-bold text-[1.1rem] mb-2 leading-5  ">
             {item.name}
           </p>
+          <p className=" font-bold text-[0.8rem] mb-2 leading-5  ">
+            Size: {item.size}
+          </p>
           {item.topping.map((item) => (
             <p className="mb-1">+{item.name}</p>
           ))}
           <p className="text-[#146d4d] text-[1rem] mt-2 mb-0">
-            {item.price.toLocaleString()}VND
+            {item.size == "L"
+              ? (item.price + 5000).toLocaleString()
+              : item.price.toLocaleString()}
+            VND
           </p>
         </div>
       </Col>

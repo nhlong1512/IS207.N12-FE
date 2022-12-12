@@ -171,7 +171,7 @@ const Products_admin = () => {
         </Button>
       </div>
       <div className="px-4 pt-4 pb-14 bg-[#F0F2F5]">
-        <p className="text-[1.3rem] font-bold mb-1">Người dùng</p>
+        <p className="text-[1.3rem] font-bold mb-1">Sản phẩm</p>
         <Table
           //   pagination={false}
           style={{

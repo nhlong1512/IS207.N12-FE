@@ -13,7 +13,7 @@ const MainAdmin = () => {
 
   return (
     <Layout className="min-h-screen bg-[#fff]">
-      <AppMenu />
+        <AppMenu />
       <Layout className="bg-[#fff]">
         <Outlet  />
       </Layout>
