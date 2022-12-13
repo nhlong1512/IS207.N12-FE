@@ -1,12 +1,13 @@
-import { Button, Space, Table } from "antd";
+import { Button, Image, Space, Table } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
+import { getHoaDon } from "../../api/admin/Hoadon";
 import { getAllCTHDUser } from "../../api/billApi";
-
+import barcode from "../../images/barcode.png";
 const HoaDonPDF = () => {
   const location = useLocation();
   const componentRef = useRef();
@@ -61,6 +62,7 @@ const HoaDonPDF = () => {
   ];
   const [listCTHD, setListCTHD] = useState([]);
   const [data, setData] = useState([]);
+  const [hoadonDetail, setHoadonDetail] = useState({});
 
   useEffect(() => {
     const FetchHoaDon = async () => {
@@ -80,6 +82,18 @@ const HoaDonPDF = () => {
     };
     FetchHoaDon();
   }, []);
+  useEffect(() => {
+    const FetchDonHang = async () => {
+      const { hoadon } = await getHoaDon();
+      if (listCTHD) setIsLoading(false);
+      const hoadonDetail = hoadon.find(
+        (item) => parseInt(item.id) === parseInt(MaHD)
+      );
+      console.log("reseff", hoadonDetail);
+      setHoadonDetail(hoadonDetail);
+    };
+    FetchDonHang();
+  }, [isLoading]);
 
   useEffect(() => {
     let listHoaDonTrucTiep = [];
@@ -125,7 +139,9 @@ const HoaDonPDF = () => {
         <p className="text-center text-xl text-[#146d4d] font-semibold mb-0">
           Hóa đơn thanh toán
         </p>
-        <p className="text-center font-semibold text-base mb-0 ">13/12/2022</p>
+        <p className="text-center font-semibold text-base mb-0 ">
+          {hoadonDetail.NgayHD}
+        </p>
         <div className="flex justify-between w-[34%]">
           <p className="text-left font-semibold text-base mb-0 mr-2 ">
             Mã hóa đơn:
@@ -137,7 +153,7 @@ const HoaDonPDF = () => {
             Nhân viên:
           </p>
           <p className="text-left font-semibold text-base mb-0 w-[108px] mb-5 ">
-            Trần Trọng Tín
+            {hoadonDetail.hoten}
           </p>
         </div>
         <Table
@@ -153,7 +169,7 @@ const HoaDonPDF = () => {
         <div className="flex justify-end w-full items-center ml-6 mt-3 ">
           <p className="text-center text-lg font-semibold  mb-0 ">Tổng cộng</p>
           <p className="text-left font-semibold text-base w-[108px] ml-5 mb-0 ">
-            {totalCart.toLocaleString()}
+            {totalCart.toLocaleString() + "đ"}
           </p>
         </div>
         <div className="flex justify-end w-full items-center ml-6 border-b-[2px] border-solid pb-3 border-[#000]">
@@ -161,7 +177,7 @@ const HoaDonPDF = () => {
             Giảm giá
           </p>
           <p className="text-left font-semibold text-base w-[108px] ml-5 mb-0 ">
-            0
+            0.000đ
           </p>
         </div>
         <div className="flex justify-end w-full items-center ml-6 mt-3 ">
@@ -169,12 +185,15 @@ const HoaDonPDF = () => {
             Thanh toán
           </p>
           <p className="text-left font-semibold text-base w-[108px] ml-5 mb-0 ">
-            {totalCart.toLocaleString()}
+            {totalCart.toLocaleString() + "đ"}
           </p>
         </div>
         <div className="flex justify-center w-full items-center ml-6 mt-3 ">
+          <Image className="" src={barcode} />
+        </div>
+        <div className="flex justify-center w-full items-center ml-6 mt-3 ">
           <p className="text-center text-[#146d4d] text-lg font-semibold  mb-0 ">
-            Morrii Coffee xin chào và hẹn gặp lại !!
+            Morii Coffee xin chào và hẹn gặp lại !
           </p>
         </div>
       </div>

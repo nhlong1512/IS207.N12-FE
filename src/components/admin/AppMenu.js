@@ -52,12 +52,12 @@ const AppMenu = () => {
 
   // Return menu items here
   const items = [
-    getItem("Order", "1", <MdFastfood />, () => redirectTo("order")),
+    getItem("Đặt hàng", "1", <MdFastfood />, () => redirectTo("order")),
     getItem("Hóa đơn", "2", <GiFoodTruck />, () => redirectTo("hoadon")),
-    getItem("Product", "3", <AppstoreOutlined />, () => redirectTo("product")),
-    getItem("User", "4", <UserOutlined />, () => redirectTo("user")),
-    getItem("Staff", "5", <IdcardOutlined />, () => redirectTo("staff")),
-    getItem("Promotion", "6", <TbDiscount2 />, () => redirectTo("promotion")),
+    getItem("Sản phẩm", "3", <AppstoreOutlined />, () => redirectTo("product")),
+    getItem("Người dùng", "4", <UserOutlined />, () => redirectTo("user")),
+    getItem("Nhân viên", "5", <IdcardOutlined />, () => redirectTo("staff")),
+    getItem("Blog", "6", <TbDiscount2 />, () => redirectTo("blog")),
     getItem("Statistic", "7", <IoIosStats />, () => redirectTo("statistic")),
     getItem("Sign out", "8", <LogoutOutlined />, () => confirm(), {
       backgroundColor: "transparent",
@@ -67,17 +67,17 @@ const AppMenu = () => {
   const getDefaultSelectedKeys = () => {
     const pathname = location.pathname.substring(1);
     switch (pathname) {
-      case "order":
+      case "Đặt hàng":
         return ["1"];
       case "Hóa đơn":
         return ["2"];
-      case "product":
+      case "Sản phẩm":
         return ["3"];
-      case "user":
+      case "Người dùng":
         return ["4"];
-      case "staff":
+      case "Nhân viên":
         return ["5"];
-      case "promotion":
+      case "Blog":
         return ["6"];
       case "statistic":
         return ["7"];

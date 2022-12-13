@@ -11,6 +11,8 @@ import {
   Popconfirm,
 } from "antd";
 import {
+  CaretDownOutlined,
+  CaretUpOutlined,
   DeleteOutlined,
   EditOutlined,
   LoadingOutlined,
@@ -38,6 +40,12 @@ const Orders_admin = () => {
   const { bill } = useSelector((state) => state.bill);
   const [data, setData] = useState([]);
   const [isConfirm, setIsConfirm] = useState(false);
+  const [isClick, setIsClick] = useState(false);
+  const [isChuaxnActive, setIsChuaxnActive] = useState("");
+  const [isDaxnActive, setIsDaxnActive] = useState("");
+  const [isDanggiaoActive, setIDanggiaosActive] = useState("");
+  const [isDagiaoActive, setIsDagiaoActive] = useState("");
+  const [isReset, setIsReset] = useState(false);
   const antIcon = (
     <LoadingOutlined
       style={{
@@ -54,7 +62,7 @@ const Orders_admin = () => {
     const id = e.target.id;
     const order = orders.find((item) => parseInt(item.id) === parseInt(id));
     dispatch(fetchBill(order.MaKH));
-   
+
     navigate("/admin/order/detail-bill", {
       state: { MaHD: order.MaHD, MaKH: order.MaKH },
     });
@@ -64,10 +72,13 @@ const Orders_admin = () => {
     // await deleteStaff(id);
     // dispatch(getAllUserProfile());
   };
-
+  const handleClickSort = () => {
+    setIsClick(!isClick);
+  };
   const handleClickConfirmOrder = async (e) => {
     const id = e.target.id;
     const element = orders.find((item) => parseInt(item.id) === parseInt(id));
+
     console.log(element);
     await confirmOrder(id);
     dispatch(getAllOrders());
@@ -79,6 +90,43 @@ const Orders_admin = () => {
     await cancelBillUser(id);
     dispatch(getAllOrders());
   };
+  const handleClickFilterCXN = () => {
+    let inputArray = [];
+    orders.forEach((order) => {
+      if (order.TrangThai === "Chưa xác nhận") {
+        inputArray.push(order);
+      }
+    });
+    setData(inputArray);
+  };
+  const handleClickFilterĐG = () => {
+    let inputArray = [];
+    orders.forEach((order) => {
+      if (order.TrangThai === "Đang giao") {
+        inputArray.push(order);
+      }
+    });
+    setData(inputArray);
+  };
+  const handleClickFilterĐGiao = () => {
+    let inputArray = [];
+    orders.forEach((order) => {
+      if (order.TrangThai === "Đã giao") {
+        inputArray.push(order);
+      }
+    });
+    setData(inputArray);
+  };
+  const handleClickFilterĐH = () => {
+    let inputArray = [];
+    orders.forEach((order) => {
+      if (order.TrangThai === "Đã hủy") {
+        inputArray.push(order);
+      }
+    });
+    setData(inputArray);
+  };
+  var title = "Trạng thái";
   useEffect(() => {
     dispatch(getAllOrders());
   }, []);
@@ -103,7 +151,14 @@ const Orders_admin = () => {
       key: "SDT",
     },
     {
-      title: "Trạng thái",
+      title: (
+        <div className="flex">
+          Trạng thái
+          <div onClick={handleClickSort} className="ml-2 w-4 cursor-pointer">
+            <CaretDownOutlined />
+          </div>
+        </div>
+      ),
       key: "TrangThai",
       dataIndex: "TrangThai",
       render: (_, record) => (
@@ -236,8 +291,10 @@ const Orders_admin = () => {
     dispatch(getAllOrders());
     console.log(orders);
   }, []);
+
   useEffect(() => {
     // console.log(users);
+
     let listOrders = [];
     orders?.map((item, index) => {
       const order = {
@@ -252,8 +309,16 @@ const Orders_admin = () => {
       };
       listOrders.push(order);
     });
-    setData(listOrders);
-  }, [orders]);
+    if (isClick === true) {
+      setData(
+        listOrders.sort((a, b) =>
+          a.TrangThai > b.TrangThai ? 1 : b.TrangThai > a.TrangThai ? -1 : 0
+        )
+      );
+    } else {
+      setData(listOrders);
+    }
+  }, [orders, isClick, isReset]);
   return (
     <>
       <div className="w-full my-5 flex justify-start ">
@@ -267,8 +332,40 @@ const Orders_admin = () => {
           }}
         />
       </div>
-      <div className="px-4 pt-4 pb-14 bg-[#F0F2F5]">
-        <p className="text-[1.3rem] font-bold mb-1">Đơn hàng</p>
+      <div className="px-4 pt-4 pb-14 bg-[#F0F2F5] ">
+        <div className="mb-3">
+          <p className="text-[1.3rem] font-bold mb-1">Đơn hàng</p>
+          <Button
+            onClick={() => setIsReset(!isReset)}
+            className="mx-1 text-[#fff] bg-[#000] "
+          >
+            Tất cả
+          </Button>
+          <Button
+            onClick={handleClickFilterCXN}
+            className="mx-1 text-[#fff] bg-[#EC870E] "
+          >
+            Chưa xác nhận
+          </Button>
+          <Button
+            onClick={handleClickFilterĐG}
+            className="mx-1 text-[#fff] bg-[#FFCC33]"
+          >
+            Đang giao
+          </Button>
+          <Button
+            onClick={handleClickFilterĐGiao}
+            className="mx-1 text-[#fff] bg-[#146d4d]"
+          >
+            Đã giao
+          </Button>
+          <Button
+            onClick={handleClickFilterĐH}
+            className="mx-1 text-[#fff] bg-[#DD0000]"
+          >
+            Đã hủy
+          </Button>
+        </div>
         <Table
           // pagination={false}
           style={{

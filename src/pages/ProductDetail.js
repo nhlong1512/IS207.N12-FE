@@ -138,7 +138,7 @@ const ProductDetail = () => {
   }, [listTopping, sizeLonActive, sizeVuaActive]);
   return (
     <div className="container mx-auto max-w-[1024px]">
-      <div className="mt-20 mb-6">
+      <div className="pt-10 mb-6">
         <Breadcrumb>
           <Breadcrumb.Item>Menu</Breadcrumb.Item>
           <Breadcrumb.Item>
@@ -156,7 +156,9 @@ const ProductDetail = () => {
           </Col>
           <Col span={12}>
             <Title level={2}>{dataProduct.TenSP}</Title>
-            <Text className="text-[1.8rem] text-[#146d4d]">{total.toLocaleString()}đ</Text>
+            <Text className="text-[1.8rem] text-[#146d4d]">
+              {total.toLocaleString()}đ
+            </Text>
             <Text className="text-[1.2rem]  block">Chọn size (bắt buộc)</Text>
             <div className="flex mt-2">
               <div className="relative h-[2.4rem] w-[7rem] flex items-center border-[0.01rem] rounded-[0.3rem] border-solid  ">

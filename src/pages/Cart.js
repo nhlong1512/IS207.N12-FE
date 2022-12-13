@@ -79,7 +79,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="container  h-full  max-w-[1024px] mx-auto pb-40 mt-20 ">
+    <div className="container  h-full  max-w-[1024px] mx-auto pb-40 pt-20 ">
       <Title level={2} className="text-black">
         Giỏ hàng
       </Title>

@@ -11,12 +11,12 @@ const Sidebar = () => {
   const defaultActiveKey = location.state?.default;
   const arrayProfile = [<Profile />, <ChangePassWord />, <Orders />];
   return (
-    <div className="mt-10 h-[160vh] container mx-auto max-w-[1124px]">
+    <div className="pt-20 h-full pb-10 container mx-auto max-w-[1124px]">
       <Title className="ml-5 border-b-2 border-solid pb-5" level={2}>
         PROFILE
       </Title>
       <Tabs
-        className="text-left h-[135vh]"
+        className="text-left h-full"
         centered={false}
         defaultActiveKey={defaultActiveKey || 0}
         tabPosition="left"

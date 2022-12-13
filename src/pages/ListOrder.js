@@ -103,8 +103,8 @@ const ListOrder = () => {
   };
 
   return (
-    <div className="container  h-full mx-auto mt-20 max-w-[1024px]">
-      <div className="mb-10 mt-4">
+    <div className="container  h-full mx-auto pt-4 max-w-[1024px]">
+      <div className="mb-10 ">
         <Breadcrumb>
           <Breadcrumb.Item>Menu</Breadcrumb.Item>
           <Breadcrumb.Item>
