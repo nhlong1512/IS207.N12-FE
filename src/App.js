@@ -30,6 +30,7 @@ import Orders_admin from "./components/admin/Orders_admin";
 import BillDetailadmin from "./components/admin/BillDetailadmin";
 import HoaDon from "./components/admin/HoaDon";
 import HoaDonDetail from "./components/admin/HoaDonDetail";
+import HoaDonPDF from "./components/admin/HoaDonPDF";
 const excludeHeaderFooterPath = [
   "/signin",
   "/signup",
@@ -86,6 +87,7 @@ function App() {
             <Route path="order/detail-bill" element={<BillDetailadmin />} />
             <Route path="hoadon" element={<HoaDon />} />
             <Route path="hoadon/hoadon-detail" element={<HoaDonDetail />} />
+            <Route path="hoadon/hoadonpdf" element={<HoaDonPDF />} />
           </Route>
           <Route element={<MainLayout />}>
             <Route exact path="/" element={<Home />} />

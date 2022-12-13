@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllUserProfile } from "../../reducer/admin/user/userAction";
 import Search from "antd/lib/input/Search";
 import { fetchProduct } from "../../reducer/admin/product/productAction";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getDetailProduct } from "../../reducer/admin/product/productSlice";
 import { deleteProduct } from "../../api/admin/Product";
 import { getHoaDonAction } from "../../reducer/admin/hoadon/hoadonAction";
@@ -161,13 +161,12 @@ const HoaDon = () => {
             width: 300,
           }}
         />
-        <Button
-          onClick={handleClickAddProduct}
-          className="w-[12rem] flex items-center justify-center accent-[#146d4d] hover:text-[#146d4d] hover:border-[#146d4d]  ml-[20px] "
-        >
-          <UserAddOutlined className="h-full pr-1" />
-          <p className="mb-0 h-full">Thêm hóa đơn</p>
-        </Button>
+        <Link to="/sanpham">
+          <Button className="w-[12rem] flex items-center justify-center accent-[#146d4d] hover:text-[#146d4d] hover:border-[#146d4d]  ml-[20px] ">
+            <UserAddOutlined className="h-full pr-1" />
+            <p className="mb-0 h-full">Thêm hóa đơn</p>
+          </Button>
+        </Link>
       </div>
       <div className="px-4 pt-4 pb-14 bg-[#F0F2F5]">
         <p className="text-[1.3rem] font-bold mb-1">Hóa đơn</p>

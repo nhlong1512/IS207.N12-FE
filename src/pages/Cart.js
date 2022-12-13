@@ -6,16 +6,31 @@ import order1 from "../images/menu/order1.png";
 import order2 from "../images/menu/order2.png";
 import Product from "../components/productInCart/product";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addProductToCard } from "../reducer/product/productSlice";
+import { PurchaseApi } from "../api/PurchaseApi";
 const { Meta } = Card;
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { user, status, updateStatus, isLoading } = useSelector(
+    (state) => state.user
+  );
   const [quantityProduct, setQuantityProduct] = useState(1);
   var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
   const [cartItems_state, setCarrItems_state] = useState(cartItems);
   const [totalCart, setTotalCart] = useState(0);
+  var arrayInput = [];
+  cartItems.map((item) => {
+    arrayInput.push({
+      MaSP: item.id,
+      SoLuong: item.quantity,
+      Size: item.size,
+      MaPL: 1,
+      MaKM: 0,
+      Topping: item.topping,
+    });
+  });
   const sumWithInitial = cartItems.reduce(
     (accumulator, currentValue) => accumulator + currentValue.total,
     0
@@ -24,10 +39,18 @@ const Cart = () => {
     setTotalCart(sumWithInitial + 10000);
   }, [sumWithInitial]);
 
-  const handleClickCheckOut = () => {
-    navigate(`/purchase`, {
-      state: { totalCart: totalCart },
-    });
+  const handleClickCheckOut = async () => {
+    if (user.role != "khachhang") {
+      var formData = { MaKH: user.id, list: arrayInput };
+      console.log(formData);
+      await PurchaseApi(formData);
+      localStorage.removeItem("cartItems");
+      navigate("/admin/hoadon");
+    } else {
+      navigate(`/purchase`, {
+        state: { totalCart: totalCart },
+      });
+    }
   };
 
   const handleChangeItem = (cartItems_state, value, id) => {
