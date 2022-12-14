@@ -88,6 +88,7 @@ const AppMenu = () => {
 
   return (
     <Sider
+      className=""
       collapsible
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
@@ -104,7 +105,7 @@ const AppMenu = () => {
       </div>
       <Menu
         theme="dark"
-        className="relative"
+        className=" h-full"
         selectedKeys={getDefaultSelectedKeys()}
         mode="inline"
         items={items}

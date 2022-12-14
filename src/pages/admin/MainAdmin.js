@@ -12,10 +12,10 @@ const MainAdmin = () => {
   const [data, setData] = useState([]);
 
   return (
-    <Layout className="min-h-screen bg-[#fff]">
-        <AppMenu />
+    <Layout className="min-h-screen h-full bg-[#fff]">
+      <AppMenu  />
       <Layout className="bg-[#fff]">
-        <Outlet  />
+        <Outlet />
       </Layout>
     </Layout>
   );

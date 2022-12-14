@@ -24,7 +24,7 @@ const BlogDetail = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-4xl mx-auto h-[100vh]">
+    <div className="w-full max-w-5xl mx-auto h-[100vh]">
       <div className="w-full mb-5">
         <img
           src={data.UrlImage}
@@ -33,9 +33,9 @@ const BlogDetail = () => {
         />
       </div>
       <Breadcrumb>
-        <Breadcrumb.Item>Home</Breadcrumb.Item>
+        <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
         <Breadcrumb.Item>
-          <a href="">Blog</a>
+          <a href="/admin/blog">Blog</a>
         </Breadcrumb.Item>
 
         <Breadcrumb.Item>Coffeeholic</Breadcrumb.Item>

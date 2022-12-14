@@ -78,6 +78,7 @@ function App() {
           <Route path="/find-account" element={<FindYourAccount />} />
           <Route path="/code-validation" element={<CodeValidation />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="admin/blog/blog-detail" element={<BlogDetail />} />
           <Route path="/admin/" element={<MainAdmin />}>
             <Route path="user" element={<Users_admin />} />
             <Route path="staff/" element={<Staffs_admin />} />
@@ -93,7 +94,6 @@ function App() {
             <Route path="hoadon/hoadonpdf" element={<HoaDonPDF />} />
             <Route path="blog" element={<Blog_admin />} />
             <Route path="blog/add-blog" element={<Blog />} />
-            <Route path="blog/blog-detail" element={<BlogDetail />} />
           </Route>
           <Route element={<MainLayout />}>
             <Route exact path="/" element={<Home />} />

@@ -1,5 +1,17 @@
 import React from "react";
-import { Button, Layout, Space, Table, Tag, Spin, Image } from "antd";
+import {
+  Button,
+  Layout,
+  Space,
+  Table,
+  Tag,
+  Spin,
+  Image,
+  Popconfirm,
+  notification,
+  message,
+  Modal,
+} from "antd";
 import { LoadingOutlined, UserAddOutlined } from "@ant-design/icons";
 import AppMenu from "../../components/admin/AppMenu";
 import { getAlUser } from "../../api/admin/Users";
@@ -13,13 +25,17 @@ import { useNavigate } from "react-router-dom";
 import { getDetailProduct } from "../../reducer/admin/product/productSlice";
 import { deleteProduct } from "../../api/admin/Product";
 import { getBlogAction } from "../../reducer/admin/blog/blogAction";
+import { deleteBlog } from "../../api/admin/Blog";
 const Blog_admin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { blogs, isLoading } = useSelector((state) => state.blog_admin);
   const [data, setData] = useState([]);
+  const [idDelete, setIDelete] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
   const handleClickDetailBlog = (e) => {
     const id = e.target.id;
+
     // const detailProduct = products.find(
     //   (item) => parseInt(item.id) === parseInt(id)
     // );
@@ -29,11 +45,32 @@ const Blog_admin = () => {
     });
   };
   const handleClickDeleteProduct = async (e) => {
-    // const id = e.target.id;
+    const id = e.target.id;
+    Modal.confirm({
+      title: "Cảnh báo",
+      content: "Bạn có chắc chắn muốn xóa blog này không?",
+      cancelText: "Cancel",
+      // onOk: handleClickDeleteProduct1(id),
+      onOk: () => {
+        handleClickDeleteProduct1(id);
+      },
+    });
+    // deleteBlog(id),
+    // dispatch(getBlogAction()),
+    // dispatch(getBlogAction());
     // await deleteProduct(id);
     // dispatch(fetchProduct());
   };
-
+  const handleClickDeleteProduct1 = async (id) => {
+    const res = await deleteBlog(id);
+    dispatch(getBlogAction());
+    if (res.status === true) {
+      notification["success"]({
+        message: "Thành công",
+        description: "Xóa blog thành công",
+      });
+    }
+  };
   const antIcon = (
     <LoadingOutlined
       style={{
@@ -42,7 +79,16 @@ const Blog_admin = () => {
       spin
     />
   );
-
+  const confirm = async () => {
+    console.log(idDelete);
+    // await deleteBlog(id1);
+    // console.log(record);
+    // handleClickDeleteProduct(e.target.id);
+  };
+  const cancel = (e) => {
+    console.log(e.target.id);
+    message.error("Click on No");
+  };
   const handleClickAddProduct = (e) => {
     navigate("/admin/blog/add-blog");
   };
@@ -108,7 +154,9 @@ const Blog_admin = () => {
               />
             </svg>
           </div>
+
           <div
+            id={record.id}
             className="cursor-pointer"
             onClick={(e) => handleClickDeleteProduct(e)}
           >
