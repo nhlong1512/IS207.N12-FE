@@ -1,13 +1,33 @@
 import { Image, Breadcrumb } from "antd";
 import Title from "antd/lib/typography/Title";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { getAllBlogs } from "../../api/admin/Blog";
 
 const BlogDetail = () => {
+  const location = useLocation();
+  const id = location.state.id;
+  const [data, setData] = useState({});
+  useEffect(() => {
+    const getBlogDetail = async () => {
+      const res = await getAllBlogs();
+      const listBlog = res.blog;
+      const detailBlog = listBlog.find(
+        (blog) => parseInt(blog.id) === parseInt(id)
+      );
+      console.log("tin", detailBlog);
+      if (res.status === true) {
+        setData(detailBlog);
+      }
+    };
+    getBlogDetail();
+  }, []);
+
   return (
     <div className="w-full max-w-4xl mx-auto h-[100vh]">
       <div className="w-full mb-5">
         <img
-          src="https://file.hstatic.net/1000075078/article/thecoffehouse_ca_phe_01_b4adbd88db6e4ca3b7c2c5934d1a1ed9_master.jpg"
+          src={data.UrlImage}
           alt="Ảnh blog"
           className="w-full h-[50vh] block object-cover"
         />
@@ -21,20 +41,18 @@ const BlogDetail = () => {
         <Breadcrumb.Item>Coffeeholic</Breadcrumb.Item>
       </Breadcrumb>
       <Title level={2} className="mt-5">
-        CÁCH NHẬN BIẾT HƯƠNG VỊ CÀ PHÊ ROBUSTA NGUYÊN CHẤT DỄ DÀNG NHẤT
+        {data.TieuDe}
       </Title>
+      <p>{data.NgayBlog}</p>
       <Title level={5} className="mt-5">
-        Cùng Arabica, Robusta cũng là loại cà phê nổi tiếng được sử dụng phổ
-        biến ở Việt Nam và nhiều nước khác trên thế giới. Với nhiều đặc điểm
-        riêng, không quá khó để có thể nhận ra hương vị của loại cà phê trứ danh
-        này.
+        {data.MoTa}
       </Title>
       <div>
-       
+        <td dangerouslySetInnerHTML={{ __html: data.NoiDung }} />
       </div>
 
       <div className="w-full flex justify-end">
-        <p>Tác giả: Tín</p>
+        <p>Tác giả: {data.tacgia}</p>
       </div>
     </div>
   );

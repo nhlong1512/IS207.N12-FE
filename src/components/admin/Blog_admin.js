@@ -18,15 +18,15 @@ const Blog_admin = () => {
   const dispatch = useDispatch();
   const { blogs, isLoading } = useSelector((state) => state.blog_admin);
   const [data, setData] = useState([]);
-  const handleClickDetailProduct = (e) => {
-    // const id = e.target.id;
+  const handleClickDetailBlog = (e) => {
+    const id = e.target.id;
     // const detailProduct = products.find(
     //   (item) => parseInt(item.id) === parseInt(id)
     // );
     // dispatch(getDetailProduct(detailProduct));
-    // navigate("detail-product", {
-    //   state: { detailProduct: detailProduct },
-    // });
+    navigate("blog-detail", {
+      state: { id: id },
+    });
   };
   const handleClickDeleteProduct = async (e) => {
     // const id = e.target.id;
@@ -89,7 +89,7 @@ const Blog_admin = () => {
         <Space size="middle">
           <div
             className="cursor-pointer"
-            onClick={(e) => handleClickDetailProduct(e)}
+            onClick={(e) => handleClickDetailBlog(e)}
           >
             <svg
               id={record.id}
