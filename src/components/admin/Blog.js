@@ -11,6 +11,7 @@ import {
   Spin,
   message,
   Popconfirm,
+  notification,
 } from "antd";
 import Title from "antd/lib/typography/Title";
 
@@ -18,15 +19,29 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useState } from "react";
 import axios from "axios";
+import { createBlog } from "../../api/admin/Blog";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserProfile } from "../../reducer/user/userAction";
+import { useEffect } from "react";
+import { getBlogAction } from "../../reducer/admin/blog/blogAction";
+import { useNavigate } from "react-router-dom";
 
 const Blog = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { TextArea } = Input;
-  const [userInfo, setUserInfo] = useState({});
+  const { user, status } = useSelector((state) => state.user);
+  const [blogInfo, setBlogInfo] = useState({});
   const [selectedImage, setSelectedImage] = useState({});
   const handleChangeForm = (e) => {
-    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
-    console.log(userInfo);
+    setBlogInfo({ ...blogInfo, [e.target.name]: e.target.value });
+    console.log(blogInfo);
   };
+
+  useEffect(() => {
+    dispatch(getUserProfile());
+    setBlogInfo({ ...blogInfo, MaND: user.id, NgayBlog: new Date() });
+  }, [status]);
   const onChangeImage = async (e) => {
     // setIsFirst(false);
     console.log(e.target.files[0]);
@@ -41,13 +56,8 @@ const Blog = () => {
       formData
     );
     const url = res.data.secure_url;
-    setUserInfo({ ...userInfo, urlavt: url });
+    setBlogInfo({ ...blogInfo, UrlImage: url });
     console.log(url);
-
-    setUserInfo({
-      ...userInfo,
-      urlavt: urlImage,
-    });
   };
   const confirm = (e) => {
     console.log(e);
@@ -57,8 +67,31 @@ const Blog = () => {
     console.log(e);
     message.error("Click on No");
   };
+
+  const handleCkeditor = (event, editor) => {
+    const a = '">';
+    const b = '"/>';
+    const data = editor.getData().replaceAll(a, b);
+
+    setBlogInfo({ ...blogInfo, NoiDung: data });
+  };
+
+  const handleCreateBlog = async (type) => {
+    console.log(blogInfo);
+
+    const res = await createBlog(blogInfo);
+    if (res.status === true) {
+      notification["success"]({
+        message: "Thành công",
+        description: "Bạn đã tạo blog thành công",
+      });
+
+      navigate("/admin/blog");
+      dispatch(getBlogAction());
+    }
+  };
   return (
-    <div className="container w-full mx-auto max-w-[800px] mt-5 ">
+    <div className="container w-full mx-auto max-w-[900px] mt-5 ">
       <Title className="font-bold " level={2}>
         Thêm Mới Blog
       </Title>
@@ -70,11 +103,11 @@ const Blog = () => {
         </Col>
         <Col span={18}>
           <div className="flex items-center w-full justify-between ">
-            {userInfo.urlavt && (
+            {blogInfo.UrlImage && (
               <Image
                 preview={false}
                 className="w-16 h-16"
-                src={userInfo.urlavt}
+                src={blogInfo.UrlImage}
                 alt="avatar"
               />
             )}
@@ -97,11 +130,11 @@ const Blog = () => {
           <Input
             type="text"
             size="medium"
-            name="hoten"
+            name="TieuDe"
             placeholder="Tiêu đề"
             className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
             onChange={(e) => handleChangeForm(e)}
-            // value={userInfo.hoten}
+            value={blogInfo.TieuDe}
             required
           />
         </Col>
@@ -115,11 +148,11 @@ const Blog = () => {
             rows={3}
             type="text"
             size="medium"
-            name="hoten"
+            name="MoTa"
             placeholder="Mô tả"
             className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
             onChange={(e) => handleChangeForm(e)}
-            // value={userInfo.hoten}
+            value={blogInfo.MoTa}
             required
           />
         </Col>
@@ -132,26 +165,28 @@ const Blog = () => {
           <CKEditor
             editor={ClassicEditor}
             // data="<p>Hello from CKEditor 5!</p>"
-            onReady={(editor) => {
-              // You can store the "editor" and use when it is needed.
-              console.log("Editor is ready to use!", editor);
-            }}
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              console.log({ event, editor, data });
-            }}
-            onBlur={(event, editor) => {
-              console.log("Blur.", editor);
-            }}
-            onFocus={(event, editor) => {
-              console.log("Focus.", editor);
-            }}
+            // onReady={(editor) => {
+            //   // You can store the "editor" and use when it is needed.
+            //   console.log("Editor is ready to use!", editor);
+            // }}
+            onChange={(event, editor) => handleCkeditor(event, editor)}
+            // onBlur={(event, editor) => {
+            //   console.log("Blur.", editor);
+            // }}
+            // onFocus={(event, editor) => {
+            //   console.log("Focus.", editor);
+            // }}
           />
         </Col>
       </Row>
 
       <div className="flex h-[40px] justify-end">
-        <Button className="bg-[#146d4d] text-[#fff]">Tạo Blog</Button>
+        <Button
+          onClick={() => handleCreateBlog("success")}
+          className="bg-[#146d4d] text-[#fff]"
+        >
+          Tạo Blog
+        </Button>
       </div>
     </div>
   );

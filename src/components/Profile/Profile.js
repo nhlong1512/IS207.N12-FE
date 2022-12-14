@@ -127,7 +127,7 @@ const Profile = () => {
     dispatch(getUserProfile());
   }, [isAuthenticated, status]);
   return (
-    <div className="w-full h-[135vh]  ">
+    <div className=" h-[135vh]  ">
       {isChangeProfileLoading && (
         <LoadingOutlined
           style={{
