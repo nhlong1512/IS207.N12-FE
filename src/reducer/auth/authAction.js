@@ -20,7 +20,12 @@ export const login = (userInfo, navigate) => async (dispatch) => {
       dispatch(loginSuccess(response));
       window.localStorage.setItem("accessToken", response.data.token);
       dispatch(getUserProfile());
-      navigate("/");
+      if (
+        response.data.user.role == "quanli" ||
+        response.data.user.role == "nhanvien"
+      ) {
+        navigate("/admin");
+      } else navigate("/");
     }
 
     dispatch(loginFailure(response));

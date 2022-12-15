@@ -32,7 +32,7 @@ const Blog = () => {
   const { TextArea } = Input;
   const { user, status } = useSelector((state) => state.user);
   const [blogInfo, setBlogInfo] = useState({});
-  const [selectedImage, setSelectedImage] = useState({});
+  const [selectedImage, setSelectedImage] = useState(null);
   const handleChangeForm = (e) => {
     setBlogInfo({ ...blogInfo, [e.target.name]: e.target.value });
     console.log(blogInfo);
@@ -77,17 +77,34 @@ const Blog = () => {
   };
 
   const handleCreateBlog = async (type) => {
+    console.log(blogInfo.TieuDe);
     console.log(blogInfo);
-
-    const res = await createBlog(blogInfo);
-    if (res.status === true) {
-      notification["success"]({
-        message: "Thành công",
-        description: "Bạn đã tạo blog thành công",
+    if (
+      selectedImage == null ||
+      blogInfo.TieuDe == null ||
+      blogInfo.TieuDe == "" ||
+      blogInfo.NoiDung == null ||
+      blogInfo.NoiDung == "" ||
+      blogInfo.MoTa == null ||
+      blogInfo.MoTa == ""
+    ) {
+      notification["error"]({
+        message: "Thất bại",
+        description:
+          "Bạn đã tạo blog thất bại, vui lòng nhập đầy đủ các trường kể cả hình ảnh",
       });
+    } else {
+      const res = await createBlog(blogInfo);
+      console.log(res.status);
+      if (res.status === true) {
+        notification["success"]({
+          message: "Thành công",
+          description: "Bạn đã tạo blog thành công",
+        });
 
-      navigate("/admin/blog");
-      dispatch(getBlogAction());
+        navigate("/admin/blog");
+        dispatch(getBlogAction());
+      }
     }
   };
   return (

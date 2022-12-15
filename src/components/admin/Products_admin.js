@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Layout, Space, Table, Tag, Spin, Image } from "antd";
+import { Button, Layout, Space, Table, Tag, Spin, Image, Modal, notification } from "antd";
 import { LoadingOutlined, UserAddOutlined } from "@ant-design/icons";
 import AppMenu from "../../components/admin/AppMenu";
 import { getAlUser } from "../../api/admin/Users";
@@ -29,10 +29,26 @@ const Products_admin = () => {
   };
   const handleClickDeleteProduct = async (e) => {
     const id = e.target.id;
-    await deleteProduct(id);
-    dispatch(fetchProduct());
+    Modal.confirm({
+      title: "Cảnh báo",
+      content: "Bạn có chắc chắn muốn xóa sản phẩm này không?",
+      cancelText: "Cancel",
+      // onOk: handleClickDeleteProduct1(id),
+      onOk: () => {
+        handleClickDeleteProduct1(id);
+      },
+    });
   };
-
+  const handleClickDeleteProduct1 = async (id) => {
+    const res = await deleteProduct(id);
+    dispatch(fetchProduct());
+    if (res.status === true) {
+      notification["success"]({
+        message: "Thành công",
+        description: "Xóa sản phẩm thành công",
+      });
+    }
+  };
   const antIcon = (
     <LoadingOutlined
       style={{

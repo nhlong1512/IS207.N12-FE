@@ -106,7 +106,7 @@ const Purchase = () => {
           value={userInfo.diachi}
           required
         />
-        <Row gutter={10}>
+        {/* <Row gutter={10}>
           <Col span={8}>
             <Input
               type="text"
@@ -143,7 +143,7 @@ const Purchase = () => {
               required
             />
           </Col>
-        </Row>
+        </Row> */}
         <Input
           type="text"
           size="medium"
@@ -155,7 +155,7 @@ const Purchase = () => {
           required
         />
 
-        <Title className="mt-16" level={2}>
+        <Title className="mt-10" level={2}>
           PHƯƠNG THỨC THANH TOÁN
         </Title>
         <div>
@@ -166,7 +166,7 @@ const Purchase = () => {
               name="payment"
               value="COD"
               className="mx-6 checked:accent-[#146d4d]  "
-              checked
+              // checked
             />
             <label className="flex items-center cursor-pointer" for="COD">
               <img className="w-4 h-4" src={COD} />

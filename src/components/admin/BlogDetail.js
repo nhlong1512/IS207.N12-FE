@@ -25,14 +25,7 @@ const BlogDetail = () => {
 
   return (
     <div className="w-full max-w-5xl mx-auto h-[100vh]">
-      <div className="w-full mb-5">
-        <img
-          src={data.UrlImage}
-          alt="Ảnh blog"
-          className="w-full h-[50vh] block object-cover"
-        />
-      </div>
-      <Breadcrumb>
+      <Breadcrumb className="mt-10 mb-5">
         <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
         <Breadcrumb.Item>
           <a href="/admin/blog">Blog</a>
@@ -40,6 +33,14 @@ const BlogDetail = () => {
 
         <Breadcrumb.Item>Coffeeholic</Breadcrumb.Item>
       </Breadcrumb>
+      <div className="w-full mb-5">
+        <img
+          src={data.UrlImage}
+          alt="Ảnh blog"
+          className="w-full h-[50vh] block object-cover"
+        />
+      </div>
+
       <Title level={2} className="mt-5">
         {data.TieuDe}
       </Title>

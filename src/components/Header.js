@@ -304,7 +304,7 @@ export default function Header() {
           >
             <ShoppingCartOutlined className="text-[1.8rem] pt-1 " />
             {isShowCount && (
-              <div className="absolute text-[#ffffff] bg-[#FF4D4F] rounded-full w-[20px] h-[22px] text-center flex items-center justify-center top-0 right-[25px] ">
+              <div className="absolute text-[#ffffff] bg-[#FF4D4F] rounded-full w-[20px] h-[22px] text-center flex items-center justify-center top-0 right-[10px] ">
                 {count}
               </div>
             )}

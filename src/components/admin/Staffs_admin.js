@@ -1,5 +1,14 @@
 import React from "react";
-import { Button, Layout, Space, Table, Tag, Spin } from "antd";
+import {
+  Button,
+  Layout,
+  Space,
+  Table,
+  Tag,
+  Spin,
+  Modal,
+  notification,
+} from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -46,8 +55,26 @@ const Staffs_admin = () => {
   };
   const handleClickDeleteStaff = async (e) => {
     const id = e.target.id;
-    await deleteStaff(id);
+    Modal.confirm({
+      title: "Cảnh báo",
+      content: "Bạn có chắc chắn muốn xóa nhân viên này không?",
+      cancelText: "Cancel",
+      // onOk: handleClickDeleteProduct1(id),
+      onOk: () => {
+        handleClickDeleteStaff1(id);
+      },
+    });
+  };
+
+  const handleClickDeleteStaff1 = async (id) => {
+    const res = await deleteStaff(id);
     dispatch(getAllUserProfile());
+    if (res.status === true) {
+      notification["success"]({
+        message: "Thành công",
+        description: "Xóa nhân viên thành công",
+      });
+    }
   };
   const columns = [
     {

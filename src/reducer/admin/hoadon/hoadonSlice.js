@@ -17,14 +17,13 @@ const hoadonSlice = createSlice({
       state.isLoading = true;
     },
     getHoaDonSuccess: (state, { payload }) => {
-      console.log("payload", payload.donhang);
       state.isLoading = false;
       state.hoadon = payload.hoadon;
-      state.status = payload.status;
+      state.status = payload.true;
     },
     getHoaDonFail: (state, { payload }) => {
       state.isLoading = false;
-      state.status = payload.status;
+      state.status = payload.false;
     },
     // getMaHDAndMaKH: (state, { payload }) => {
     //   state.MaHD = payload.MaHD;

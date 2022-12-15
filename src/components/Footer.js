@@ -62,37 +62,37 @@ const Footer = () => {
             </Title>
             <div className="flex justify-between my-7 block">
               <div className="flex-col ">
-                <div className=" my-2">
+                <div className=" flex items-center my-2">
                   <DoubleRightOutlined className="text-[#fff]" />
                   <Text className="text-[#fff] ml-2">Câu chuyện</Text>
                 </div>
-                <div className=" my-2">
+                <div className=" flex items-center my-2">
                   <DoubleRightOutlined className="text-[#fff]" />
                   <Text className="text-[#fff] ml-2">Dịch vụ</Text>
                 </div>
-                <div className=" my-2">
+                <div className=" flex items-center my-2">
                   <DoubleRightOutlined className="text-[#fff]" />
                   <Text className="text-[#fff] ml-2">Menu</Text>
                 </div>
-                <div className=" my-2">
+                <div className=" flex items-center my-2">
                   <DoubleRightOutlined className="text-[#fff]" />
                   <Text className="text-[#fff] ml-2">Về Cửa Hàng</Text>
                 </div>
               </div>
               <div className="flex-col">
-                <div className="my-2">
+                <div className="flex items-center my-2">
                   <DoubleRightOutlined className="text-[#fff]" />
                   <Text className="text-[#fff] ml-2">Blog</Text>
                 </div>
-                <div className="my-2">
+                <div className="flex items-center my-2">
                   <DoubleRightOutlined className="text-[#fff]" />
                   <Text className="text-[#fff] ml-2">Giúp Đỡ</Text>
                 </div>
-                <div className="my-2">
+                <div className="flex items-center my-2">
                   <DoubleRightOutlined className="text-[#fff]" />
                   <Text className="text-[#fff] ml-2">Công Việc</Text>
                 </div>
-                <div className="my-2">
+                <div className="flex items-center my-2">
                   <DoubleRightOutlined className="text-[#fff]" />
                   <Text className="text-[#fff] ml-2">Liên Hệ</Text>
                 </div>

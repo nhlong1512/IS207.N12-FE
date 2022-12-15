@@ -91,7 +91,7 @@ const Users_admin = () => {
       <div className="w-full my-5 flex justify-start ">
         <Search
           className="w-[15rem]"
-          placeholder="Tìm kiếm nhân viên"
+          placeholder="Tìm kiếm người dùng"
           //   onChange={(e) => onSearch(e)}
           style={{
             marginLeft: "20px",

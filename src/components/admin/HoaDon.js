@@ -154,7 +154,7 @@ const HoaDon = () => {
       <div className="w-full my-5 flex justify-start ">
         <Search
           className="w-[15rem]"
-          placeholder="Tìm kiếm sản phẩm"
+          placeholder="Tìm kiếm hóa đơn"
           //   onChange={(e) => onSearch(e)}
           style={{
             marginLeft: "20px",

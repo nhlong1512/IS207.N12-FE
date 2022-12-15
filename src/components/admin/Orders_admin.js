@@ -9,6 +9,8 @@ import {
   Spin,
   message,
   Popconfirm,
+  notification,
+  Modal,
 } from "antd";
 import {
   CaretDownOutlined,
@@ -32,7 +34,7 @@ import { getMaHDAndMaKH } from "../../reducer/admin/order/orderSlice";
 import { confirmOrder } from "../../api/admin/Order";
 import { fetchBill } from "../../reducer/bill/billAction";
 import { getDetailBill } from "../../reducer/bill/billSlice";
-import { cancelBillUser } from "../../api/billApi";
+import { cancelBillUser, doneBillUser } from "../../api/billApi";
 const Orders_admin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -79,17 +81,47 @@ const Orders_admin = () => {
     const id = e.target.id;
     const element = orders.find((item) => parseInt(item.id) === parseInt(id));
 
-    console.log(element);
-    await confirmOrder(id);
+    if (element.TrangThai === "Chưa xác nhận") {
+      await confirmOrder(id);
+      notification["success"]({
+        message: "Thành công",
+        description: "Xác nhận đơn hàng thành công",
+      });
+    } else {
+      await doneBillUser(id);
+      notification["success"]({
+        message: "Thành công",
+        description: "Xác nhận đơn hàng đã giao thành công",
+      });
+    }
+
     dispatch(getAllOrders());
   };
   const handleClickDeleteBill = async (e) => {
     const idString = e.target.id;
     const id = parseInt(idString);
+    Modal.confirm({
+      title: "Cảnh báo",
+      content: "Bạn có chắc chắn muốn hủy đơn hàng này không?",
+      cancelText: "Cancel",
+      onOk: () => {
+        handleClickDeleteBill1(id);
+      },
+    });
     console.log(id);
-    await cancelBillUser(id);
-    dispatch(getAllOrders());
   };
+  const handleClickDeleteBill1 = async (id) => {
+    const res = await cancelBillUser(id);
+    dispatch(getAllOrders());
+    console.log(res);
+    if (res.data.status === true) {
+      notification["success"]({
+        message: "Thành công",
+        description: "Hủy đơn hàng thành công",
+      });
+    }
+  };
+
   const handleClickFilterCXN = () => {
     let inputArray = [];
     orders.forEach((order) => {
@@ -236,12 +268,15 @@ const Orders_admin = () => {
           </div> */}
           <div
             className="cursor-pointer relative w-30 h-30"
+            name={record.MaHD}
             onClick={(e) => handleClickConfirmOrder(e)}
           >
-            {record.TrangThai === "Chưa xác nhận" && (
+            {(record.TrangThai === "Chưa xác nhận" ||
+              record.TrangThai === "Đang giao") && (
               <svg
                 id={record.id}
                 values={record.key}
+                name={record.MaHD}
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -252,6 +287,7 @@ const Orders_admin = () => {
                 <path
                   id={record.id}
                   values={record.key}
+                  name={record.MaHD}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   d="M4.5 12.75l6 6 9-13.5"
@@ -259,30 +295,30 @@ const Orders_admin = () => {
               </svg>
             )}
           </div>
-          {record.TrangThai === "Đang giao" ||
-            (record.TrangThai === "Chưa xác nhận" && (
-              <div
-                className="cursor-pointer relative w-30 h-30"
-                onClick={(e) => handleClickDeleteBill(e)}
+          {(record.TrangThai === "Đang giao" ||
+            record.TrangThai === "Chưa xác nhận") && (
+            <div
+              className="cursor-pointer relative w-30 h-30"
+              onClick={(e) => handleClickDeleteBill(e)}
+            >
+              <svg
+                id={record.MaHD}
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-wMaHDth="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
               >
-                <svg
-                  id={record.MaHD}
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-wMaHDth="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    id={record.id}
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </div>
-            ))}
+                <path
+                  id={record.id}
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </div>
+          )}
         </Space>
       ),
     },

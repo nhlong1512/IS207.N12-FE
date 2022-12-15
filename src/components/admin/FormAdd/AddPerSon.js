@@ -28,106 +28,107 @@ import { getAllUserProfile } from "../../../reducer/admin/user/userAction";
 // } from "../../reducer/user/userAction";
 const AddPerSon = () => {
   const dispatch = useDispatch();
+const navigate = useNavigate();
+const { isAuthenticated } = useSelector((state) => state.auth);
+// console.log(user);
+const [isFirst, setIsFirst] = useState(true);
+const [selectedImage, setSelectedImage] = useState("");
+const [userInfo, setUserInfo] = useState({
+  hoten: "",
+  email: "",
+  role: "nhanvien",
+  password: "nhanvien123@!!",
+  sdt: "",
+  ngsinh: "",
+  gioitinh: "",
+  diachi: "",
+  urlavt: "",
+});
 
-  const { isAuthenticated } = useSelector((state) => state.auth);
-  // console.log(user);
-  const [isFirst, setIsFirst] = useState(true);
-  const [selectedImage, setSelectedImage] = useState("");
-  const [userInfo, setUserInfo] = useState({
-    hoten: "",
-    email: "",
-    role: "nhanvien",
-    password: "nhanvien123@!!",
-    sdt: "",
-    ngsinh: "",
-    gioitinh: "",
-    diachi: "",
-    urlavt: "",
-  });
+//validate date
+const isValidDate = (dateString) => {
+  // First check for the pattern
+  var regex_date = /^\d{4}\-\d{1,2}\-\d{1,2}$/;
 
-  //validate date
-  const isValidDate = (dateString) => {
-    // First check for the pattern
-    var regex_date = /^\d{4}\-\d{1,2}\-\d{1,2}$/;
+  if (!regex_date.test(dateString)) {
+    return false;
+  }
 
-    if (!regex_date.test(dateString)) {
-      return false;
-    }
+  // Parse the date parts to integers
+  var parts = dateString.split("-");
+  var day = parseInt(parts[2], 10);
+  var month = parseInt(parts[1], 10);
+  var year = parseInt(parts[0], 10);
 
-    // Parse the date parts to integers
-    var parts = dateString.split("-");
-    var day = parseInt(parts[2], 10);
-    var month = parseInt(parts[1], 10);
-    var year = parseInt(parts[0], 10);
+  // Check the ranges of month and year
+  if (year < 1000 || year > 3000 || month == 0 || month > 12) {
+    return false;
+  }
 
-    // Check the ranges of month and year
-    if (year < 1000 || year > 3000 || month == 0 || month > 12) {
-      return false;
-    }
+  var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-    var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  // Adjust for leap years
+  if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) {
+    monthLength[1] = 29;
+  }
 
-    // Adjust for leap years
-    if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) {
-      monthLength[1] = 29;
-    }
+  // Check the range of the day
+  return day > 0 && day <= monthLength[month - 1];
+};
 
-    // Check the range of the day
-    return day > 0 && day <= monthLength[month - 1];
-  };
+// const [gender, setGender] = useState(0);
+const handleChangeForm = (e) => {
+  setIsFirst(false);
+  setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+  console.log(userInfo);
+};
 
-  // const [gender, setGender] = useState(0);
-  const handleChangeForm = (e) => {
+const onChangeImage = async (e) => {
+  console.log(e.target.files[0]);
+  const urlImage = URL.createObjectURL(e.target.files[0]);
+  setSelectedImage(urlImage);
+
+  const formData = new FormData();
+  formData.append("file", e.target.files[0]);
+  formData.append("upload_preset", "themorrii");
+  const res = await axios.post(
+    "https://api.cloudinary.com/v1_1/dql5y1xex/image/upload",
+    formData
+  );
+  const url = res.data.secure_url;
+  setUserInfo({ ...userInfo, urlavt: url });
+  console.log(url);
+
+  // setUserInfo({
+  //   ...userInfo,
+  //   urlavt: urlImage,
+  // });
+};
+
+const handleChangeGender = (e) => {
+  const gt = e.target.value == "nu" ? 1 : 0;
+  setUserInfo({ ...userInfo, [e.target.name]: gt });
+  console.log(userInfo);
+};
+const handleSubmitUpdateProfile = async () => {
+  var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+  console.log(userInfo);
+  if (vnf_regex.test(userInfo.sdt) == false) {
+    message.error("Số điện thoại không hợp lệ");
+  } else if (isValidDate(userInfo.ngsinh) == false) {
+    message.error("Ngày sinh không hợp lệ");
+  } else {
     setIsFirst(false);
-    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
     console.log(userInfo);
-  };
-
-  const onChangeImage = async (e) => {
-    console.log(e.target.files[0]);
-    const urlImage = URL.createObjectURL(e.target.files[0]);
-    setSelectedImage(urlImage);
-
-    const formData = new FormData();
-    formData.append("file", e.target.files[0]);
-    formData.append("upload_preset", "themorrii");
-    const res = await axios.post(
-      "https://api.cloudinary.com/v1_1/dql5y1xex/image/upload",
-      formData
-    );
-    const url = res.data.secure_url;
-    setUserInfo({ ...userInfo, urlavt: url });
-    console.log(url);
-
-    // setUserInfo({
-    //   ...userInfo,
-    //   urlavt: urlImage,
-    // });
-  };
-
-  const handleChangeGender = (e) => {
-    const gt = e.target.value == "nu" ? 1 : 0;
-    setUserInfo({ ...userInfo, [e.target.name]: gt });
-    console.log(userInfo);
-  };
-  const handleSubmitUpdateProfile = async () => {
-    var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-    console.log(userInfo);
-    if (vnf_regex.test(userInfo.sdt) == false) {
-      message.error("Số điện thoại không hợp lệ");
-    } else if (isValidDate(userInfo.ngsinh) == false) {
-      message.error("Ngày sinh không hợp lệ");
-    } else {
-      setIsFirst(false);
-      console.log(userInfo);
-      const res = await createUser(userInfo);
-      console.log(res);
-      if (res.status == true) {
-        dispatch(getAllUserProfile());
-        message.success("Thêm nhân viên thành công");
-      }
+    const res = await createUser(userInfo);
+    console.log(res);
+    if (res.status == true) {
+      dispatch(getAllUserProfile());
+      message.success("Thêm nhân viên thành công");
+      navigate("/admin/staff");
     }
-  };
+  }
+};
   //   useEffect(() => {
   //     if (isFirst == false) {
   //       if (isChangeProfileLoading == false && updateStatus == true)

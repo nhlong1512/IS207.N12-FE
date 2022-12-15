@@ -34,6 +34,7 @@ import HoaDonPDF from "./components/admin/HoaDonPDF";
 import Blog from "./components/admin/Blog";
 import Blog_admin from "./components/admin/Blog_admin";
 import BlogDetail from "./components/admin/BlogDetail";
+import Dashboard from "./components/admin/Dashboard";
 const excludeHeaderFooterPath = [
   "/signin",
   "/signup",
@@ -80,6 +81,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="admin/blog/blog-detail" element={<BlogDetail />} />
           <Route path="/admin/" element={<MainAdmin />}>
+            <Route path="" element={<Dashboard />} />
             <Route path="user" element={<Users_admin />} />
             <Route path="staff/" element={<Staffs_admin />} />
             <Route path="staff/add-staff" element={<AddPerSon />} />

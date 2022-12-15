@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { MdFastfood } from "react-icons/md";
+import { MdFastfood, MdSpaceDashboard } from "react-icons/md";
 import { TbDiscount2 } from "react-icons/tb";
 import { GiFoodTruck } from "react-icons/gi";
 import { IoIosStats } from "react-icons/io";
@@ -52,14 +52,14 @@ const AppMenu = () => {
 
   // Return menu items here
   const items = [
+    getItem("Dashboard", "0", <MdSpaceDashboard />, () => redirectTo("")),
     getItem("Đặt hàng", "1", <MdFastfood />, () => redirectTo("order")),
     getItem("Hóa đơn", "2", <GiFoodTruck />, () => redirectTo("hoadon")),
     getItem("Sản phẩm", "3", <AppstoreOutlined />, () => redirectTo("product")),
     getItem("Người dùng", "4", <UserOutlined />, () => redirectTo("user")),
     getItem("Nhân viên", "5", <IdcardOutlined />, () => redirectTo("staff")),
     getItem("Blog", "6", <TbDiscount2 />, () => redirectTo("blog")),
-    getItem("Statistic", "7", <IoIosStats />, () => redirectTo("statistic")),
-    getItem("Sign out", "8", <LogoutOutlined />, () => confirm(), {
+    getItem("Sign out", "7", <LogoutOutlined />, () => confirm(), {
       backgroundColor: "transparent",
     }),
   ];
@@ -79,10 +79,9 @@ const AppMenu = () => {
         return ["5"];
       case "Blog":
         return ["6"];
-      case "statistic":
-        return ["7"];
+
       default:
-        return ["8"];
+        return ["7"];
     }
   };
 

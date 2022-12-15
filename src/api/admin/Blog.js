@@ -35,7 +35,7 @@ export const createBlog = (blogInfo) => {
       console.log("res", res);
       resolve(res.data);
     } catch (error) {
-      reject(error.response.data);
+      reject(error.response);
     }
   });
 };
