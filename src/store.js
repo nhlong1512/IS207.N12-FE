@@ -8,6 +8,7 @@ import product_adminReducer from "./reducer/admin/product/productSlice";
 import order_adminReducer from "./reducer/admin/order/orderSlice";
 import hoadon_adminReducer from "./reducer/admin/hoadon/hoadonSlice";
 import blog_adminReducer from "./reducer/admin/blog/blogSlice";
+import khuyenmai_adminReducer from "./reducer/admin/khuyenmai/khuyenmaiSlice";
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -19,6 +20,7 @@ const store = configureStore({
     order_admin: order_adminReducer,
     hoadon_admin: hoadon_adminReducer,
     blog_admin: blog_adminReducer,
+    khuyenmai_admin: khuyenmai_adminReducer,
   },
 });
 

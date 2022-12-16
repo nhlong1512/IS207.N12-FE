@@ -59,7 +59,8 @@ const AppMenu = () => {
     getItem("Người dùng", "4", <UserOutlined />, () => redirectTo("user")),
     getItem("Nhân viên", "5", <IdcardOutlined />, () => redirectTo("staff")),
     getItem("Blog", "6", <TbDiscount2 />, () => redirectTo("blog")),
-    getItem("Sign out", "7", <LogoutOutlined />, () => confirm(), {
+    getItem("Khuyến mãi", "7", <TbDiscount2 />, () => redirectTo("khuyenmai")),
+    getItem("Sign out", "8", <LogoutOutlined />, () => confirm(), {
       backgroundColor: "transparent",
     }),
   ];
@@ -79,9 +80,11 @@ const AppMenu = () => {
         return ["5"];
       case "Blog":
         return ["6"];
+      case "Khuyến mãi":
+        return ["7"];
 
       default:
-        return ["7"];
+        return ["8"];
     }
   };
 
