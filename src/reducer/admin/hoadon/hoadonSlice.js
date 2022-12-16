@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   hoadon: [],
+  allHoadon: [],
   //   detailOrder: {},
   isLoading: false,
   status: false,
@@ -19,11 +20,23 @@ const hoadonSlice = createSlice({
     getHoaDonSuccess: (state, { payload }) => {
       state.isLoading = false;
       state.hoadon = payload.hoadon;
+      state.allHoadon = payload.hoadon;
       state.status = payload.true;
     },
     getHoaDonFail: (state, { payload }) => {
       state.isLoading = false;
       state.status = payload.false;
+    },
+    onFilterHoaDon: (state, { payload }) => {
+      console.log(payload);
+      if (payload.length > 0) {
+        const filterProduct = state.allHoadon.filter((product) => {
+          console.log(payload, product.TenSP);
+
+          return product.hoten.toLowerCase().includes(payload.toLowerCase());
+        });
+        state.hoadon = filterProduct;
+      } else state.hoadon = state.allHoadon;
     },
     // getMaHDAndMaKH: (state, { payload }) => {
     //   state.MaHD = payload.MaHD;
@@ -53,6 +66,7 @@ export const {
   getHoaDonPending,
   getHoaDonSuccess,
   getHoaDonFail,
+  onFilterHoaDon,
   //   getMaHDAndMaKH,
 } = hoadonSlice.actions;
 

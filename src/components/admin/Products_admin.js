@@ -10,7 +10,10 @@ import { getAllUserProfile } from "../../reducer/admin/user/userAction";
 import Search from "antd/lib/input/Search";
 import { fetchProduct } from "../../reducer/admin/product/productAction";
 import { useNavigate } from "react-router-dom";
-import { getDetailProduct } from "../../reducer/admin/product/productSlice";
+import {
+  getDetailProduct,
+  onFilterProduct,
+} from "../../reducer/admin/product/productSlice";
 import { deleteProduct } from "../../api/admin/Product";
 const Products_admin = () => {
   const navigate = useNavigate();
@@ -165,14 +168,16 @@ const Products_admin = () => {
     });
     setData(listProduct);
   }, [products]);
-
+  const onSearch = (e) => {
+    dispatch(onFilterProduct(e.target.value));
+  };
   return (
     <>
       <div className="w-full my-5 flex justify-start ">
         <Search
           className="w-[15rem]"
           placeholder="Tìm kiếm sản phẩm"
-          //   onChange={(e) => onSearch(e)}
+          onChange={(e) => onSearch(e)}
           style={{
             marginLeft: "20px",
             width: 300,

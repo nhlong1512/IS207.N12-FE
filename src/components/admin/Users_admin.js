@@ -8,7 +8,10 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUserProfile } from "../../reducer/admin/user/userAction";
 import Search from "antd/lib/input/Search";
+import { onFilterStaff } from "../../reducer/admin/user/userSlice";
+import { useNavigate } from "react-router-dom";
 const Users_admin = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { users, isLoading } = useSelector((state) => state.user_admin);
   const [data, setData] = useState([]);
@@ -86,19 +89,28 @@ const Users_admin = () => {
     setData(listUsers);
   }, [users]);
 
+  const onSearch = (e) => {
+    dispatch(onFilterStaff(e.target.value));
+  };
+  const handleClickAddUser = () => {
+    navigate("admin/user/add-user");
+  };
   return (
     <>
       <div className="w-full my-5 flex justify-start ">
         <Search
           className="w-[15rem]"
           placeholder="Tìm kiếm người dùng"
-          //   onChange={(e) => onSearch(e)}
+          onChange={(e) => onSearch(e)}
           style={{
             marginLeft: "20px",
             width: 300,
           }}
         />
-        <Button className="w-[12rem] flex items-center justify-center accent-[#146d4d] hover:text-[#146d4d] hover:border-[#146d4d]  ml-[20px] ">
+        <Button
+          onClick={handleClickAddUser}
+          className="w-[12rem] flex items-center justify-center accent-[#146d4d] hover:text-[#146d4d] hover:border-[#146d4d]  ml-[20px] "
+        >
           <UserAddOutlined className="h-full pr-1" />
           <p className="mb-0 h-full">Thêm người dùng</p>
         </Button>

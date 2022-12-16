@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   users: [],
+  allUsers: [],
   detailUser: {},
   isLoading: false,
   status: false,
@@ -18,6 +19,7 @@ const userSlice = createSlice({
       console.log("payload", payload.nguoidung);
       state.isLoading = false;
       state.users = payload.nguoidung;
+      state.allUsers = payload.nguoidung;
       state.status = payload.status;
     },
     getAllUserFail: (state, { payload }) => {
@@ -41,6 +43,18 @@ const userSlice = createSlice({
     getDetailUser: (state, { payload }) => {
       state.detailUser = payload;
     },
+
+    onFilterStaff: (state, { payload }) => {
+      console.log(payload);
+      if (payload.length > 0) {
+        const filterProduct = state.allUsers.filter((product) => {
+          console.log(payload, product.TenSP);
+
+          return product.hoten.toLowerCase().includes(payload.toLowerCase());
+        });
+        state.users = filterProduct;
+      } else state.users = state.allUsers;
+    },
   },
 });
 
@@ -52,6 +66,7 @@ export const {
   updateStaffPending,
   updateStaffSuccess,
   updateStaffFail,
+  onFilterStaff,
 } = userSlice.actions;
 
 export default userSlice.reducer;

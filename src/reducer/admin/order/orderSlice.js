@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   orders: [],
+  allOrders: [],
   detailOrder: {},
   isLoading: false,
   status: false,
@@ -20,6 +21,7 @@ const orderSlice = createSlice({
       console.log("payload", payload.donhang);
       state.isLoading = false;
       state.orders = payload.donhang;
+      state.allOrders = payload.donhang;
       state.status = payload.status;
     },
     getAllOrderFail: (state, { payload }) => {
@@ -29,6 +31,17 @@ const orderSlice = createSlice({
     getMaHDAndMaKH: (state, { payload }) => {
       state.MaHD = payload.MaHD;
       state.MaKH = payload.MaKH;
+    },
+    onFilterOrder: (state, { payload }) => {
+      console.log(payload);
+      if (payload.length > 0) {
+        const filterProduct = state.allOrders.filter((product) => {
+          console.log(payload, product.TenSP);
+
+          return product.HoTen.toLowerCase().includes(payload.toLowerCase());
+        });
+        state.orders = filterProduct;
+      } else state.orders = state.allOrders;
     },
 
     // updateStaffPending: (state) => {
@@ -55,6 +68,7 @@ export const {
   getAllOrderSuccess,
   getAllOrderFail,
   getMaHDAndMaKH,
+  onFilterOrder
 } = orderSlice.actions;
 
 export default orderSlice.reducer;

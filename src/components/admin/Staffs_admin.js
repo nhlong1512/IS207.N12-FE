@@ -23,7 +23,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllUserProfile } from "../../reducer/admin/user/userAction";
 import Search from "antd/lib/input/Search";
 import { useNavigate } from "react-router-dom";
-import { getDetailUser } from "../../reducer/admin/user/userSlice";
+import {
+  getDetailUser,
+  onFilterStaff,
+} from "../../reducer/admin/user/userSlice";
 const Staffs_admin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -75,6 +78,10 @@ const Staffs_admin = () => {
         description: "Xóa nhân viên thành công",
       });
     }
+  };
+
+  const onSearch = (e) => {
+    dispatch(onFilterStaff(e.target.value));
   };
   const columns = [
     {
@@ -198,7 +205,7 @@ const Staffs_admin = () => {
         <Search
           className="w-[15rem]"
           placeholder="Tìm kiếm nhân viên"
-          //   onChange={(e) => onSearch(e)}
+          onChange={(e) => onSearch(e)}
           style={{
             marginLeft: "20px",
             width: 300,

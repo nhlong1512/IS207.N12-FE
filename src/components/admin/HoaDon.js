@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getDetailProduct } from "../../reducer/admin/product/productSlice";
 import { deleteProduct } from "../../api/admin/Product";
 import { getHoaDonAction } from "../../reducer/admin/hoadon/hoadonAction";
+import { onFilterHoaDon } from "../../reducer/admin/hoadon/hoadonSlice";
 const HoaDon = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -149,13 +150,16 @@ const HoaDon = () => {
     setData(listProduct);
   }, [hoadon]);
 
+  const onSearch = (e) => {
+    dispatch(onFilterHoaDon(e.target.value));
+  };
   return (
     <>
       <div className="w-full my-5 flex justify-start ">
         <Search
           className="w-[15rem]"
           placeholder="Tìm kiếm hóa đơn"
-          //   onChange={(e) => onSearch(e)}
+            onChange={(e) => onSearch(e)}
           style={{
             marginLeft: "20px",
             width: 300,

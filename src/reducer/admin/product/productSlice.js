@@ -61,17 +61,17 @@ const productSlice = createSlice({
     // searchFilterChanged: (state, { payload }) => {
     //   state.searchText = payload;
     // },
-    // onFilterProduct: (state, { payload }) => {
-    //   console.log(payload);
-    //   if (payload.length > 0) {
-    //     const filterProduct = state.totalProduct.filter((product) => {
-    //       console.log(payload, product.TenSP);
+    onFilterProduct: (state, { payload }) => {
+      console.log(payload);
+      if (payload.length > 0) {
+        const filterProduct = state.totalProduct.filter((product) => {
+          console.log(payload, product.TenSP);
 
-    //       return product.TenSP.includes(payload);
-    //     });
-    //     state.products = filterProduct;
-    //   } else state.products = state.totalProduct;
-    // },
+          return product.TenSP.toLowerCase().includes(payload.toLowerCase());
+        });
+        state.products = filterProduct;
+      } else state.products = state.totalProduct;
+    },
     // onPhanLoai: (state, { payload }) => {
     //   if (payload > 0) {
     //     const filterProduct = state.totalProduct.filter(
@@ -99,7 +99,7 @@ export const {
   updateProductFail,
   //   addProductToCard,
   //   searchFilterChanged,
-  //   onFilterProduct,
+  onFilterProduct,
   //   onPhanLoai,
 } = actions;
 

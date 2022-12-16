@@ -26,6 +26,7 @@ import { getDetailProduct } from "../../reducer/admin/product/productSlice";
 import { deleteProduct } from "../../api/admin/Product";
 import { getBlogAction } from "../../reducer/admin/blog/blogAction";
 import { deleteBlog } from "../../api/admin/Blog";
+import { onFilterBlog } from "../../reducer/admin/blog/blogSlice";
 const Blog_admin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -202,13 +203,16 @@ const Blog_admin = () => {
     setData(listBlogs);
   }, [blogs]);
 
+  const onSearch = (e) => {
+    dispatch(onFilterBlog(e.target.value));
+  };
   return (
     <>
       <div className="w-full my-5  flex justify-start ">
         <Search
           className="w-[15rem]"
-          placeholder="Tìm kiếm sản phẩm"
-          //   onChange={(e) => onSearch(e)}
+          placeholder="Tìm kiếm Blog"
+          onChange={(e) => onSearch(e)}
           style={{
             marginLeft: "20px",
             width: 300,

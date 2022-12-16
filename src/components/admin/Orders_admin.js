@@ -30,7 +30,10 @@ import Search from "antd/lib/input/Search";
 import { useNavigate } from "react-router-dom";
 import { getDetailUser } from "../../reducer/admin/user/userSlice";
 import { getAllOrders } from "../../reducer/admin/order/orderActions";
-import { getMaHDAndMaKH } from "../../reducer/admin/order/orderSlice";
+import {
+  getMaHDAndMaKH,
+  onFilterOrder,
+} from "../../reducer/admin/order/orderSlice";
 import { confirmOrder } from "../../api/admin/Order";
 import { fetchBill } from "../../reducer/bill/billAction";
 import { getDetailBill } from "../../reducer/bill/billSlice";
@@ -355,13 +358,17 @@ const Orders_admin = () => {
       setData(listOrders);
     }
   }, [orders, isClick, isReset]);
+
+  const onSearch = (e) => {
+    dispatch(onFilterOrder(e.target.value));
+  };
   return (
     <>
       <div className="w-full my-5 flex justify-start ">
         <Search
           className="w-[15rem]"
           placeholder="Tìm kiếm đơn hàng"
-          //   onChange={(e) => onSearch(e)}
+          onChange={(e) => onSearch(e)}
           style={{
             marginLeft: "20px",
             width: 300,
