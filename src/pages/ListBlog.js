@@ -1,24 +1,36 @@
 import React from "react";
-import { Card, Col, Row, Typography, Spin } from "antd";
-import styled from "styled-components";
-import Blog1 from "../../images/blog/MoriiBlog1.jpeg";
-import Blog2 from "../../images/blog/MoriiBlog2.jpeg";
-import Blog3 from "../../images/blog/MoriiBlog3.jpg";
-import Blog4 from "../../images/blog/MoriiBlog4.jpg";
-import Blog5 from "../../images/blog/MoriiBlog5.jpg";
-import Blog6 from "../../images/blog/MoriiBlog6.jpg";
-import { getBlogAction } from "../../reducer/admin/blog/blogAction";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getBlogAction } from "../reducer/admin/blog/blogAction";
+import { Card, Col, Row, Typography, Spin, Breadcrumb } from "antd";
+import styled from "styled-components";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const { Meta } = Card;
-const { Title, Paragraph } = Typography;
 
-export default function Blog() {
-  const dispatch = useDispatch();
+const { Title, Paragraph } = Typography;
+const Img = styled.img`
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+  -webkit-transition: all 0.3s linear;
+  -moz-transition: all 0.3s linear;
+  -ms-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  &:hover {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform-y: scale(1.2);
+    overflow-y: hidden;
+  }
+`;
+const ListBlog = () => {
   const navigate = useNavigate();
-  const { blogs, isLoading } = useSelector((state) => state.blog_admin);
+  const dispatch = useDispatch();
   const antIcon = (
     <LoadingOutlined
       style={{
@@ -27,25 +39,7 @@ export default function Blog() {
       spin
     />
   );
-  const Img = styled.img`
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -o-transform: scale(1);
-    transform: scale(1);
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s linear;
-    -ms-transition: all 0.3s linear;
-    -o-transition: all 0.3s linear;
-    transition: all 0.3s linear;
-    &:hover {
-      -webkit-transform: scale(1.2);
-      -moz-transform: scale(1.2);
-      -ms-transform: scale(1.2);
-      -o-transform: scale(1.2);
-      transform-y: scale(1.2);
-      overflow-y: hidden;
-    }
-  `;
+  const { blogs, isLoading } = useSelector((state) => state.blog_admin);
   useEffect(() => {
     dispatch(getBlogAction());
     console.log("bb", blogs);
@@ -60,7 +54,14 @@ export default function Blog() {
     });
   };
   return (
-    <div className="container w-full max-w-[1100px] mx-auto h-[160vh]">
+    <div className="container w-full max-w-[1100px] mx-auto h-full mb-10 pt-12">
+      <Breadcrumb className="pt-10 ml-10 mb-5 text-base">
+        <Breadcrumb.Item>
+          <Link to="/">Trang chủ</Link>
+        </Breadcrumb.Item>
+
+        <Breadcrumb.Item>Blog</Breadcrumb.Item>
+      </Breadcrumb>
       <div className="flex-col py-8 ">
         <Title className="text-[#146d4d] w-[15rem] mb-0 mx-auto text-center">
           Morii Blog
@@ -73,9 +74,6 @@ export default function Blog() {
       <Row gutter={36}>
         {isLoading && <Spin indicator={antIcon} />}
         {blogs.map((item, index) => {
-          if (index > 5) {
-            return;
-          }
           return (
             <Col id={item.id} className="mt-5 " span={8}>
               <Card
@@ -115,4 +113,6 @@ export default function Blog() {
       </Row>
     </div>
   );
-}
+};
+
+export default ListBlog;

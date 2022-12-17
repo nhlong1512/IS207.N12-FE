@@ -103,13 +103,13 @@ const ListOrder = () => {
   };
 
   return (
-    <div className="container  h-full mx-auto pt-4 max-w-[1024px]">
+    <div className="container  h-full mx-auto pt-20 max-w-[1024px]">
       <div className="mb-10 ">
         <Breadcrumb>
-          <Breadcrumb.Item>Menu</Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <a href="/order">Đồ uống</a>
+          <Breadcrumb.Item className="text-base">
+            <Link to="/">Trang chủ</Link>
           </Breadcrumb.Item>
+          <Breadcrumb.Item>Thực đơn</Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <Row>
@@ -171,15 +171,15 @@ const ListOrder = () => {
                     id={product.id}
                     size="large"
                     hoverable
-                    className="  mx-0 my-5 rounded-lg h-[23rem]"
+                    className="  mx-0 my-5 rounded-lg h-[23rem]  "
                     bordered={true}
                     cover={
                       <div className="h-[15rem] overflow-hidden ">
                         <Img
                           id={product.id}
-                          className=" hover:overflow-hidden "
+                          className=" hover:overflow-hidden h-[17rem] object-fit "
                           alt="example"
-                          src={order1}
+                          src={product.HinhAnh}
                         />
                       </div>
                     }
@@ -187,11 +187,15 @@ const ListOrder = () => {
                     <Meta
                       id={product.id}
                       title={
-                        <p className="whitespace-normal mb-0">
+                        <p className="whitespace-normal mb-0 text-[1.3rem]">
                           {product.TenSP}
                         </p>
                       }
-                      description={`${product.Gia.toLocaleString()} VND`}
+                      description={
+                        <p className="text-[1rem]">
+                          {product.Gia.toLocaleString()} VND
+                        </p>
+                      }
                     />
                   </Card>
                 </Col>
@@ -205,7 +209,7 @@ const ListOrder = () => {
             className="h-[10rem]  py-10 overflow-y-visible"
             defaultCurrent={1}
             size="large"
-            total={30}
+            total={20}
             onChange={(page, pageSize) => OnPageChange(page, pageSize)}
           />
         </Row>

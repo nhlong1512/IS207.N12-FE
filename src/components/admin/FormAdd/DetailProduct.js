@@ -37,6 +37,7 @@ import { getDetailProduct } from "../../../reducer/admin/product/productSlice";
 const DetailProduct = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   const detailProductLocation = location.state.detailProduct;
   // console.log(user);
   const { detailProduct, status, isLoading } = useSelector(
@@ -90,6 +91,9 @@ const DetailProduct = () => {
     } else {
       console.log(productInfo);
       dispatch(updateDetailProduct(productInfo, detailProductLocation.id));
+      message.success("Cập nhật thông tin thành công");
+      dispatch(fetchProduct());
+      navigate("/admin/product");
     }
   };
   useEffect(() => {
@@ -126,14 +130,14 @@ const DetailProduct = () => {
             />
           )} */}
       <div className="flex items-center mb-6 mt-10  w-full  ">
-        {productInfo.HinhAnh && (
+        {/* {productInfo.HinhAnh && (
           <Image
             preview={false}
             className="w-32 h-32 pr-2"
             src={productInfo?.HinhAnh}
             alt="avatar"
           />
-        )}
+        )} */}
 
         <div className="w-full ">
           <Title className=" " level={3}>

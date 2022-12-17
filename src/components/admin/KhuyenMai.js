@@ -118,6 +118,10 @@ const KhuyenMai = () => {
     const id = e.id;
     const res = await UpdateKhuyenMai(id, e);
     setIsLoading(true);
+    notification["success"]({
+      message: "Thành công",
+      description: "Áp dụng khuyến mãi thành công",
+    });
   };
   return (
     <div className="w-full max-w-4xl mx-auto">

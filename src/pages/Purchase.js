@@ -17,17 +17,25 @@ const Purchase = () => {
   const dispatch = useDispatch();
   var arrayInput = [];
   const totalCart = location.state.totalCart;
+  const giaKM = location.state.giaKM;
+  const prevKm = location.state.prevKm;
   var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
   const { user, status, updateStatus, isLoading } = useSelector(
     (state) => state.user
   );
+  const { selectedKhuyenmai, khuyenmais } = useSelector(
+    (state) => state.khuyenmai_admin
+  );
   cartItems.map((item) => {
+    if (selectedKhuyenmai) {
+      var maKm = selectedKhuyenmai.id;
+    }
     arrayInput.push({
       MaSP: item.id,
       SoLuong: item.quantity,
       Size: item.size,
       MaPL: 1,
-      MaKM: 0,
+      MaKM: maKm,
       Topping: item.topping,
     });
   });
@@ -211,21 +219,21 @@ const Purchase = () => {
           </Title>
           <div className="w-full border-b-[0.01rem] pb-16 border-solid border-[#C6BDBD] ">
             <div className="w-full flex mt-10 justify-between ">
-              <p>PHỤ THU</p>
-              <p>5.000 VND</p>
+              <p>Tổng Cộng</p>
+              <p>{prevKm.toLocaleString()} VND</p>
             </div>
             <div className="w-full flex mt-10 justify-between ">
-              <p>PHÍ SHIP</p>
-              <p>30.000 VND</p>
+              <p>Phí Ship</p>
+              <p>30,000 VND</p>
             </div>
             <div className="w-full flex mt-10 justify-between ">
-              <p>THUẾ GTGT</p>
-              <p>5.000 VND</p>
+              <p>Khuyến Mãi</p>
+              <p>{giaKM.toLocaleString()}VND</p>
             </div>
           </div>
           <div className="w-full flex mt-10 justify-between ">
             <p>TỔNG CỘNG</p>
-            <p>{totalCart + 30000} VND</p>
+            <p>{(totalCart + 30000).toLocaleString()} VND</p>
           </div>
           <Button
             onClick={handleClickPurchase}

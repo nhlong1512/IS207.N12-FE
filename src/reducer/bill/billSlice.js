@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   bill: [],
   detailBill: {},
+  idDetail: 0,
   isLoading: false,
   status: false,
   error: "",
@@ -18,6 +19,9 @@ const billSlice = createSlice({
     fetchBillSuccess: (state, { payload }) => {
       console.log("payload", payload.donhang);
       state.bill = payload.donhang;
+      state.detailBill = payload.donhang.find(
+        (item) => item.id == state.idDetail
+      );
       state.isLoading = false;
     },
     fetchBillFail: (state, { payload }) => {
@@ -28,6 +32,7 @@ const billSlice = createSlice({
 
     getDetailBill: (state, { payload }) => {
       state.detailBill = payload;
+      state.idDetail = payload.id;
     },
   },
 });

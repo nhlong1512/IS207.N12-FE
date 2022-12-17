@@ -93,7 +93,7 @@ const Users_admin = () => {
     dispatch(onFilterStaff(e.target.value));
   };
   const handleClickAddUser = () => {
-    navigate("admin/user/add-user");
+    navigate("add-user");
   };
   return (
     <>

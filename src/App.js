@@ -37,6 +37,10 @@ import BlogDetail from "./components/admin/BlogDetail";
 import Dashboard from "./components/admin/Dashboard";
 import KhuyenMai from "./components/admin/KhuyenMai";
 import AddUser from "./components/admin/FormAdd/AddUser";
+import EditBlog from "./components/admin/EditBlog";
+import ListBlog from "./pages/ListBlog";
+import Contact from "./pages/Contact";
+import About from "./pages/About";
 const excludeHeaderFooterPath = [
   "/signin",
   "/signup",
@@ -81,7 +85,7 @@ function App() {
           <Route path="/find-account" element={<FindYourAccount />} />
           <Route path="/code-validation" element={<CodeValidation />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="admin/blog/blog-detail" element={<BlogDetail />} />
+
           <Route path="/admin/" element={<MainAdmin />}>
             <Route path="" element={<Dashboard />} />
             <Route path="user" element={<Users_admin />} />
@@ -98,10 +102,17 @@ function App() {
             <Route path="hoadon/hoadon-detail" element={<HoaDonDetail />} />
             <Route path="hoadon/hoadonpdf" element={<HoaDonPDF />} />
             <Route path="blog" element={<Blog_admin />} />
+
             <Route path="blog/add-blog" element={<Blog />} />
+            <Route path="blog/edit-blog" element={<EditBlog />} />
             <Route path="khuyenmai" element={<KhuyenMai />} />
           </Route>
           <Route element={<MainLayout />}>
+            <Route path="blog/blog-detail" element={<BlogDetail />} />
+            <Route path="blog" element={<ListBlog />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="aboutme" element={<About />} />
+
             <Route exact path="/" element={<Home />} />
             <Route path="/sanpham" element={<ListOrder />} />
             {/* <Route path="/product-detail" element={<ProductDetail />} /> */}

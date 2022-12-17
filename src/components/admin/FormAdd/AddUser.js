@@ -36,8 +36,9 @@ const AddUser = () => {
   const [userInfo, setUserInfo] = useState({
     hoten: "",
     email: "",
-    role: "nhanvien",
-    password: "nhanvien123@!!",
+    role: "khachhang",
+    password: "",
+    password_confirmation: "",
     sdt: "",
     ngsinh: "",
     gioitinh: "",
@@ -118,14 +119,14 @@ const AddUser = () => {
     } else if (isValidDate(userInfo.ngsinh) == false) {
       message.error("Ngày sinh không hợp lệ");
     } else {
-      setIsFirst(false);
+      // setIsFirst(false);
       console.log(userInfo);
       const res = await createUser(userInfo);
       console.log(res);
       if (res.status == true) {
         dispatch(getAllUserProfile());
         message.success("Thêm nhân viên thành công");
-        navigate("/admin/staff");
+        navigate("/admin/user");
       }
     }
   };
@@ -175,11 +176,11 @@ const AddUser = () => {
           </Title>
 
           {/* <input
-                // className="hidden"
-                type="file"
-                name="myImage"
-                onChange={(e) => onChangeImage(e)}
-              /> */}
+                  // className="hidden"
+                  type="file"
+                  name="myImage"
+                  onChange={(e) => onChangeImage(e)}
+                /> */}
 
           <div className="flex w-full justify-between">
             <Title className=" " level={5}>
@@ -254,7 +255,7 @@ const AddUser = () => {
           <Input
             type="password"
             size="medium"
-            name="confirmPassword"
+            name="password_confirmation"
             placeholder="Xác nhận mật khẩu"
             className="rounded-md py-2 mb-3 placeholder:font-SignIn placeholder:font-semibold placeholder:text-[#595959] placeholder:text-[0.7rem] pl-4  "
             onChange={(e) => handleChangeForm(e)}
@@ -318,47 +319,24 @@ const AddUser = () => {
         </Col>
         <Col span={18}>
           <div className="flex items-center w-ful ">
-            {userInfo.gioitinh == 0 ? (
-              <input
-                onClick={(e) => handleChangeGender(e)}
-                id="nam"
-                type="radio"
-                name="gioitinh"
-                value="nam"
-                className=" mr-1 accent-[#146d4d] w-4 h-4  "
-                checked
-              />
-            ) : (
-              <input
-                onClick={(e) => handleChangeGender(e)}
-                id="nam"
-                type="radio"
-                name="gioitinh"
-                value="nam"
-                className=" mr-1 accent-[#146d4d] w-4 h-4  "
-              />
-            )}
+            <input
+              onClick={(e) => handleChangeGender(e)}
+              id="nam"
+              type="radio"
+              name="gioitinh"
+              value="nam"
+              className=" mr-1 accent-[#146d4d] w-4 h-4  "
+            />
+
             <label for="nam">Nam</label>
-            {userInfo.gioitinh == 0 ? (
-              <input
-                onClick={(e) => handleChangeGender(e)}
-                id="nu"
-                type="radio"
-                name="gioitinh"
-                value="nu"
-                className="ml-10 mr-1 accent-[#146d4d] w-4 h-4 "
-              />
-            ) : (
-              <input
-                onClick={(e) => handleChangeGender(e)}
-                id="nu"
-                type="radio"
-                name="gioitinh"
-                value="nu"
-                className="ml-10 mr-1 accent-[#146d4d] w-4 h-4 "
-                checked
-              />
-            )}
+            <input
+              onClick={(e) => handleChangeGender(e)}
+              id="nu"
+              type="radio"
+              name="gioitinh"
+              value="nu"
+              className="ml-10 mr-1 accent-[#146d4d] w-4 h-4 "
+            />
 
             <label for="nu">Nữ</label>
           </div>

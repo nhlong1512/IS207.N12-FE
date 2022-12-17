@@ -1,4 +1,4 @@
-import { Col, Row, InputNumber, Button } from "antd";
+import { Col, Row, InputNumber, Button, Image, Breadcrumb } from "antd";
 import Title from "antd/lib/typography/Title";
 import React, { useEffect, useState } from "react";
 import { Card } from "antd";
@@ -9,6 +9,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addProductToCard } from "../reducer/product/productSlice";
 import { PurchaseApi } from "../api/PurchaseApi";
+import emptyCart from "../images/empty-cart.svg";
+import { getKhuyenMaiAction } from "../reducer/admin/khuyenmai/khuyenmaiAction";
 const { Meta } = Card;
 const Cart = () => {
   const dispatch = useDispatch();
@@ -16,10 +18,16 @@ const Cart = () => {
   const { user, status, updateStatus, isLoading } = useSelector(
     (state) => state.user
   );
+  const { selectedKhuyenmai, khuyenmais } = useSelector(
+    (state) => state.khuyenmai_admin
+  );
   const [quantityProduct, setQuantityProduct] = useState(1);
   var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
   const [cartItems_state, setCarrItems_state] = useState(cartItems);
   const [totalCart, setTotalCart] = useState(0);
+  const [priceKM, setPriceKM] = useState(0);
+  const [phanTramKM, setPhanTramKM] = useState(0);
+  const [prevKM, setPrevKM] = useState(0);
   var arrayInput = [];
   cartItems.map((item) => {
     arrayInput.push({
@@ -36,8 +44,17 @@ const Cart = () => {
     0
   );
   useEffect(() => {
-    setTotalCart(sumWithInitial + 10000);
-  }, [sumWithInitial]);
+    const giaKM =
+      sumWithInitial - (sumWithInitial * selectedKhuyenmai.phantramKM) / 100;
+    // console.log("ptram", selectedKhuyenmai);
+    // console.log("ptram1", sumWithInitial);
+    // let a = (sumWithInitial * (100 - selectedKhuyenmai.phantramKM)) / 100;
+    // console.log("gia", a);
+    setPrevKM(sumWithInitial);
+    let gia = (sumWithInitial * selectedKhuyenmai.phantramKM) / 100;
+    setPriceKM(gia);
+    setTotalCart(giaKM);
+  }, [sumWithInitial, selectedKhuyenmai]);
 
   const handleClickCheckOut = async () => {
     if (user.role != "khachhang") {
@@ -48,21 +65,31 @@ const Cart = () => {
       navigate("/admin/hoadon");
     } else {
       navigate(`/purchase`, {
-        state: { totalCart: totalCart },
+        state: { totalCart: totalCart, giaKM: priceKM, prevKm: prevKM },
       });
     }
   };
+
+  useEffect(() => {
+    dispatch(getKhuyenMaiAction());
+    // console.log("select", selectedKhuyenmai);
+  }, []);
 
   const handleChangeItem = (cartItems_state, value, id) => {
     // const item = cartItems.find((item) => item.id === id);
     // item.total = value;
     console.log(cartItems_state);
-    const sumWithInitial1 = cartItems_state.reduce(
+    let sumWithInitial1 = cartItems_state.reduce(
       (accumulator, currentValue) => accumulator + currentValue.total,
       0
     );
+    setPrevKM(sumWithInitial1);
+    // sumWithInitial1 -= (sumWithInitial1 * selectedKhuyenmai.phanTramKM) / 100;
+    const giaKM = (sumWithInitial1 * selectedKhuyenmai.phantramKM) / 100;
+    const total =
+      sumWithInitial1 - (sumWithInitial1 * selectedKhuyenmai.phantramKM) / 100;
     console.log(sumWithInitial1);
-    setTotalCart(sumWithInitial1 + 10000);
+    setTotalCart(total);
     // localStorage.setItem("cartItems", JSON.stringify(cartItems_state));
   };
   // useEffect(() => {
@@ -80,6 +107,16 @@ const Cart = () => {
 
   return (
     <div className="container  h-full  max-w-[1024px] mx-auto pb-40 pt-20 ">
+      <Breadcrumb className="pt-20 mb-5">
+        <Breadcrumb.Item>
+          <Link to="/">Trang chủ</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to="/sanpham">Thực đơn</Link>
+        </Breadcrumb.Item>
+
+        <Breadcrumb.Item>Giỏ hàng</Breadcrumb.Item>
+      </Breadcrumb>
       <Title level={2} className="text-black">
         Giỏ hàng
       </Title>
@@ -111,6 +148,13 @@ const Cart = () => {
               />
             );
           })}
+          {cartItems_state.length == 0 && (
+            <Image
+              preview={false}
+              className="w-[600px] h-[500px]"
+              src={emptyCart}
+            />
+          )}
         </Col>
         <Col className="h-full " span={8}>
           <div className="w-full px-6 h-[70vh] border-[1px] border-solid border-[#F5F5F6] bg-[#F5F5F6] rounded-2xl ">
@@ -122,24 +166,30 @@ const Cart = () => {
             </Title>
             <div className="w-full border-b-[0.01rem] pb-16 border-solid border-[#C6BDBD] ">
               <div className="w-full flex mt-10 justify-between ">
-                <p>PHỤ THU</p>
-                <p>5.000 VND</p>
+                <p>Tổng Cộng</p>
+                <p>{prevKM.toLocaleString()}</p>
               </div>
               <div className="w-full flex mt-10 justify-between ">
-                <p>THUẾ GTGT</p>
-                <p>5.000 VND</p>
+                <p>Khuyến mãi</p>
+                <p>
+                  {totalCart > 0 && selectedKhuyenmai.phantramKM > 0
+                    ? priceKM.toLocaleString()
+                    : "__"}
+                </p>
               </div>
             </div>
             <div className="w-full flex mt-10 justify-between ">
-              <p>TỔNG CỘNG</p>
+              <p>Thanh Toán</p>
               <p>{totalCart.toLocaleString()} VND</p>
             </div>
-            <Button
-              onClick={handleClickCheckOut}
-              className="bg-[#146d4d] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.7rem] font-bold"
-            >
-              CHECKOUT
-            </Button>
+            {totalCart > 0 && (
+              <Button
+                onClick={handleClickCheckOut}
+                className="bg-[#146d4d] w-full rounded-md py-[1rem] flex justify-center items-center text-[#fff] text-[0.7rem] font-bold"
+              >
+                CHECKOUT
+              </Button>
+            )}
           </div>
         </Col>
       </Row>

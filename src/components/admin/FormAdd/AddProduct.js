@@ -40,6 +40,7 @@ const AddProduct = () => {
     TenSP: "",
     Gia: "",
     MaPL: 1,
+    HinhAnh: "",
   });
 
   //validate date

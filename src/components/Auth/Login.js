@@ -220,9 +220,11 @@ export default function Login() {
                   Tạo tài khoản
                 </span>
               </Link>
-              <span className="underline text-xs font-semibold text-[1rem] cursor-pointer ">
-                Quên mật khẩu
-              </span>
+              <Link to="/find-account">
+                <span className="underline text-xs font-semibold text-[1rem] cursor-pointer ">
+                  Quên mật khẩu
+                </span>
+              </Link>
             </div>
           </div>
         </Col>

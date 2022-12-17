@@ -21,7 +21,9 @@ const khuyenmaiSlice = createSlice({
       console.log("payload", payload.khuyenmai);
       state.isLoading = false;
       state.khuyenmais = payload.khuyenmai;
-      state.selectedKhuyenmai = payload.khuyenmai[1];
+      state.selectedKhuyenmai = payload.khuyenmai.find(
+        (item) => parseInt(item.Status) == 1
+      );
       state.status = payload.status;
     },
     getKhuyenmaiFail: (state, { payload }) => {

@@ -10,6 +10,8 @@ import {
   Upload,
   message,
   Popconfirm,
+  Modal,
+  notification,
 } from "antd";
 import Title from "antd/lib/typography/Title";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +21,7 @@ import { useState } from "react";
 import { forEach } from "underscore";
 import { DeleteOutlined } from "@ant-design/icons";
 import { cancelBillUser, doneBillUser } from "../../api/billApi";
+import { getDetailBill } from "../../reducer/bill/billSlice";
 const Orders = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -37,19 +40,36 @@ const Orders = () => {
     const idString = e.target.id;
     const id = parseInt(idString);
     const billDetail = bills.find((bill) => bill.MaHD === id);
-
+    dispatch(getDetailBill(billDetail));
     navigate(`/bill/${id}`, {
-      state: { billDetail: billDetail },
+      state: { billDetail: billDetail, id: id },
     });
   };
 
-  const handleClickDeleteBill = async (e) => {
+  const handleClickDeleteBill = (e) => {
     const idString = e.target.id;
     const id = parseInt(idString);
-    console.log(id);
-    await cancelBillUser(id);
-    dispatch(fetchBill(user.id));
+    Modal.confirm({
+      title: "Cảnh báo",
+      content: "Bạn có chắc chắn muốn hủy đơn hàng này không?",
+      cancelText: "Cancel",
+      onOk: () => {
+        handleClickDeleteBill1(id);
+      },
+    });
   };
+
+  const handleClickDeleteBill1 = async (id) => {
+    const res = await cancelBillUser(id);
+    dispatch(fetchBill(user.id));
+    if (res.status === true) {
+      notification["success"]({
+        message: "Thành công",
+        description: "Hủy đơn hàng thành công",
+      });
+    }
+  };
+
   const handleClickDoneBill = async (e) => {
     const idString = e.target.id;
     const id = parseInt(idString);

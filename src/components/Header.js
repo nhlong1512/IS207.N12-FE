@@ -86,15 +86,14 @@ export default function Header() {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("cartItems");
     navigate("/signin");
-    window.location.reload();
   };
   const handleNavigateDoiMatKhau = () => {
-    setIsShowDropdown(false);
     navigate("/profile", { state: { default: 1 } });
+    setIsShowDropdown(false);
   };
   const handleNavigateDonDat = () => {
-    setIsShowDropdown(false);
     navigate("/profile", { state: { default: 2 } });
+    setIsShowDropdown(false);
   };
 
   const handleClickCart = () => {
@@ -119,11 +118,13 @@ export default function Header() {
       </Link>
       <div>
         <div className="flex justify-evenly w-[38rem]">
-          <Text
-            className={`text-[1.3rem] ${txtNav} mx-2 font-Jose font-normal cursor-pointer `}
-          >
-            Câu chuyện
-          </Text>
+          <Link to="/aboutme">
+            <Text
+              className={`text-[1.3rem] ${txtNav} mx-2 font-Jose font-normal cursor-pointer `}
+            >
+              Câu chuyện
+            </Text>
+          </Link>
           <Link to="/sanpham">
             <Text
               className={`text-[1.3rem] ${txtNav} mx-2 font-Jose font-normal cursor-pointer `}
@@ -131,21 +132,21 @@ export default function Header() {
               Thực đơn
             </Text>
           </Link>
-          <Text
-            className={`text-[1.3rem] ${txtNav} mx-2 font-Jose font-normal cursor-pointer `}
-          >
-            Blog
-          </Text>
-          <Text
-            className={`text-[1.3rem] ${txtNav} mx-2 font-Jose font-normal cursor-pointer `}
-          >
-            Cửa Hàng
-          </Text>
-          <Text
-            className={`text-[1.3rem] ${txtNav} mx-2 font-Jose font-normal cursor-pointer `}
-          >
-            Liên Hệ
-          </Text>
+          <Link to="/blog">
+            <Text
+              className={`text-[1.3rem] ${txtNav} mx-2 font-Jose font-normal cursor-pointer `}
+            >
+              Blog
+            </Text>
+          </Link>
+
+          <Link to="/contact">
+            <Text
+              className={`text-[1.3rem] ${txtNav} mx-2 font-Jose font-normal cursor-pointer `}
+            >
+              Liên Hệ
+            </Text>
+          </Link>
         </div>
       </div>
       <div className="ml-9 w-[15.4rem]">
@@ -304,7 +305,7 @@ export default function Header() {
           >
             <ShoppingCartOutlined className="text-[1.8rem] pt-1 " />
             {isShowCount && (
-              <div className="absolute text-[#ffffff] bg-[#FF4D4F] rounded-full w-[20px] h-[22px] text-center flex items-center justify-center top-0 right-[10px] ">
+              <div className="absolute text-[#ffffff] bg-[#FF4D4F] rounded-full w-[20px] h-[22px] text-center flex items-center justify-center top-0 right-[22px] ">
                 {count}
               </div>
             )}

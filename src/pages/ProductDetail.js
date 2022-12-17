@@ -8,10 +8,11 @@ import Title from "antd/lib/typography/Title";
 import Text from "antd/lib/typography/Text";
 import styled from "styled-components";
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import _ from "underscore";
 import { addProductToCard } from "../reducer/product/productSlice";
+
 const { Meta } = Card;
 const Img = styled.img`
   -webkit-transform: scale(1);
@@ -42,6 +43,7 @@ const ProductDetail = () => {
   const dispatch = useDispatch();
   const navigate1 = useNavigate();
   const navigate = useLocation();
+  const { products, currentPage } = useSelector((state) => state.product);
   const { isAuthenticated } = useSelector((state) => state.auth);
   const [sizeVuaActive, setSizeVuaActive] = useState(true);
   const [sizeLonActive, setSizeLonActive] = useState(false);
@@ -138,21 +140,24 @@ const ProductDetail = () => {
   }, [listTopping, sizeLonActive, sizeVuaActive]);
   return (
     <div className="container mx-auto max-w-[1024px]">
-      <div className="pt-10 mb-6">
+      <div className="pt-20 mb-6">
         <Breadcrumb>
           <Breadcrumb.Item>Menu</Breadcrumb.Item>
           <Breadcrumb.Item>
-            <a href="/sanpham">Đồ uống</a>
+            <Link to="/sanpham">Đồ uống</Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
-            <a href="">{dataProduct.TenSP}</a>
+            <Link to="">{dataProduct.TenSP}</Link>
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <div className="  items-center mx-auto ">
         <Row className="w-full pb-10" gutter={35}>
           <Col span={12}>
-            <img className="h-[80vh] w-full bg-contain" src={menu1} />
+            <img
+              className="h-[80vh] w-full bg-contain"
+              src={dataProduct.HinhAnh}
+            />
           </Col>
           <Col span={12}>
             <Title level={2}>{dataProduct.TenSP}</Title>
@@ -301,110 +306,44 @@ const ProductDetail = () => {
           Sản phẩm liên quan
         </Title>
         <Row gutter={35} className="w-full  mx-auto    ">
-          <Col span={6}>
-            <Card
-              size="large"
-              hoverable
-              className="  mx-0 my-2 mb-10 mt-6 rounded-lg"
-              bordered={true}
-              cover={
-                <div className="h-[15rem] overflow-hidden ">
-                  <Img
-                    className=" hover:overflow-hidden "
-                    alt="example"
-                    src={menu1}
+          {products.map((product, index) => {
+            if (product.MaPL == 3) return;
+            if (index > 6) return;
+            return (
+              <Col
+                key={product.id}
+                id={product.id}
+                // onClick={(e) => handleClickProduct(e)}
+                span={6}
+              >
+                <Card
+                  id={product.id}
+                  size="large"
+                  hoverable
+                  className="  mx-0 my-5 rounded-lg h-[23rem]"
+                  bordered={true}
+                  cover={
+                    <div className="h-[15rem] overflow-hidden ">
+                      <Img
+                        id={product.id}
+                        className=" hover:overflow-hidden "
+                        alt="example"
+                        src={product.HinhAnh}
+                      />
+                    </div>
+                  }
+                >
+                  <Meta
+                    id={product.id}
+                    title={
+                      <p className="whitespace-normal mb-0">{product.TenSP}</p>
+                    }
+                    description={`${product.Gia.toLocaleString()} VND`}
                   />
-                </div>
-              }
-            >
-              <Meta
-                title={
-                  <p className="whitespace-normal mb-0">
-                    Sữa tươi chân châu đường đen
-                  </p>
-                }
-                description="30.000đ"
-              />
-            </Card>
-          </Col>
-          <Col span={6}>
-            <Card
-              size="large"
-              hoverable
-              className="  mx-0 my-2 mb-10 mt-6 rounded-lg"
-              bordered={true}
-              cover={
-                <div className="h-[15rem] overflow-hidden ">
-                  <Img
-                    className=" hover:overflow-hidden "
-                    alt="example"
-                    src={menu1}
-                  />
-                </div>
-              }
-            >
-              <Meta
-                title={
-                  <p className="whitespace-normal mb-0">
-                    Sữa tươi chân châu đường đen
-                  </p>
-                }
-                description="30.000đ"
-              />
-            </Card>
-          </Col>
-          <Col span={6}>
-            <Card
-              size="large"
-              hoverable
-              className="  mx-0 my-2 mb-10 mt-6 rounded-lg"
-              bordered={true}
-              cover={
-                <div className="h-[15rem] overflow-hidden ">
-                  <Img
-                    className=" hover:overflow-hidden "
-                    alt="example"
-                    src={menu1}
-                  />
-                </div>
-              }
-            >
-              <Meta
-                title={
-                  <p className="whitespace-normal mb-0">
-                    Sữa tươi chân châu đường đen
-                  </p>
-                }
-                description="30.000đ"
-              />
-            </Card>
-          </Col>
-          <Col span={6}>
-            <Card
-              size="large"
-              hoverable
-              className="  mx-0 my-2 mb-10 mt-6 rounded-lg"
-              bordered={true}
-              cover={
-                <div className="h-[15rem] overflow-hidden ">
-                  <Img
-                    className=" hover:overflow-hidden "
-                    alt="example"
-                    src={menu1}
-                  />
-                </div>
-              }
-            >
-              <Meta
-                title={
-                  <p className="whitespace-normal mb-0">
-                    Sữa tươi chân châu đường đen
-                  </p>
-                }
-                description="30.000đ"
-              />
-            </Card>
-          </Col>
+                </Card>
+              </Col>
+            );
+          })}
         </Row>
       </div>
     </div>
