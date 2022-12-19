@@ -6,7 +6,7 @@ import imgAboutme from "../images/cfco.jpg";
 import { Link } from "react-router-dom";
 const About = () => {
   return (
-    <div className="w-full max-w-5xl mx-auto h-full">
+    <div className="w-full max-w-5xl mx-auto h-full ">
       <Breadcrumb className="pt-20 mb-5 text-base">
         <Breadcrumb.Item>
           <Link to="/">Trang chủ</Link>
@@ -22,7 +22,7 @@ const About = () => {
         />
       </div>
 
-      <Title level={2} className="mt-5">
+      <Title level={2} className="mt-5 text-[#146d4d]">
         TỪ PHONG CÁCH UỐNG CÀ PHÊ ĐẾN VIỆC THÀNH LẬP MORII COFFEE
       </Title>
       <p>12/12/2022</p>
@@ -34,10 +34,10 @@ const About = () => {
         thức xem cảm nhận mới lạ như thế nào nhé!
       </Title>
       <div>
-        <p>
+        <p className="text-[1.2rem]">
           <strong>Italy</strong>
         </p>
-        <p>
+        <p className="text-[1rem]">
           Là “thủ phủ” cà phê nổi tiếng trên thế giới, thức uống này là món
           không thể thiếu đối với người dân Italy. Họ thường bắt đầu ngày mới
           với một ly cà phê và loại thường được dùng nhiều nhất chính là
@@ -45,81 +45,96 @@ const About = () => {
         </p>
         <p>&nbsp;</p>
         <p>
-          <img src="https://file.hstatic.net/1000075078/file/espresso_72dcdfeace2045f0922ea566e0303c80_grande.jpg" />
+          <img
+            className="w-4/5 mx-auto"
+            src="https://file.hstatic.net/1000075078/file/espresso_72dcdfeace2045f0922ea566e0303c80_grande.jpg"
+          />
         </p>
-        <p>
+        <p className="text-[1rem]">
           Đây là loại&nbsp;cà phê có thể phục vụ nhanh, có cho bạn ngay lập tức
           và thường được đựng trong những chiếc ly nhỏ. Người Italy khi thưởng
           thức sẽ cầm ly trong tay, hít hà mùi thơm quyến rũ rồi uống trong 3-4
           hơi. Cả quá trình diễn ra nhanh gọn nhưng đầy thanh lịch theo đúng
           phong cách người Italy.
         </p>
-        <p>
+        <p className="text-[1.2rem]">
           <strong>Pháp</strong>
         </p>
-        <p>
+        <p className="text-[1rem]">
           Ở Pháp thường dùng Café Au Lait, nghe thôi đã rất Pháp rồi đúng không?
           Đây là loại cà phê được pha chế hết sức đơn giản.&nbsp;
         </p>
         <p>
-          <img src="https://file.hstatic.net/1000075078/file/phap_477cd4bf793c44dd91589ef3cc5dfe22_grande.jpg" />
+          <img
+            className="w-4/5 mx-auto"
+            src="https://file.hstatic.net/1000075078/file/phap_477cd4bf793c44dd91589ef3cc5dfe22_grande.jpg"
+          />
         </p>
-        <p>
+        <p className="text-[1rem]">
           Là sự pha trộn giữa cà phê espresso và sữa tươi nóng. Café Au Lait là
           thức uống yêu thích của người Pháp vào buổi sáng và thường được dùng
           cùng bánh mì Baguette. Café Au Lait và Baguette, sự kết hợp biểu tượng
           của ẩm thực Pháp.
         </p>
-        <p>
+        <p className="text-[1.2rem]">
           <strong>Đức</strong>
         </p>
-        <p>
+        <p className="text-[1rem]">
           Eiskaffee&nbsp;là món cà phê quen thuộc của người Đức. Nó đích thị
           dành cho những ai thích sự ngọt ngào. Eiskaffee&nbsp;trong tiếng Đức
           có nghĩa là “cà phê kem lạnh”. Vị beo béo của kem lạnh lơ lửng trong
           lớp cà phê đắng kết hợp cùng tầng kem whipping ngọt ngào và một ít vụn
           choco đã tạo nên thứ đồ uống hấp dẫn khó cưỡng.&nbsp;
         </p>
-        <p>
-          <img src="https://file.hstatic.net/1000075078/file/duc_b3896265765847bcb9b8f90fb68463de_grande.jpg" />
+        <p className="text-[1rem]">
+          <img
+            className="w-4/5 mx-auto"
+            src="https://file.hstatic.net/1000075078/file/duc_b3896265765847bcb9b8f90fb68463de_grande.jpg"
+          />
         </p>
-        <p>
+        <p className="text-[1rem]">
           Vậy nên Eiskaffee đã đã chinh phục khẩu vị không chỉ của người dân
           nước Đức, trở thành món đồ uống “quốc dân” của đất nước này mà còn thu
           hút cả những khách du lịch đến nơi đây.
         </p>
-        <p>
+        <p className="text-[1.2rem]">
           <strong>Bồ Đào Nha</strong>
         </p>
-        <p>
+        <p className="text-[1rem]">
           Người Bồ Đào Nha cực kì ưa chuộng và phổ biến với món cà phê pha chanh
           mát lạnh Mazagran. Để thưởng thức món cà phê này hết sức đơn giản, bạn
           chỉ cần đổ hai tách espresso và nước cốt chanh vào một ly cao, thêm
           đường cho vừa uống và một ít đá viên.&nbsp;
         </p>
         <p>
-          <img src="https://file.hstatic.net/1000075078/file/tay_ban_nha_9569302e90194de6b52704f323ec77ca_grande.jpg" />
+          <img
+            className="w-4/5 mx-auto"
+            src="https://file.hstatic.net/1000075078/file/tay_ban_nha_9569302e90194de6b52704f323ec77ca_grande.jpg"
+          />
         </p>
-        <p>
+        <p className="text-[1rem]">
           Với sự kết hợp đặc biệt từ vị chua của chanh khiến món cà phê này có
           vị khác hẳn so với các loại cà phê khác trên thế giới. Đây cũng là một
           thức uống lý tưởng và sảng khoái cho những ngày hè.
         </p>
-        <p>
+        <p className="text-[1.2rem]">
           <strong>Hy Lạp</strong>
         </p>
-        <p>
+        <p className="text-[1rem]">
           Khá giống như người Bồ Đào Nha, người Hy Lạp cũng có một thức uống cà
           phê được yêu chuộng vào những ngày hè nhằm xua đi cái nóng nực. Đó
           chính là Frappé. Trong tiếng Pháp nó có nghĩa “ướp lạnh”, là loại cà
           phê hòa tan&nbsp;đánh sủi bọt hết sức độc đáo và được biết đến như
           biểu tượng của đất nước Hy Lạp.&nbsp;
         </p>
-        <p>
-          <img src="https://file.hstatic.net/1000075078/file/hy_lap_83f3b7571b15434a992f132d29d4b309_grande.jpg" />
+        <p className="text-[1rem]">
+          <img
+            className="w-4/5 mx-auto"
+            src="https://file.hstatic.net/1000075078/file/hy_lap_83f3b7571b15434a992f132d29d4b309_grande.jpg"
+          />
         </p>
         <p>&nbsp;</p>
-        <p>
+        <p className="text-[1rem]">
           Để pha Frappé, đầu tiên cho cà phê bột vào ly, thêm một thìa cà phê
           đường và một ít nước đá. Dùng máy trộn tay (handmixer) khuấy mạnh cho
           đến khi cà phê sủi bọt. Cuối cùng cho đá và rót một thêm một ít nước
@@ -128,10 +143,10 @@ const About = () => {
           thêm nước để pha loãng cà phê hoặc thêm đường vào để thưởng thức ngọt
           hơn.
         </p>
-        <p>
+        <p className="text-[1.2rem]">
           <strong>Cà phê sữa Việt Nam</strong>
         </p>
-        <p>
+        <p className="text-[1rem]">
           Mỗi đất nước đều có loại cà phê yêu thích đặc trưng. Và đối với người
           Việt đó là món cà phê sữa. Bạn thường thưởng thức cà phê sữa như thế
           nào? Mỗi buổi sáng tự pha cho mình hay ra cửa hàng gọi một ly cà phê
@@ -140,7 +155,7 @@ const About = () => {
           chân đến mảnh đất hình chữ S. Và nhiều thực khách nước ngoài khi vào
           cửa hàng của The Coffee House cũng thường xuyên lựa chọn cà phê sữa.
         </p>
-        <p>
+        <p className="text-[1rem]">
           Không giống những nước khác thường sử dụng cà phê pha sẵn, cà phê
           bột,…Việt Nam sử dụng loại cà phê xay nhuyễn, cho vào loại phin đặc
           trưng của bản xứ, sau đó đổ nước sôi vào. Từng giọt cà phê đậm đặc,
@@ -149,9 +164,12 @@ const About = () => {
           ngọt nơi hậu vị.
         </p>
         <p>
-          <img src="https://file.hstatic.net/1000075078/file/ca_phe_vietnam_3a4efb55366e4422aaedd0e7fd54240b_grande.jpg" />
+          <img
+            className="w-4/5 mx-auto"
+            src="https://file.hstatic.net/1000075078/file/ca_phe_vietnam_3a4efb55366e4422aaedd0e7fd54240b_grande.jpg"
+          />
         </p>
-        <p>
+        <p className="text-[1rem]">
           Không chỉ mỗi quốc gia sẽ có một loại cà phê đặc trưng và cách thưởng
           thức riêng biệt, mà mỗi cá nhận lại còn có cả phong cách uống cà phê
           rất khác. Phong cách thưởng thức cà phê của bạn là gì? Cà phê đen hay

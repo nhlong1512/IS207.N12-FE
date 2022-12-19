@@ -16,6 +16,7 @@ import {
 import ChiTietHoaDon from "../CTHD/ChiTietHoaDon";
 import { fetchBill } from "../../reducer/bill/billAction";
 import { confirmOrder, getAllOrderMAHD } from "../../api/admin/Order";
+import { getHoaDon } from "../../api/admin/Hoadon";
 
 const { Meta } = Card;
 const BillDetailadmin = () => {
@@ -29,6 +30,7 @@ const BillDetailadmin = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [listCTHD, setListCTHD] = useState([]);
   const [billDetail, setBillDetail] = useState({});
+  const [detailBill, setDetailBill] = useState({});
   //   const [quantityProduct, setQuantityProduct] = useState(1);
   //   var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
   //   const [cartItems_state, setCarrItems_state] = useState(cartItems);
@@ -41,17 +43,30 @@ const BillDetailadmin = () => {
       spin
     />
   );
+
+  useEffect(() => {
+    const FetchDonHang = async () => {
+      const { hoadon } = await getHoaDon();
+      if (listCTHD) setIsLoading(false);
+      const hoadonDetail = hoadon.find(
+        (item) => parseInt(item.id) === parseInt(MaHD)
+      );
+      console.log("reseff111", hoadonDetail);
+      setDetailBill(hoadonDetail);
+    };
+    FetchDonHang();
+  }, [isLoading]);
   useEffect(() => {
     const FetchHoaDon = async () => {
       const response = await getAllCTHDUser(MaHD);
       if (billDetail) setIsLoading(false);
       console.log("detailabc", response);
       setListCTHD(response.hoadon);
-      let total = response.hoadon.reduce(
-        (accumulator, currentValue) => accumulator + currentValue.ThanhTien,
-        0
-      );
-      setTotalCart(total + 40000);
+      // let total = response.hoadon.reduce(
+      //   (accumulator, currentValue) => accumulator + currentValue.ThanhTien,
+      //   0
+      // );
+      // setTotalCart(total + 40000);
     };
     FetchHoaDon();
   }, []);
@@ -177,17 +192,37 @@ const BillDetailadmin = () => {
             </Title>
             <div className="w-full border-b-[0.01rem] pb-16 border-solid border-[#C6BDBD] ">
               <div className="w-full flex mt-10 justify-between ">
-                <p>PHỤ THU</p>
-                <p>5.000 VND</p>
+                <p className="mb-0">Tổng Cộng </p>
+                <p className="mb-0">
+                  {detailBill.TongTien + detailBill.TienKM > 0
+                    ? (detailBill.TongTien + detailBill.TienKM).toLocaleString()
+                    : ""}{" "}
+                  VND
+                </p>
               </div>
+
               <div className="w-full flex mt-10 justify-between ">
-                <p>THUẾ GTGT</p>
-                <p>5.000 VND</p>
+                <p className="mb-0">{detailBill.TenKM}</p>
+              </div>
+              <div className="w-full flex mt-3 justify-between ">
+                <p className="mb-0"> Khuyến Mãi</p>
+                <p className="mb-0">
+                  {detailBill.TienKM > 0
+                    ? detailBill.TienKM.toLocaleString()
+                    : ""}{" "}
+                  VND
+                </p>
               </div>
             </div>
             <div className="w-full flex mt-10 justify-between ">
-              <p>TỔNG CỘNG</p>
-              <p>{totalCart.toLocaleString()} VND</p>
+              <p>Thành Tiền</p>
+              <p>
+                {" "}
+                {detailBill.TongTien > 0
+                  ? detailBill.TongTien.toLocaleString()
+                  : ""}{" "}
+                VND
+              </p>
             </div>
           </div>
 

@@ -35,7 +35,7 @@ const Cart = () => {
       SoLuong: item.quantity,
       Size: item.size,
       MaPL: 1,
-      MaKM: 0,
+      MaKM: selectedKhuyenmai.id,
       Topping: item.topping,
     });
   });

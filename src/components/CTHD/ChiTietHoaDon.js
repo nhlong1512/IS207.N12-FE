@@ -34,7 +34,7 @@ const ChiTietHoaDon = ({
             <p className="mb-1">{item}</p>
           ))}
           <p className="text-[#146d4d] text-[1rem] mt-2 mb-0">
-            {item.Gia.toLocaleString()}VND
+            {(item.Gia / item.SoLuong).toLocaleString()}VND
           </p>
         </div>
       </Col>

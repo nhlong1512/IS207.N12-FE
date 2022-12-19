@@ -56,11 +56,11 @@ const AppMenu = () => {
     getItem("Đặt hàng", "1", <MdFastfood />, () => redirectTo("order")),
     getItem("Hóa đơn", "2", <GiFoodTruck />, () => redirectTo("hoadon")),
     getItem("Sản phẩm", "3", <AppstoreOutlined />, () => redirectTo("product")),
-    getItem("Người dùng", "4", <UserOutlined />, () => redirectTo("user")),
+    getItem("Khách hàng", "4", <UserOutlined />, () => redirectTo("user")),
     getItem("Nhân viên", "5", <IdcardOutlined />, () => redirectTo("staff")),
     getItem("Blog", "6", <TbDiscount2 />, () => redirectTo("blog")),
     getItem("Khuyến mãi", "7", <TbDiscount2 />, () => redirectTo("khuyenmai")),
-    getItem("Sign out", "8", <LogoutOutlined />, () => confirm(), {
+    getItem("Đăng xuất", "8", <LogoutOutlined />, () => confirm(), {
       backgroundColor: "transparent",
     }),
   ];
@@ -74,7 +74,7 @@ const AppMenu = () => {
         return ["2"];
       case "Sản phẩm":
         return ["3"];
-      case "Người dùng":
+      case "Khách hàng":
         return ["4"];
       case "Nhân viên":
         return ["5"];

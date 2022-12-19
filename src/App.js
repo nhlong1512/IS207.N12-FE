@@ -41,6 +41,7 @@ import EditBlog from "./components/admin/EditBlog";
 import ListBlog from "./pages/ListBlog";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
+import NotFound from "./pages/NotFound";
 const excludeHeaderFooterPath = [
   "/signin",
   "/signup",
@@ -122,6 +123,7 @@ function App() {
             <Route path="/profile" element={<Sidebar />} />
             <Route path="/bill/:id" element={<BillDetail />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Wrapper>
     </>

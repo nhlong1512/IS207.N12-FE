@@ -12,6 +12,7 @@ const HoaDonPDF = () => {
   const location = useLocation();
   const componentRef = useRef();
   const MaHD = location.state.MaHD;
+  const tienKM = location.state.TienKM;
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: "Hóa đơn" + MaHD,
@@ -177,7 +178,7 @@ const HoaDonPDF = () => {
             Giảm giá
           </p>
           <p className="text-left font-semibold text-base w-[108px] ml-5 mb-0 ">
-            0.000đ
+            {tienKM.toLocaleString() + " VND"}
           </p>
         </div>
         <div className="flex justify-end w-full items-center ml-6 mt-3 ">
@@ -185,7 +186,7 @@ const HoaDonPDF = () => {
             Thanh toán
           </p>
           <p className="text-left font-semibold text-base w-[108px] ml-5 mb-0 ">
-            {totalCart.toLocaleString() + "đ"}
+            {(totalCart - tienKM).toLocaleString() + " VND"}
           </p>
         </div>
         <div className="flex justify-center w-full items-center ml-6 mt-3 ">

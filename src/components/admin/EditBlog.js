@@ -104,6 +104,7 @@ const EditBlog = () => {
         console.log("tin", detailBlog1);
         setDetaiBlog(detailBlog1);
         setIsLoading(false);
+        setSelectedImage(detailBlog1.UrlImage);
       }
     };
     getBlogDetail();

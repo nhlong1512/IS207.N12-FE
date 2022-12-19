@@ -14,6 +14,7 @@ import { getDetailProduct } from "../../reducer/admin/product/productSlice";
 import { deleteProduct } from "../../api/admin/Product";
 import { getHoaDonAction } from "../../reducer/admin/hoadon/hoadonAction";
 import { onFilterHoaDon } from "../../reducer/admin/hoadon/hoadonSlice";
+import { getKhuyenMaiAction } from "../../reducer/admin/khuyenmai/khuyenmaiAction";
 const HoaDon = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -127,6 +128,7 @@ const HoaDon = () => {
   ];
   useEffect(() => {
     dispatch(getHoaDonAction());
+    dispatch(getKhuyenMaiAction());
     // console.log(products);
   }, []);
   useEffect(() => {
@@ -159,7 +161,7 @@ const HoaDon = () => {
         <Search
           className="w-[15rem]"
           placeholder="Tìm kiếm hóa đơn"
-            onChange={(e) => onSearch(e)}
+          onChange={(e) => onSearch(e)}
           style={{
             marginLeft: "20px",
             width: 300,

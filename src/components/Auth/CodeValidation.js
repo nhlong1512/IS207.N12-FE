@@ -47,7 +47,7 @@ const CodeValidation = () => {
               Nhập mã OTP
             </Title>
             <p className="font-normal text-[0.72rem]  ">
-              Chúng tôi sẽ gửi 1 mã OTP đến địa chỉ Email của bạn.
+              Chúng tôi sẽ gửi 1 mã OTP đến địa chỉ Email của bạn. &nbsp;
               <span className="text-[#146d4d] font-bold cursor-pointer">
                 Gửi mã.
               </span>

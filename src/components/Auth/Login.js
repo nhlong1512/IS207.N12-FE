@@ -227,6 +227,13 @@ export default function Login() {
               </Link>
             </div>
           </div>
+          <div className="pt-16">
+            <Link to="/">
+              <span className="underline text-xs font-semibold text-[1rem] cursor-pointer ">
+                Trở về trang chủ
+              </span>
+            </Link>
+          </div>
         </Col>
       </Col>
     </div>

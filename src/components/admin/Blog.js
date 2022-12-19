@@ -25,6 +25,7 @@ import { getUserProfile } from "../../reducer/user/userAction";
 import { useEffect } from "react";
 import { getBlogAction } from "../../reducer/admin/blog/blogAction";
 import { useNavigate } from "react-router-dom";
+import "./blogDetail.css";
 
 const Blog = () => {
   const dispatch = useDispatch();
@@ -70,7 +71,7 @@ const Blog = () => {
 
   const handleCkeditor = (event, editor) => {
     const a = '">';
-    const b = '"/>';
+    const b = '" className="imgBlog" />';
     const data = editor.getData().replaceAll(a, b);
 
     setBlogInfo({ ...blogInfo, NoiDung: data });
@@ -122,6 +123,7 @@ const Blog = () => {
           <div className="flex items-center w-full justify-between ">
             {blogInfo.UrlImage && (
               <Image
+             
                 preview={false}
                 className="w-16 h-16"
                 src={blogInfo.UrlImage}

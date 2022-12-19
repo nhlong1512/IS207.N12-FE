@@ -26,6 +26,7 @@ import {
   onPhanLoai,
   searchFilterChanged,
 } from "../reducer/product/productSlice";
+import { getKhuyenMaiAction } from "../reducer/admin/khuyenmai/khuyenmaiAction";
 const Img = styled.img`
   -webkit-transform: scale(1);
   -moz-transform: scale(1);
@@ -54,6 +55,7 @@ const ListOrder = () => {
   const [isDoAnActiveFilter, setIsDoAnActiveFilter] = useState(false);
   useEffect(() => {
     dispatch(fetchProduct());
+    dispatch(getKhuyenMaiAction());
     console.log(products);
   }, []);
 
