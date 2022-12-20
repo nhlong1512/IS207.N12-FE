@@ -199,7 +199,7 @@ const HoaDonDetail = () => {
                 <p className="mb-0">
                   {billDetail.TienKM > 0
                     ? billDetail.TienKM.toLocaleString()
-                    : ""}{" "}
+                    : "0"}{" "}
                   VND
                 </p>
               </div>

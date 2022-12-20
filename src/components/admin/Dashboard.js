@@ -16,9 +16,7 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state) => state.auth);
-  useEffect(() => {
-    if (isAuthenticated == false) navigate("/signin");
-  }, []);
+
   const data1 = [
     { year: 2012, value: 10 },
     { year: 2013, value: 20 },

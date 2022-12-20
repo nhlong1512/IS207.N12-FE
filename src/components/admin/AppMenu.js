@@ -16,6 +16,7 @@ import { IoIosStats } from "react-icons/io";
 const { Sider } = Layout;
 
 const AppMenu = () => {
+  const accessToken = localStorage.getItem("accessToken");
   const { user } = useSelector((state) => state.user);
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
@@ -47,15 +48,16 @@ const AppMenu = () => {
     });
   };
 
-  const staffManage = () => {
-    if (user.role === "admin") redirectTo("staff");
-    message.error("Nhân viên không có quyền truy cập");
-  };
-  const discountManage = () => {
-    if (user.role === "admin") redirectTo("khuyenmai");
-    message.error("Nhân viên không có quyền truy cập");
-  };
+  // const staffManage = () => {
+  //   if (user.role === "quanli") redirectTo("staff");
+  //   else message.error("Nhân viên không có quyền truy cập");
+  // };
+  // const discountManage = () => {
+  //   if (user.role === "quanli") redirectTo("khuyenmai");
+  //   else message.error("Nhân viên không có quyền truy cập");
+  // };
   const logout = () => {
+    localStorage.removeItem("cartItems");
     navigate("/signin");
   };
 
@@ -66,13 +68,9 @@ const AppMenu = () => {
     getItem("Hóa đơn", "2", <GiFoodTruck />, () => redirectTo("hoadon")),
     getItem("Sản phẩm", "3", <AppstoreOutlined />, () => redirectTo("product")),
     getItem("Khách hàng", "4", <UserOutlined />, () => redirectTo("user")),
-    getItem("Nhân viên", "5", <IdcardOutlined />, () => {
-      staffManage();
-    }),
+    getItem("Nhân viên", "5", <IdcardOutlined />, () => redirectTo("staff")),
     getItem("Blog", "6", <TbDiscount2 />, () => redirectTo("blog")),
-    getItem("Khuyến mãi", "7", <TbDiscount2 />, () => {
-      discountManage();
-    }),
+    getItem("Khuyến mãi", "7", <TbDiscount2 />, () => redirectTo("khuyenmai")),
     getItem("Đăng xuất", "8", <LogoutOutlined />, () => confirm(), {
       backgroundColor: "transparent",
     }),

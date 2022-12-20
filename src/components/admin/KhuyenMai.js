@@ -19,6 +19,7 @@ import Title from "antd/lib/typography/Title";
 import { useState } from "react";
 import {
   createKhuyenMai,
+  DeleteKhuyenMai,
   getKhuyenMai,
   UpdateKhuyenMai,
 } from "../../api/admin/KhuyenMai";
@@ -72,7 +73,7 @@ const KhuyenMai = () => {
         message: "Thành công",
         description: "Tạo khuyến mãi thành công",
       });
-      dispatch(getKhuyenMaiAction());
+      setIsLoading(true);
     }
   };
 
@@ -123,6 +124,16 @@ const KhuyenMai = () => {
       description: "Áp dụng khuyến mãi thành công",
     });
   };
+  const handleSubmitDeleteKhuyenMai = async () => {
+    const e = khuyenmais.find((item) => item.phantramKM === defaultnKM.value);
+    const id = e.id;
+    const res = await DeleteKhuyenMai(id);
+    setIsLoading(true);
+    notification["success"]({
+      message: "Thành công",
+      description: "Xóa khuyến mãi thành công",
+    });
+  };
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="flex mt-5 ">
@@ -145,7 +156,7 @@ const KhuyenMai = () => {
         </Col>
         <div className="w-full flex justify-end mt-5 ">
           <Button
-            //   onClick={handleSubmitUpdateProfile}
+              onClick={handleSubmitDeleteKhuyenMai}
             className="w-24 h-8 rounded-lg text-white bg-[#146d4d] hover:bg-[#FF5A5F] flex items-center justify-center"
           >
             Xóa

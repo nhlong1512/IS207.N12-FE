@@ -1,4 +1,4 @@
-import { Col, Row, InputNumber, Button, Spin } from "antd";
+import { Col, Row, InputNumber, Button, Spin, Modal, notification } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import Title from "antd/lib/typography/Title";
 import React, { useEffect, useState } from "react";
@@ -87,9 +87,28 @@ const BillDetailadmin = () => {
   }, [isLoading]);
 
   const handleClickDeleteBill = async (e) => {
-    await cancelBillUser(billDetail.MaHD);
-    setIsLoading(true);
+    Modal.confirm({
+      title: "Cảnh báo",
+      content: "Bạn có chắc chắn muốn xóa nhân viên này không?",
+      cancelText: "Cancel",
+      // onOk: handleClickDeleteProduct1(id),
+      onOk: () => {
+        handleClickDeleteBill1();
+      },
+    });
   };
+
+  const handleClickDeleteBill1 = async () => {
+    const res = await cancelBillUser(billDetail.MaHD);
+    setIsLoading(true);
+    if (res.status === true) {
+      notification["success"]({
+        message: "Thành công",
+        description: "Hủy đơn thành công thành công",
+      });
+    }
+  };
+
   const handleClickConfirmOrder = async (e) => {
     await confirmOrder(billDetail.id);
     setIsLoading(true);
@@ -209,7 +228,7 @@ const BillDetailadmin = () => {
                 <p className="mb-0">
                   {detailBill.TienKM > 0
                     ? detailBill.TienKM.toLocaleString()
-                    : ""}{" "}
+                    : "0"}{" "}
                   VND
                 </p>
               </div>

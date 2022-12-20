@@ -22,7 +22,7 @@ export default function Header() {
   const [txtNav, setTxtNav] = useState("text-[#000]");
   const [borderNav, setBorderNav] = useState("border-[#000]");
   const [isShowDropdown, setIsShowDropdown] = useState(false);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(numberProduct);
   const handleClickProfile = () => {
     setIsShowDropdown(!isShowDropdown);
   };
@@ -74,9 +74,12 @@ export default function Header() {
     if (cartItems) {
       setCount(cartItems.length);
     }
+  }, [numberProduct, count, isAuthenticated]);
+
+  useEffect(() => {
     if (count > 0) setIsShowCount(true);
     else setIsShowCount(false);
-  }, [numberProduct, count]);
+  }, [count, numberProduct]);
 
   const handleClickLogout = () => {
     // localStorage.removeItem("accessToken")
