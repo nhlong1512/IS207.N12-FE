@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../../images/Logo.png";
-import { Layout, Menu, Modal } from "antd";
+import { Layout, Menu, message, Modal } from "antd";
 import {
   AppstoreOutlined,
   LogoutOutlined,
@@ -8,7 +8,7 @@ import {
   IdcardOutlined,
 } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MdFastfood, MdSpaceDashboard } from "react-icons/md";
 import { TbDiscount2 } from "react-icons/tb";
 import { GiFoodTruck } from "react-icons/gi";
@@ -16,6 +16,7 @@ import { IoIosStats } from "react-icons/io";
 const { Sider } = Layout;
 
 const AppMenu = () => {
+  const { user } = useSelector((state) => state.user);
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -46,6 +47,14 @@ const AppMenu = () => {
     });
   };
 
+  const staffManage = () => {
+    if (user.role === "admin") redirectTo("staff");
+    message.error("Nhân viên không có quyền truy cập");
+  };
+  const discountManage = () => {
+    if (user.role === "admin") redirectTo("khuyenmai");
+    message.error("Nhân viên không có quyền truy cập");
+  };
   const logout = () => {
     navigate("/signin");
   };
@@ -57,9 +66,13 @@ const AppMenu = () => {
     getItem("Hóa đơn", "2", <GiFoodTruck />, () => redirectTo("hoadon")),
     getItem("Sản phẩm", "3", <AppstoreOutlined />, () => redirectTo("product")),
     getItem("Khách hàng", "4", <UserOutlined />, () => redirectTo("user")),
-    getItem("Nhân viên", "5", <IdcardOutlined />, () => redirectTo("staff")),
+    getItem("Nhân viên", "5", <IdcardOutlined />, () => {
+      staffManage();
+    }),
     getItem("Blog", "6", <TbDiscount2 />, () => redirectTo("blog")),
-    getItem("Khuyến mãi", "7", <TbDiscount2 />, () => redirectTo("khuyenmai")),
+    getItem("Khuyến mãi", "7", <TbDiscount2 />, () => {
+      discountManage();
+    }),
     getItem("Đăng xuất", "8", <LogoutOutlined />, () => confirm(), {
       backgroundColor: "transparent",
     }),

@@ -177,6 +177,7 @@ const BillDetail = () => {
                 topping={item.Topping}
                 item={item}
                 id={item.MaSP}
+                
               />
             );
           })}

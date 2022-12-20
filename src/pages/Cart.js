@@ -30,14 +30,25 @@ const Cart = () => {
   const [prevKM, setPrevKM] = useState(0);
   var arrayInput = [];
   cartItems.map((item) => {
-    arrayInput.push({
-      MaSP: item.id,
-      SoLuong: item.quantity,
-      Size: item.size,
-      MaPL: 1,
-      MaKM: selectedKhuyenmai.id,
-      Topping: item.topping,
-    });
+    if (item.MaPL != 1) {
+      arrayInput.push({
+        MaSP: item.id,
+        SoLuong: item.quantity,
+        MaPL: item.MaPL,
+        MaKM: selectedKhuyenmai.id,
+        Topping: item.topping,
+      });
+    } else {
+      arrayInput.push({
+        MaSP: item.id,
+        SoLuong: item.quantity,
+        Size: item.size,
+        MaPL: item.MaPL,
+        MaKM: selectedKhuyenmai.id,
+        Topping: item.topping,
+      });
+    }
+    
   });
   const sumWithInitial = cartItems.reduce(
     (accumulator, currentValue) => accumulator + currentValue.total,

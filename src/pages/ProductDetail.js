@@ -115,6 +115,7 @@ const ProductDetail = () => {
           topping: listTopping,
           quantity: 1,
           total: total,
+          MaPL: dataProduct.MaPL,
         };
         listItems.push(item);
       }

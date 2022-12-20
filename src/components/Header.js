@@ -184,7 +184,7 @@ export default function Header() {
               </a>
               <a
                 className="text-[#fff] flex items-center pl-[0.4rem] py-2 hover:bg-white hover:opacity-90 hover:text-[#146d4d] hover:font-bold"
-                href="#"
+                href="/profile"
               >
                 <div className="w-6 h-6 mr-1 ">
                   <svg
@@ -208,7 +208,7 @@ export default function Header() {
               </a>
               <a
                 className="text-[#fff] flex items-center pl-[0.4rem] py-2 hover:bg-white hover:opacity-90 hover:text-[#146d4d] hover:font-bold"
-                href="#"
+                href="/profile"
               >
                 <div className="w-6 h-6 mr-1 ">
                   <svg

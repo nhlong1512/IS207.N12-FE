@@ -18,6 +18,7 @@ const ChiTietHoaDon = ({
     const topping = item.Topping.split(",");
     setListTopping(topping);
     console.log(topping);
+    console.log("ii", item);
   }, []);
   return (
     <Row className="w-full h-full mt-8 text-[#000] flex items-center ">
@@ -29,7 +30,7 @@ const ChiTietHoaDon = ({
           <p className="text-[#000] font-bold text-[1.1rem] mb-2 leading-5  ">
             {item.TenSP}
           </p>
-          <p className="mb-0">Size: {size}</p>
+          {item.PhanLoai == 1 ? <p className="mb-0">Size: {size}</p> : ""}
           {listTopping.map((item) => (
             <p className="mb-1">{item}</p>
           ))}

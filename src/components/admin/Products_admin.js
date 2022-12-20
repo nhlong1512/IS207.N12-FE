@@ -1,5 +1,16 @@
 import React from "react";
-import { Button, Layout, Space, Table, Tag, Spin, Image, Modal, notification } from "antd";
+import {
+  Button,
+  Layout,
+  Space,
+  Table,
+  Tag,
+  Spin,
+  Image,
+  Modal,
+  notification,
+  message,
+} from "antd";
 import { LoadingOutlined, UserAddOutlined } from "@ant-design/icons";
 import AppMenu from "../../components/admin/AppMenu";
 import { getAlUser } from "../../api/admin/Users";
@@ -16,6 +27,7 @@ import {
 } from "../../reducer/admin/product/productSlice";
 import { deleteProduct } from "../../api/admin/Product";
 const Products_admin = () => {
+  const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { products, isLoading } = useSelector((state) => state.product_admin);
@@ -31,16 +43,18 @@ const Products_admin = () => {
     });
   };
   const handleClickDeleteProduct = async (e) => {
-    const id = e.target.id;
-    Modal.confirm({
-      title: "Cảnh báo",
-      content: "Bạn có chắc chắn muốn xóa sản phẩm này không?",
-      cancelText: "Cancel",
-      // onOk: handleClickDeleteProduct1(id),
-      onOk: () => {
-        handleClickDeleteProduct1(id);
-      },
-    });
+    if (user.role == "admin") {
+      const id = e.target.id;
+      Modal.confirm({
+        title: "Cảnh báo",
+        content: "Bạn có chắc chắn muốn xóa sản phẩm này không?",
+        cancelText: "Cancel",
+        // onOk: handleClickDeleteProduct1(id),
+        onOk: () => {
+          handleClickDeleteProduct1(id);
+        },
+      });
+    } else message.error("Bạn không được phép xóa sản phẩm");
   };
   const handleClickDeleteProduct1 = async (id) => {
     const res = await deleteProduct(id);
@@ -62,7 +76,8 @@ const Products_admin = () => {
   );
 
   const handleClickAddProduct = (e) => {
-    navigate("/admin/product/add-product");
+    if (user.role == "admin") navigate("/admin/product/add-product");
+    message.error("Bạn không được phép thêm sản phẩm");
   };
   const columns = [
     {
