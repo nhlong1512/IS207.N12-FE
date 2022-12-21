@@ -80,7 +80,7 @@ const BillDetail = () => {
     const FetchHoaDon = async () => {
       const response = await getAllCTHDUser(billDetail.MaHD);
       setIsLoading(false);
-      console.log(response);
+      console.log("hoadonne", response.hoadon);
       setListCTHD(response.hoadon);
       let total = response.hoadon.reduce(
         (accumulator, currentValue) => accumulator + currentValue.ThanhTien,
@@ -177,7 +177,7 @@ const BillDetail = () => {
                 topping={item.Topping}
                 item={item}
                 id={item.MaSP}
-                
+                HinhAnh={item.HinhAnh}
               />
             );
           })}

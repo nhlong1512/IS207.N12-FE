@@ -156,6 +156,7 @@ const Cart = () => {
                 cartItems={cartItems}
                 item={item}
                 id={item.id}
+                HinhAnh={item.HinhAnh}
               />
             );
           })}

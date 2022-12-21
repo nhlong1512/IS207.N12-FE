@@ -116,6 +116,7 @@ const ProductDetail = () => {
           quantity: 1,
           total: total,
           MaPL: dataProduct.MaPL,
+          HinhAnh: dataProduct.HinhAnh,
         };
         listItems.push(item);
       }
@@ -165,127 +166,137 @@ const ProductDetail = () => {
             <Text className="text-[1.8rem] text-[#146d4d]">
               {total.toLocaleString()}đ
             </Text>
-            <Text className="text-[1.2rem]  block">Chọn size (bắt buộc)</Text>
-            <div className="flex mt-2">
-              <div className="relative h-[2.4rem] w-[7rem] flex items-center border-[0.01rem] rounded-[0.3rem] border-solid  ">
-                <input
-                  onClick={handleChangeSize}
-                  className="hidden  "
-                  id="sizeVua"
-                  type="radio"
-                  name="sizeTraSua"
-                  value="0"
-                />
-                <label
-                  for="sizeVua"
-                  className={`cursor-pointer w-full h-full flex ${
-                    sizeVuaActive ? "bg-[#146d4d]" : ""
-                  }`}
-                >
-                  <p
-                    className={`text-[0.9rem] mx-auto text-center my-auto ${
-                      sizeVuaActive ? "bg-[#146d4d] text-[#fff]" : "text-[#000]"
-                    }`}
-                  >
-                    Vừa + 0đ
-                  </p>
-                </label>
-              </div>
-              <div className="relative h-[2.4rem] w-[7rem] flex items-center border-[0.01rem] rounded-[0.3rem] border-solid ml-3  ">
-                <input
-                  onClick={handleChangeSize}
-                  className="hidden  "
-                  id="sizeLon"
-                  type="radio"
-                  name="sizeTraSua"
-                  value="5000"
-                />
-                <label
-                  for="sizeLon"
-                  className={`cursor-pointer w-full h-full flex ${
-                    sizeLonActive ? "bg-[#146d4d]" : ""
-                  } `}
-                >
-                  <p
-                    className={`text-[0.9rem] mx-auto text-center my-auto ${
-                      sizeLonActive ? "bg-[#146d4d] text-[#fff]" : "text-[#000]"
-                    }`}
-                  >
-                    Lớn + 5,000đ
-                  </p>
-                </label>
-              </div>
-            </div>
-            <Text className="text-[1.2rem] mt-4 block">Topping</Text>
-            <div className="flex flex-wrap ">
-              <div className="relative  flex items-center border-[0.01rem] rounded-[0.3rem] border-solid mr-3  mt-4 ">
-                <Input_checkbox
-                  onClick={handleClickTopping}
-                  className="hidden  "
-                  id="6"
-                  type="checkbox"
-                  name="Kem chese"
-                  value="10000"
-                />
-                <label
-                  for="6"
-                  className={`cursor-pointer w-full box-border	 block `}
-                >
-                  <p
-                    className={`text-[0.9rem] mx-auto text-center my-auto py-2  px-3 border-[0.01rem] rounded-[0.3rem] border-solid  `}
-                  >
-                    Kemchese + 10,000đ
-                  </p>
-                </label>
-              </div>
-              <div className="relative  flex items-center border-[0.01rem] rounded-[0.3rem] border-solid mr-3  mt-4">
-                <Input_checkbox
-                  onClick={handleClickTopping}
-                  className="hidden  "
-                  id="4"
-                  type="checkbox"
-                  name="Trân châu đen"
-                  value="5000"
-                />
-                <label
-                  for="4"
-                  className={`cursor-pointer w-full box-border	 block `}
-                >
-                  <p
-                    className={`text-[0.9rem] mx-auto text-center my-auto py-2  px-3 border-[0.01rem] rounded-[0.3rem] border-solid `}
-                  >
-                    Trân châu đen + 5,000đ
-                  </p>
-                </label>
-              </div>
-              <div className="relative  flex items-center border-[0.01rem] rounded-[0.3rem] border-solid mr-3 mt-4 ">
-                <Input_checkbox
-                  onClick={handleClickTopping}
-                  className="hidden  "
-                  id="5"
-                  type="checkbox"
-                  name="Trân châu trắng"
-                  value="5000"
-                />
-                <label
-                  for="5"
-                  className={`cursor-pointer w-full box-border	 block `}
-                >
-                  <p
-                    className={`text-[0.9rem] mx-auto text-center my-auto py-2  px-3 border-[0.01rem] rounded-[0.3rem] border-solid  
+            {dataProduct.MaPL === 1 && (
+              <>
+                <Text className="text-[1.2rem]  block">
+                  Chọn size (bắt buộc)
+                </Text>
+                <div className="flex mt-2">
+                  <div className="relative h-[2.4rem] w-[7rem] flex items-center border-[0.01rem] rounded-[0.3rem] border-solid  ">
+                    <input
+                      onClick={handleChangeSize}
+                      className="hidden  "
+                      id="sizeVua"
+                      type="radio"
+                      name="sizeTraSua"
+                      value="0"
+                    />
+                    <label
+                      for="sizeVua"
+                      className={`cursor-pointer w-full h-full flex ${
+                        sizeVuaActive ? "bg-[#146d4d]" : ""
+                      }`}
+                    >
+                      <p
+                        className={`text-[0.9rem] mx-auto text-center my-auto ${
+                          sizeVuaActive
+                            ? "bg-[#146d4d] text-[#fff]"
+                            : "text-[#000]"
+                        }`}
+                      >
+                        Vừa + 0đ
+                      </p>
+                    </label>
+                  </div>
+                  <div className="relative h-[2.4rem] w-[7rem] flex items-center border-[0.01rem] rounded-[0.3rem] border-solid ml-3  ">
+                    <input
+                      onClick={handleChangeSize}
+                      className="hidden  "
+                      id="sizeLon"
+                      type="radio"
+                      name="sizeTraSua"
+                      value="5000"
+                    />
+                    <label
+                      for="sizeLon"
+                      className={`cursor-pointer w-full h-full flex ${
+                        sizeLonActive ? "bg-[#146d4d]" : ""
+                      } `}
+                    >
+                      <p
+                        className={`text-[0.9rem] mx-auto text-center my-auto ${
+                          sizeLonActive
+                            ? "bg-[#146d4d] text-[#fff]"
+                            : "text-[#000]"
+                        }`}
+                      >
+                        Lớn + 5,000đ
+                      </p>
+                    </label>
+                  </div>
+                </div>
+                <Text className="text-[1.2rem] mt-4 block">Topping</Text>
+                <div className="flex flex-wrap ">
+                  <div className="relative  flex items-center border-[0.01rem] rounded-[0.3rem] border-solid mr-3  mt-4 ">
+                    <Input_checkbox
+                      onClick={handleClickTopping}
+                      className="hidden  "
+                      id="6"
+                      type="checkbox"
+                      name="Kem chese"
+                      value="10000"
+                    />
+                    <label
+                      for="6"
+                      className={`cursor-pointer w-full box-border	 block `}
+                    >
+                      <p
+                        className={`text-[0.9rem] mx-auto text-center my-auto py-2  px-3 border-[0.01rem] rounded-[0.3rem] border-solid  `}
+                      >
+                        Kemchese + 10,000đ
+                      </p>
+                    </label>
+                  </div>
+                  <div className="relative  flex items-center border-[0.01rem] rounded-[0.3rem] border-solid mr-3  mt-4">
+                    <Input_checkbox
+                      onClick={handleClickTopping}
+                      className="hidden  "
+                      id="4"
+                      type="checkbox"
+                      name="Trân châu đen"
+                      value="5000"
+                    />
+                    <label
+                      for="4"
+                      className={`cursor-pointer w-full box-border	 block `}
+                    >
+                      <p
+                        className={`text-[0.9rem] mx-auto text-center my-auto py-2  px-3 border-[0.01rem] rounded-[0.3rem] border-solid `}
+                      >
+                        Trân châu đen + 5,000đ
+                      </p>
+                    </label>
+                  </div>
+                  <div className="relative  flex items-center border-[0.01rem] rounded-[0.3rem] border-solid mr-3 mt-4 ">
+                    <Input_checkbox
+                      onClick={handleClickTopping}
+                      className="hidden  "
+                      id="5"
+                      type="checkbox"
+                      name="Trân châu trắng"
+                      value="5000"
+                    />
+                    <label
+                      for="5"
+                      className={`cursor-pointer w-full box-border	 block `}
+                    >
+                      <p
+                        className={`text-[0.9rem] mx-auto text-center my-auto py-2  px-3 border-[0.01rem] rounded-[0.3rem] border-solid  
                     `}
-                  >
-                    Trân châu trắng + 5,000đ
-                  </p>
-                </label>
-              </div>
-              <Button
-                onClick={(id) => handleAddToCart(id)}
-                className="bg-[#146d4d] w-full rounded-md py-[1.3rem] flex justify-center items-center text-[#fff] text-[0.7rem] mt-7 font-bold"
-              >
-                Thêm vào giỏ hàng
-              </Button>
-            </div>
+                      >
+                        Trân châu trắng + 5,000đ
+                      </p>
+                    </label>
+                  </div>
+                </div>
+              </>
+            )}
+            <Button
+              onClick={(id) => handleAddToCart(id)}
+              className="bg-[#146d4d] w-full rounded-md py-[1.3rem] flex justify-center items-center text-[#fff] text-[0.7rem] mt-7 font-bold"
+            >
+              Thêm vào giỏ hàng
+            </Button>
           </Col>
         </Row>
         <Row

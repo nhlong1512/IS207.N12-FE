@@ -64,16 +64,16 @@ export default function Feedback() {
               src={Ava1}
             />
             <Text className="text-[1.2rem] block text-center w-[60rem] my-2 mx-auto ">
-              1Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea sit
-              id accusantium officia quod quasi necessitatibus perspiciatis
-              Harum error provident quibusdam tenetur.
+              Nhân viên rất lịch sự và chu đáo. Khách hàng trong quán hầu như là
+              sinh viên các trường đại học lân cận như ĐH UIT, các trường ĐHQG.
+              Vì đối tượng khách hàng là sinh viên nên giá cả rất phải chăng.
             </Text>
             <div className="w-full  flex justify-center  text-center block">
               <Text
                 italic={true}
                 className="text-[1.4rem]  font-normal text-[#146d4d] "
               >
-                Sen
+                Trọng Tín
               </Text>
             </div>
           </div>
@@ -87,16 +87,16 @@ export default function Feedback() {
               src={Ava2}
             />
             <Text className="text-[1.2rem] block text-center w-[60rem] my-2 mx-auto ">
-              2Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea sit
-              id accusantium officia quod quasi necessitatibus perspiciatis
-              Harum error provident quibusdam tenetur.
+              Thái độ nhân viên khiến mình rất hài lòng, dù chỉ là một cử chỉ
+              quan tâm nhỏ mình cảm giác rất chân thành và quán chưa bao giờ làm
+              mình thất vọng về chất lượng cũng như thái độ phục vụ.
             </Text>
             <div className="w-full  flex justify-center  text-center block">
               <Text
                 italic={true}
                 className="text-[1.4rem]  font-normal text-[#146d4d] "
               >
-                Sen
+                Mỹ Nhung
               </Text>
             </div>
           </div>
@@ -109,16 +109,37 @@ export default function Feedback() {
               src={Ava3}
             />
             <Text className="text-[1.2rem] block text-center w-[60rem] my-2 mx-auto ">
-              3Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea sit
-              id accusantium officia quod quasi necessitatibus perspiciatis
-              Harum error provident quibusdam tenetur.
+              Thái độ của nhân viên quán thực sự khiến mình hài lòng, với mình,
+              chỉ một cử chỉ quan tâm dù nhỏ, nhưng chân thành là đủ, thực sự
+              đến quán đã nhiều lần, chưa lần nào thất vọng.
             </Text>
             <div className="w-full  flex justify-center  text-center block">
               <Text
                 italic={true}
                 className="text-[1.4rem]  font-normal text-[#146d4d] "
               >
-                Sen
+                Ngọc Ánh
+              </Text>
+            </div>
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className="w-full  bg-white ">
+          <div className="z-10  flex-col  ">
+            <Img
+              className=" hover:overflow-hidden w-[9rem] h-[9rem] rounded-full cursor-pointer mx-auto"
+              alt="example"
+              src={Ava3}
+            />
+            <Text className="text-[1.2rem] block text-center w-[60rem] my-2 mx-auto ">
+              Không gian quán đẹp, mở nhạc hợp gu mình 👏🏻👏🏻 mấy bạn nhân viên
+              cũng dễ thương nữa, pha nước siêu nhanh lại ngon.
+            </Text>
+            <div className="w-full  flex justify-center  text-center block">
+              <Text
+                italic={true}
+                className="text-[1.4rem]  font-normal text-[#146d4d] "
+              >
+                Hữu Long
               </Text>
             </div>
           </div>

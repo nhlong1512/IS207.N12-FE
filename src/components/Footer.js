@@ -44,9 +44,11 @@ const Footer = () => {
               src={Logo}
             />
             <Text className="text-[#fff] w-[20rem] block my-5">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Consequuntur hic odio voluptatem tenetur consequatur.Lorem ipsum
-              dolor sit amet consectetur adipisicing elit.
+              Morii gợi nhớ tới các vị khách dừng chân rằng thế giới ngoài kia
+              dù nhanh hay chậm, dù quay cuồng hay mệt mỏi, vẫn có đâu đó những
+              khoảnh khắc, những điều dù bé nhỏ nhưng đủ để xua tan một chút cái
+              áp lực trong cuộc sống vội vã tấp nập ngoài kia. Và hãy để Morii
+              là nơi lưu giữ những cảm giác và kí ức đó.
             </Text>
             <div className="flex my-5">
               <FacebookFilled className="text-[#fff] text-2xl mr-8 " />

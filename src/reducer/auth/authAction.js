@@ -24,8 +24,12 @@ export const login = (userInfo, navigate) => async (dispatch) => {
         response.data.user.role == "quanli" ||
         response.data.user.role == "nhanvien"
       ) {
+        window.localStorage.setItem("role", response.data.user.role);
         navigate("/admin");
-      } else navigate("/");
+      } else {
+        window.localStorage.setItem("role", response.data.user.role);
+        navigate("/");
+      }
     }
 
     dispatch(loginFailure(response));

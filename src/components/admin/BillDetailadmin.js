@@ -169,8 +169,8 @@ const BillDetailadmin = () => {
               <Button
                 className={`     ${
                   billDetail.TrangThai == "Chưa xác nhận" && "bg-[#EC870E]"
-                } ${billDetail.TrangThai == "Đã hủy" && "bg-[#DD0000]"}
-            ${billDetail.TrangThai == "Đang giao" && "bg-[#FFCC33]"}
+                } ${billDetail.TrangThai == "Đã hủy" && "bg-[#FF0000]"}
+            ${billDetail.TrangThai == "Đang giao" && "bg-[#FFC107]"}
             ${
               billDetail.TrangThai == "Đã giao" && "bg-[#50A625]"
             } p-3 rounded-lg  flex justify-center items-center text-[#fff] text-[0.7rem] font-bold`}

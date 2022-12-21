@@ -43,7 +43,8 @@ const Products_admin = () => {
     });
   };
   const handleClickDeleteProduct = async (e) => {
-    if (user.role == "admin") {
+    const role = window.localStorage.getItem("role");
+    if (role == "admin") {
       const id = e.target.id;
       Modal.confirm({
         title: "Cảnh báo",

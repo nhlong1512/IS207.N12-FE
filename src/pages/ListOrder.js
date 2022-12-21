@@ -64,7 +64,7 @@ const ListOrder = () => {
     const idProduct = e.target.id;
     const baseUrl = `http://localhost:8000/api/sanpham`;
     const res = await axios.get(`${baseUrl}/${idProduct}`);
-    console.log(res.data.sanpham);
+    console.log("nek", res.data.sanpham);
     if (res.data.status) {
       navigate(`/sanpham/${idProduct}`, {
         state: { infoProduct: res.data.sanpham },
@@ -189,7 +189,7 @@ const ListOrder = () => {
                     <Meta
                       id={product.id}
                       title={
-                        <p className="whitespace-normal mb-0 text-[1.3rem]">
+                        <p className="whitespace-normal mb-0 text-[1.1rem]">
                           {product.TenSP}
                         </p>
                       }

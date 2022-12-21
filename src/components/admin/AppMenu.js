@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../images/Logo.png";
-import { Layout, Menu, message, Modal } from "antd";
+import { Avatar, Image, Layout, Menu, message, Modal } from "antd";
 import {
   AppstoreOutlined,
   LogoutOutlined,
@@ -13,6 +13,7 @@ import { MdFastfood, MdSpaceDashboard } from "react-icons/md";
 import { TbDiscount2 } from "react-icons/tb";
 import { GiFoodTruck } from "react-icons/gi";
 import { IoIosStats } from "react-icons/io";
+import { getUserProfile } from "../../reducer/user/userAction";
 const { Sider } = Layout;
 
 const AppMenu = () => {
@@ -38,7 +39,14 @@ const AppMenu = () => {
   };
 
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    console.log("user", user);
+    if (window.localStorage.getItem("accessToken") != null) {
+      if (user.hoten == null) {
+        dispatch(getUserProfile());
+      }
+    }
+  }, [user]);
   const confirm = () => {
     Modal.confirm({
       title: "Warning",
@@ -61,16 +69,54 @@ const AppMenu = () => {
     navigate("/signin");
   };
 
+  const navigaStaff = () => {
+    const role = window.localStorage.getItem("role");
+    if (role != "admin") message.error("Bạn không có quyền truy cập");
+    else navigate("/staff");
+  };
+
+  const navigateKhuyenMai = () => {
+    const role = window.localStorage.getItem("role");
+    if (role != "admin") message.error("Bạn không có quyền truy cập");
+    else navigate("/khuyenmai");
+  };
   // Return menu items here
   const items = [
+    getItem(
+      "Blog",
+      "6",
+      <div className="w-full flex items-center  my-2">
+        <Avatar
+          size={40}
+          src={
+            <Image
+              preview={false}
+              src={user.urlavt}
+              alt="avatar"
+              width={40}
+              height={40}
+            ></Image>
+          }
+          className="mr-2"
+        ></Avatar>
+        <p className="mb-0 text-[#fff] flex justify-center items-center">
+          {user.hoten}
+        </p>
+      </div>,
+      () => redirectTo("profile")
+    ),
     getItem("Dashboard", "0", <MdSpaceDashboard />, () => redirectTo("")),
     getItem("Đặt hàng", "1", <MdFastfood />, () => redirectTo("order")),
     getItem("Hóa đơn", "2", <GiFoodTruck />, () => redirectTo("hoadon")),
     getItem("Sản phẩm", "3", <AppstoreOutlined />, () => redirectTo("product")),
     getItem("Khách hàng", "4", <UserOutlined />, () => redirectTo("user")),
-    getItem("Nhân viên", "5", <IdcardOutlined />, () => redirectTo("staff")),
+    getItem("Nhân viên", "5", <IdcardOutlined />, () => {
+      navigaStaff();
+    }),
     getItem("Blog", "6", <TbDiscount2 />, () => redirectTo("blog")),
-    getItem("Khuyến mãi", "7", <TbDiscount2 />, () => redirectTo("khuyenmai")),
+    getItem("Khuyến mãi", "7", <TbDiscount2 />, () => {
+      navigateKhuyenMai();
+    }),
     getItem("Đăng xuất", "8", <LogoutOutlined />, () => confirm(), {
       backgroundColor: "transparent",
     }),
@@ -93,9 +139,10 @@ const AppMenu = () => {
         return ["6"];
       case "Khuyến mãi":
         return ["7"];
-
-      default:
+      case "Hồ sơ":
         return ["8"];
+      default:
+        return ["9"];
     }
   };
 
@@ -106,16 +153,21 @@ const AppMenu = () => {
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
     >
-      <div className="flex  justify-center gap-4 p-6">
-        <img src={Logo} alt="Application Logo" className="w-9 h-5" />
-        <h1
+      <div className="flex  justify-center  px-6  ">
+        <img
+          src={Logo}
+          alt="Application Logo"
+          className=" object-contain h-[93px] w-[96px] "
+        />
+        {/* <h1
           className={`text-white font-extrabold transition-opacity duration-100 ${
             collapsed ? "absolute opacity-0" : ""
           }`}
         >
           Morrii Coffee
-        </h1>
+        </h1> */}
       </div>
+
       <Menu
         theme="dark"
         className=" h-full"

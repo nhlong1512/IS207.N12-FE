@@ -6,7 +6,14 @@ import { Card } from "antd";
 import order1 from "../../images/menu/order1.png";
 import order2 from "../../images/menu/order2.png";
 const { Meta } = Card;
-const Product = ({ item, id, handleChangeItem, size, handleDeleteItem }) => {
+const Product = ({
+  item,
+  id,
+  handleChangeItem,
+  size,
+  handleDeleteItem,
+  HinhAnh,
+}) => {
   const [cartItems_state, setCarrItems_state] = useState([]);
   const [totalProduct, setTotalProduct] = useState(item.total);
   const handleStepQuantity = (value) => {
@@ -29,6 +36,7 @@ const Product = ({ item, id, handleChangeItem, size, handleDeleteItem }) => {
   };
 
   useEffect(() => {
+    console.log("badas", item);
     console.log(totalProduct);
     handleChangeItem(cartItems_state, totalProduct, id);
   }, [cartItems_state]);
@@ -52,7 +60,7 @@ const Product = ({ item, id, handleChangeItem, size, handleDeleteItem }) => {
     <Row className="w-full h-full mt-8 text-[#000] flex items-center ">
       <Col className="flex items-center " span={12}>
         <div className="w-1/2">
-          <img className="w-32 h-w-32" src={order2} />
+          <img className="w-32 h-w-32" src={HinhAnh} />
         </div>
         <div className="w-1/2 ml-[-10px]">
           <p className="text-[#000] font-bold text-[1.1rem] mb-2 leading-5  ">

@@ -12,6 +12,7 @@ const ChiTietHoaDon = ({
   handleChangeItem,
   size,
   handleDeleteItem,
+  HinhAnh,
 }) => {
   const [listTopping, setListTopping] = useState([]);
   useEffect(() => {
@@ -24,7 +25,7 @@ const ChiTietHoaDon = ({
     <Row className="w-full h-full mt-8 text-[#000] flex items-center ">
       <Col className="flex items-center " span={12}>
         <div className="w-1/2">
-          <img className="w-32 h-w-32" src={order2} />
+          <img className="w-32 h-w-32" src={HinhAnh} />
         </div>
         <div className="w-1/2 ml-[-10px]">
           <p className="text-[#000] font-bold text-[1.1rem] mb-2 leading-5  ">
